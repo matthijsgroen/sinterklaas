@@ -1,0 +1,13 @@
+@import "../style/variables.scss";
+
+.character {
+  display: inline-block;
+  position: absolute;
+  transform-origin: top;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.visible {
+  opacity: 1;
+}

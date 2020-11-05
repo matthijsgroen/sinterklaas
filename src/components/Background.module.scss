@@ -1,0 +1,24 @@
+@import "../style/variables.scss";
+
+@mixin img($base) {
+  background-image: url("../content/assets/" + $base);
+}
+
+.background {
+  width: $windowWidth;
+  height: $windowHeight;
+  background-size: cover;
+  position: absolute;
+}
+.black {
+  background-color: black;
+}
+.livingRoom {
+  @include img("backgrounds/living-room.jpg");
+}
+.livingRoomKids {
+  @include img("backgrounds/living-room-kids.jpg");
+}
+.pietenhuis {
+  @include img("backgrounds/pietenhuis.jpg");
+}

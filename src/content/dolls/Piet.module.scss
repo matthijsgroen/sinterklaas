@@ -1,0 +1,16 @@
+@import "../../style/variables.scss";
+
+@mixin img($base) {
+  background-image: url("../assets/piet/" + $base);
+}
+
+.piet {
+  width: 636px;
+  height: 800px;
+  position: relative;
+}
+.piet * {
+  width: 636px;
+  height: 800px;
+  position: absolute;
+}

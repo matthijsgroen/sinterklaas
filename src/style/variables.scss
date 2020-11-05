@@ -1,0 +1,9 @@
+$windowWidth: 1280px;
+$windowHeight: 720px;
+
+@function vw($value) {
+  @return ($value / 100) * $windowWidth;
+}
+@function vh($value) {
+  @return ($value / 100) * $windowHeight;
+}

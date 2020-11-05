@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <style>
+      .sideways {
+        display: flex;
+        flex-direction: row;
+      }
+      .explain {
+        margin: 1em;
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+      input {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        width: 360px;
+        margin: 1rem 0;
+      }
+    </style>
+    <title>Remote play</title>
+  </head>
+  <body>
+    <div class="sideways">
+      <canvas id="qr"></canvas>
+      <div class="explain">
+        <p>Scan the QR code on your mobile phone or tablet when using the same
+          network to play the game on your mobile device.
+          Or type in this address: <input type="text"></input>
+          When you close this window, the server will be stopped.
+        </p>
+      </div>
+    </div>
+
+    <script src="./qrious.min.js"></script>
+    <script>
+      (function() {
+        const el = document.querySelector("#root");
+        const ip = document.location.search.slice("?address=".length);
+        const address = `http://${ip}:8080`;
+      
+        new QRious({
+          element: document.getElementById('qr'),
+          value: address,
+          size: 380
+        });
+        const inp = document.querySelector("input");
+        inp.value = address
+      })();
+    </script>
+  </body>
+</html>

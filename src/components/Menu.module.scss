@@ -1,0 +1,41 @@
+@import "../style/variables.scss";
+
+.dimmed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $windowWidth;
+  height: $windowHeight;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin textOutline($size, $color) {
+  text-shadow: 0 $size 1px $color, 0 0-$size 1px $color, $size 0 1px $color,
+    -$size 0 1px $color;
+}
+
+.button {
+  display: block;
+  font-size: 150%;
+  color: #b5e3e0;
+  width: vw(80);
+  padding: 0.5em 0;
+  margin: 1em;
+  border: none;
+  background-color: unset;
+  background-size: 100% 190%;
+  background-position: center;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    color: #e9d570;
+    @include textOutline(2px, #402313);
+  }
+}
