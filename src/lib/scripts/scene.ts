@@ -1,10 +1,10 @@
-import characters, { Character, CharacterSetup } from "../../state/characters";
-import background from "../../state/background";
-import dialog from "../../state/dialog";
-import { dispatchQ, pauseQ } from "../events";
+import characters, { Character, CharacterSetup } from "src/state/characters";
+import background from "src/state/background";
+import dialog from "src/state/dialog";
+import { dispatchQ, holdQ, pauseQ } from "../events";
 import { Queue } from "../types";
-import { DialogProps } from "../../components/Dialog";
-import { DollSettings } from "../../content/dolls/types";
+import { DialogProps } from "src/components/Dialog";
+import { DollSettings } from "src/content/dolls/types";
 
 const character = (queue: Queue) => <TDoll extends keyof DollSettings>(
   id: string,
@@ -66,6 +66,7 @@ const sceneHelpers = (queue: Queue) => {
     removeCharacter: (...args: Parameters<typeof characters.actions.remove>) =>
       dispatch(characters.actions.remove(...args)),
     pause: (delay?: number) => pause(delay),
+    hold: () => holdQ(queue)(),
     say: (...args: Parameters<typeof dialog.actions.say>) => {
       dispatch(dialog.actions.say(...args));
       pause();

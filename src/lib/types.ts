@@ -5,16 +5,31 @@ export interface QueueItem {
   type: string;
 }
 
+export type Subscriber = () => void;
+export type Unsubscribe = () => void;
+
 export type Queue = {
   addItem(item: QueueItem): void;
+  insertItem(item: QueueItem): void;
   collectToNewQueue(): () => void;
   getNext(): QueueItem | undefined;
   getQueue(): QueueItem[];
+  onItemAdded(s: Subscriber): Unsubscribe;
+  onQueueEnded(s: Subscriber): Unsubscribe;
 };
 
 export type PauseItem = {
   type: "PAUSE";
   delay?: number;
+};
+
+export type HoldItem = {
+  type: "HOLD";
+};
+
+export type JumpItem = {
+  type: "JUMP";
+  target: string;
 };
 
 export type DispatchItem = {

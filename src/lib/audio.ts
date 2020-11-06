@@ -269,7 +269,7 @@ export const createAudioManager = (): AudioManager => {
       sampleName: string,
       { volume = 1.0 } = {}
     ): AudioPlayer | undefined => {
-      const map = Object.values(audioData).find((e) => e.map[sampleName]);
+      const map = Object.values(audioData).find(e => e.map[sampleName]);
       if (!map) {
         return;
       }
@@ -282,7 +282,7 @@ export const createAudioManager = (): AudioManager => {
             setVolume: (...args: Parameters<typeof setVolume>) =>
               music.setVolume(...args),
             process: new Promise(
-              (resolve) => (music.source.onended = () => resolve())
+              resolve => (music.source.onended = () => resolve())
             ),
           };
         }
@@ -317,7 +317,7 @@ export const createAudioManager = (): AudioManager => {
         source.start();
 
         const process = new Promise<void>(
-          (resolve) => (source.onended = () => resolve())
+          resolve => (source.onended = () => resolve())
         );
 
         const setVolume = async (value: number, duration = 0) => {
@@ -361,7 +361,7 @@ export const createAudioManager = (): AudioManager => {
           source.loop ? undefined : sampleData.duration / 1000.0
         );
         const process = new Promise<void>(
-          (resolve) => (source.onended = () => resolve())
+          resolve => (source.onended = () => resolve())
         );
 
         return {

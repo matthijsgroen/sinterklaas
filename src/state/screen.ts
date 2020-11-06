@@ -4,6 +4,7 @@ export type ScreenState = {
   horizontalPunch: boolean;
   verticalPunch: boolean;
   fadeOut: number | boolean;
+  loading: boolean;
   color: string;
 };
 
@@ -13,22 +14,18 @@ export default createSlice({
     horizontalPunch: false,
     verticalPunch: false,
     fadeOut: true,
+    loading: false,
     color: "black",
   } as ScreenState,
   reducers: {
-    punch: {
-      prepare: (horizontal: boolean) => ({ payload: horizontal }),
-      reducer: (state, action: PayloadAction<boolean>) => ({
-        ...state,
-        horizontalPunch: action.payload,
-        verticalPunch: !action.payload,
-      }),
+    punch: (state, action: PayloadAction<boolean>) => {
+      state.horizontalPunch = action.payload;
+      state.verticalPunch = !action.payload;
     },
-    stopPunch: (state) => ({
-      ...state,
-      horizontalPunch: false,
-      verticalPunch: false,
-    }),
+    stopPunch: state => {
+      state.horizontalPunch = false;
+      state.verticalPunch = false;
+    },
     fade: {
       prepare: (fadeOut: number | boolean, color = "black") => ({
         payload: { fadeOut, color },
@@ -41,6 +38,12 @@ export default createSlice({
         fadeOut: action.payload.fadeOut,
         ...(action.payload.fadeOut && { color: action.payload.color }),
       }),
+    },
+    loading: state => {
+      state.loading = true;
+    },
+    loadingDone: state => {
+      state.loading = false;
     },
   },
 });

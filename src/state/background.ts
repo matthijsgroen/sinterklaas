@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BackgroundProps } from "../components/Background";
+import { BackgroundProps } from "src/components/Background";
 
 export type BackgroundState = Partial<BackgroundProps>;
 

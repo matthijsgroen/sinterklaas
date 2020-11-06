@@ -14,7 +14,7 @@ export default createSlice({
     options: [],
   } as MenuState,
   reducers: {
-    hide: (state) => ({
+    hide: state => ({
       ...state,
       visible: false,
       selected: null,

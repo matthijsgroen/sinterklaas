@@ -4,6 +4,8 @@ import menu from "./menu";
 import screen from "./screen";
 import background from "./background";
 import dialog from "./dialog";
+import gameState from "./gameState";
+import buttons from "./buttons";
 import { configureStore } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
@@ -12,6 +14,8 @@ const reducer = combineReducers({
   screen: screen.reducer,
   background: background.reducer,
   dialog: dialog.reducer,
+  gameState: gameState.reducer,
+  buttons: buttons.reducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;

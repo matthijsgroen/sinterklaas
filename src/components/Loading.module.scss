@@ -1,0 +1,17 @@
+@import "../style/variables.scss";
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $windowWidth;
+  height: $windowHeight;
+  background-color: rgba(black, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 150%;
+  color: #ccc;
+}

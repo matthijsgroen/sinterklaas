@@ -1,0 +1,12 @@
+.image {
+  position: absolute;
+  display: inline-block;
+  transition: background 0.1s;
+  img {
+    visibility: hidden;
+  }
+}
+.glow:hover {
+  background-blend-mode: screen;
+  cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import screenState from "../../state/screen";
+import screenState from "src/state/screen";
 import { dispatchQ, pauseQ } from "../events";
 import { Queue } from "../types";
 

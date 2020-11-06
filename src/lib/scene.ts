@@ -1,5 +1,5 @@
 export const delay = (amount: number): Promise<void> =>
-  new Promise<void>((resolve) => setTimeout(resolve, amount));
+  new Promise<void>(resolve => setTimeout(resolve, amount));
 
 let onKeyPress: (() => void) | null = null;
 
@@ -24,7 +24,7 @@ document.addEventListener("touchend", () => {
 });
 
 export const pause = (autoContinue: number | null = null): Promise<void> =>
-  new Promise((resolve) => {
+  new Promise(resolve => {
     const timeout =
       autoContinue !== null ? setTimeout(resolve, autoContinue) : undefined;
 

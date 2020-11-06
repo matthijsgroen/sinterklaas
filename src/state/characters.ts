@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DollSettings } from "../content/dolls/types";
+import { DollSettings } from "src/content/dolls/types";
 import { Draft } from "immer";
 
 export type Character<T extends keyof DollSettings> = {
@@ -102,6 +102,7 @@ export default createSlice({
         }>
       ) => {
         const { id, update } = action.payload;
+        state[id].visible = true;
         state[id].dollSettings = {
           ...state[id].dollSettings,
           ...update,

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DialogProps } from "../components/Dialog";
+import { DialogProps } from "src/components/Dialog";
 
 export type DialogState = {
   visible: boolean;
@@ -17,7 +17,7 @@ export default createSlice({
     settings: {},
   } as DialogState,
   reducers: {
-    hide: (state) => ({ ...state, visible: false }),
+    hide: state => ({ ...state, visible: false }),
     say: {
       prepare: (
         name: string | null,

@@ -1,7 +1,7 @@
 {
   "name": "sint-adventure",
   "productName": "Sinterklaas avontuur",
-  "description": "Help het feest van 5 december te redden",
+  "description": "Help de Sint met de 5 december voorbereidingen",
   "author": "Matthijs Groen <matthijs.groen@gmail.com>",
   "version": "0.1.0",
   "private": true,
@@ -25,6 +25,7 @@
     "wait-on": "^5.2.0"
   },
   "dependencies": {
+    "express": "4.17.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -41,7 +42,6 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-electron": "mkdir build/src && cp -r electron/. build/electron",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/ --ext .js,.ts,.jsx,.tsx",
@@ -53,7 +53,8 @@
   "build": {
     "appId": "com.example.electron-cra",
     "files": [
-      "build/**/*"
+      "build/**/*",
+      "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "assets"
@@ -71,13 +72,15 @@
       "last 1 safari version"
     ]
   },
+  "prettier": {
+    "arrowParens": "avoid"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended"
     ],
-    "env": {"node": true, "browser": true},
     "plugins": [
       "prettier",
       "@typescript-eslint"
