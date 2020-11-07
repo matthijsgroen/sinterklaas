@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import styles from "./Character.module.scss";
-import className from "../lib/className";
+import className from "src/lib/className";
 
 const cssTransform = (scale: number, mirrored: boolean) =>
   [`scale(${scale})`, mirrored && "matrix(-1, 0, 0, 1, 0, 0)"]

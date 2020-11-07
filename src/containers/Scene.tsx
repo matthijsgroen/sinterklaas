@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import Background from "src/components/Background";
-import Scene from "src/components/Scene";
+import Scene from "src/components/generic/Scene";
 import Character from "src/components/Character";
-import ScreenFade from "src/components/ScreenFade";
+import ScreenFade from "src/components/generic/ScreenFade";
 import Dialog from "src/components/Dialog";
 import Menu from "./Menu";
 import screenState from "src/state/screen";
@@ -12,9 +12,10 @@ import { DollSettings } from "src/content/dolls/types";
 import { DialogState } from "src/state/dialog";
 import { Character as CharacterType } from "src/state/characters";
 import { Doll } from "src/content/dolls";
-import { ScreenButtons, Button } from "src/components/ScreenButtons";
+import { ScreenButtons, Button } from "src/components/generic/ScreenButtons";
 import buttons from "src/state/buttons";
 import Loading from "src/components/Loading";
+import FrontLayer from "src/components/Frontlayer";
 
 interface ConnectedSceneProps {
   dialog: DialogState;
@@ -65,6 +66,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
             y={y}
           />
         ))}
+      <FrontLayer {...background} />
       <ScreenFade active={screen.fadeOut} color={screen.color} />
       {dialog.visible && (
         <Dialog

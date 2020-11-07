@@ -1,7 +1,7 @@
 @import "../../style/variables.scss";
 
 @mixin img($base) {
-  background-image: url("../assets/piet/" + $base);
+  background-image: url("../assets/doll_Piet/" + $base + ".png");
 }
 
 .piet {
@@ -13,4 +13,16 @@
   width: 636px;
   height: 800px;
   position: absolute;
+}
+
+.body {
+  @include img("body");
+}
+
+.exp-happy {
+  @include img("01");
+}
+
+.exp-hmm {
+  @include img("02");
 }

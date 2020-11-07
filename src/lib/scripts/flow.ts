@@ -72,8 +72,8 @@ const flowHelpers = (queue: Queue) => {
                     dispatch(buttonsState.actions.remove(selectedButton.id));
                   },
                 });
-                commit();
                 dispatch(buttonsState.actions.deselect());
+                commit();
               }
             }
           }

@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import menu from "../state/menu";
-import Menu, { MenuProps } from "../components/Menu";
-import { RootState } from "../state/store";
+import menu from "src/state/menu";
+import Menu, { MenuProps } from "src/components/Menu";
+import { RootState } from "src/state/store";
 
 export interface ConnectedSceneProps {
   visible: boolean;

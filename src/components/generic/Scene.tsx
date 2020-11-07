@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Scene.module.scss";
-import className from "../lib/className";
-import useWindowSize from "./hooks/useWindowSize";
+import className from "src/lib/className";
+import useWindowSize from "../hooks/useWindowSize";
 
 export interface SceneProps {
   horizontalPunch?: boolean;

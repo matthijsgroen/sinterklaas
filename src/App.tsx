@@ -2,9 +2,8 @@ import React, { ReactElement } from "react";
 import { Provider } from "react-redux";
 import { store } from "./state/store";
 import ConnectedScene from "./containers/Scene";
-// import { pause } from "./lib/scene";
 import { playEvent } from "./lib/events";
-import event from "./content/scripts/demo";
+import scripts from "./content/scripts";
 
 const App = (): ReactElement => (
   <Provider store={store}>
@@ -13,7 +12,7 @@ const App = (): ReactElement => (
 );
 
 const play = async () => {
-  await playEvent(store, event);
+  await playEvent(store, scripts, "intro");
 };
 play();
 

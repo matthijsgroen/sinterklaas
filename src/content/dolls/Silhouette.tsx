@@ -3,7 +3,7 @@ import styles from "./Silhouette.module.scss";
 import className from "../../lib/className";
 
 export interface SilhouetteProps {
-  sil: "piet";
+  sil: "piet" | "hiddo" | "jinte";
 }
 
 const Silhouette: React.FC<SilhouetteProps> = ({ sil }) => (

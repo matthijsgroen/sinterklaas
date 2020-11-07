@@ -1,18 +1,18 @@
 import React from "react";
 import styles from "./Piet.module.scss";
-// import className from "../../lib/className";
 
 export interface PietProps {
   body?: "default";
-  expression?: string;
+  expression?: "happy" | "hmm";
 }
 
 const Piet: React.FC<PietProps> = ({
   body = "default",
-  expression = "default",
+  expression = "happy",
 }) => (
   <div className={styles.piet}>
-    <div className={styles.hairBack} />
+    <div className={styles.body} />
+    <div className={styles[`exp-${expression}`]} />
   </div>
 );
 

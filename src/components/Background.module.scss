@@ -1,7 +1,7 @@
 @import "../style/variables.scss";
 
 @mixin img($base) {
-  background-image: url("../content/assets/" + $base);
+  background-image: url("../content/assets/backgrounds/" + $base);
 }
 
 .background {
@@ -14,11 +14,17 @@
   background-color: black;
 }
 .livingRoom {
-  @include img("backgrounds/living-room.jpg");
+  @include img("living-room.jpg");
 }
 .livingRoomKids {
-  @include img("backgrounds/living-room-kids.jpg");
+  @include img("living-room-kids.png");
 }
 .pietenhuis {
-  @include img("backgrounds/pietenhuis.jpg");
+  @include img("pietenhuis.jpg");
+}
+.news {
+  @include img("news.png");
+}
+.tv {
+  @include img("living-room-tv.png");
 }
