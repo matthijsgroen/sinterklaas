@@ -6,10 +6,11 @@ export interface BackgroundProps {
   image?: "black" | "livingRoom" | "pietenhuis";
   kids?: boolean;
   tv?: boolean;
+  blur?: boolean;
   frontLayer?: "news";
 }
 
-const Background: React.FC<BackgroundProps> = ({ image, kids, tv }) => (
+const Background: React.FC<BackgroundProps> = ({ image, kids, tv, blur }) => (
   <>
     <div
       className={className({
@@ -17,6 +18,7 @@ const Background: React.FC<BackgroundProps> = ({ image, kids, tv }) => (
         [styles.black]: !image,
         [styles.livingRoom]: image === "livingRoom",
         [styles.pietenhuis]: image === "pietenhuis",
+        [styles.blur]: !!blur,
         [styles.background]: true,
       })}
     />

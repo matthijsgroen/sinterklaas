@@ -10,6 +10,9 @@
   background-size: cover;
   position: absolute;
 }
+.blur {
+  filter: blur(4px);
+}
 .black {
   background-color: black;
 }

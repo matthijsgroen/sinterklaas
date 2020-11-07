@@ -19,10 +19,18 @@
   @include img("body");
 }
 
+.pointUp {
+  @include img("body-point-up");
+}
+
 .exp-happy {
   @include img("01");
 }
 
 .exp-hmm {
   @include img("02");
+}
+
+.exp-sip {
+  @include img("03");
 }

@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import Piet from "./Piet";
+import Hiddo from "./Hiddo";
 import Silhouette from "./Silhouette";
 import { DollSettings } from "./types";
 
@@ -15,6 +16,8 @@ export const Doll = <T extends keyof DollSettings>({
   switch (doll) {
     case "piet":
       return <Piet {...(settings as DollSettings["piet"])} />;
+    case "hiddo":
+      return <Hiddo {...(settings as DollSettings["hiddo"])} />;
   }
   return <Silhouette {...(settings as DollSettings["silhouette"])} />;
 };

@@ -1,4 +1,5 @@
 import { PietProps } from "./Piet";
+import { HiddoProps } from "./Hiddo";
 import { SilhouetteProps } from "./Silhouette";
 
 type Settings<
@@ -9,4 +10,5 @@ type Settings<
 export type DollSettings = {
   piet: Settings<PietProps>;
   silhouette: Settings<SilhouetteProps, "sil">;
+  hiddo: Settings<HiddoProps>;
 };

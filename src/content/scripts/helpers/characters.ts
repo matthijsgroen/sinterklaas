@@ -8,25 +8,64 @@ const characterHelpers = (queue: Queue) => {
   const dispatch = dispatchQ(queue);
   const pause = pauseQ(queue);
 
-  const silhouette = (sil: DollSettings["silhouette"]["sil"], name: string) => (
-    contents: string
+  const hiddoP = (defaults: DollSettings["hiddo"] = {}) => (
+    contents: string,
+    pose: DollSettings["hiddo"] = {}
   ) => {
     dispatch(
-      characters.actions.add(sil, "silhouette", {
-        x: 800,
-        y: 330,
+      characters.actions.add("hiddoPortrait", "hiddo", {
+        x: -50,
+        y: 450,
+        flipped: true,
         portrait: true,
-        dollSettings: { sil },
+        dollSettings: { ...defaults, ...pose },
       })
     );
-    dispatch(dialog.actions.say(name, contents, { paddingRight: 300 }));
+    dispatch(dialog.actions.say("Hiddo", contents, { paddingRight: 370 }));
     pause();
-    dispatch(characters.actions.remove(sil));
+    dispatch(characters.actions.remove("hiddoPortrait"));
+    dispatch(dialog.actions.hide());
+  };
+
+  const jinteP = (defaults: DollSettings["hiddo"] = {}) => (
+    contents: string,
+    pose: DollSettings["hiddo"] = {}
+  ) => {
+    dispatch(
+      characters.actions.add("hiddoPortrait", "hiddo", {
+        x: -50,
+        y: 450,
+        flipped: true,
+        portrait: true,
+        dollSettings: { ...defaults, ...pose },
+      })
+    );
+    dispatch(dialog.actions.say("Jinte", contents, { paddingRight: 370 }));
+    pause();
+    dispatch(characters.actions.remove("hiddoPortrait"));
+    dispatch(dialog.actions.hide());
+  };
+
+  const reporter = (contents: string) => {
+    dispatch(
+      characters.actions.add("reporter", "silhouette", {
+        x: 30,
+        y: 440,
+        portrait: true,
+        flipped: true,
+        dollSettings: { sil: "reporter" },
+      })
+    );
+    dispatch(dialog.actions.say(null, contents, { paddingLeft: 240 }));
+    pause();
+    dispatch(characters.actions.remove("reporter"));
     dispatch(dialog.actions.hide());
   };
 
   return {
-    silhouette,
+    hiddoP,
+    jinteP,
+    reporter,
   };
 };
 

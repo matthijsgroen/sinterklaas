@@ -3,14 +3,14 @@ import styles from "./Silhouette.module.scss";
 import className from "../../lib/className";
 
 export interface SilhouetteProps {
-  sil: "piet" | "hiddo" | "jinte";
+  sil: "reporter";
 }
 
 const Silhouette: React.FC<SilhouetteProps> = ({ sil }) => (
   <div
     className={className({
       [styles.silhouette]: true,
-      [styles.piet]: sil === "piet",
+      [styles.reporter]: sil === "reporter",
     })}
   />
 );

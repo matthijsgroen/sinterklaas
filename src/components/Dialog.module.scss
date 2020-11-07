@@ -2,17 +2,18 @@
 
 .dialog {
   position: relative;
+  margin: vh(2) vw(2);
   width: vw(88);
   height: vh(7);
-  min-height: vh(15.5);
+  min-height: vh(14);
   background-size: 100% 100%;
 
   background-color: rgba(#222, 0.8);
   border: 2px solid #666;
 
-  color: #aaa;
+  color: #ddd;
   font-size: 175%;
-  padding: vw(4) vw(6) 0 vw(6);
+  padding: vh(3) vw(4) 0 vw(4);
 }
 
 .name {

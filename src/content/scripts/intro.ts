@@ -1,25 +1,32 @@
-import sceneHelpers from "../../lib/scripts/scene";
-import screenHelpers from "../../lib/scripts/screen";
-import { Queue } from "../../lib/types";
+import sceneHelpers from "src/lib/scripts/scene";
+import screenHelpers from "src/lib/scripts/screen";
+import { Queue } from "src/lib/types";
 import characterHelpers from "./helpers/characters";
+import audioHelpers from "src/lib/scripts/audio";
+import { jumpQ } from "src/lib/events";
+
+import carStoppingSound from "../assets/sounds/352744__rosebugg__car-stopping.wav";
+import carDoorClose from "../assets/sounds/208695__monotraum__car-door-close.wav";
 
 const intro = (queue: Queue) => {
+  const jump = jumpQ(queue);
   const { fadeIn, fadeOut } = screenHelpers(queue);
   const { updateBackground, manageCharacter, pause } = sceneHelpers(queue);
-  // const { playMusic, playSound, stopMusic } = audioHelpers(queue);
-  const { silhouette } = characterHelpers(queue);
+  const { playSound } = audioHelpers(queue);
+  const { reporter, hiddoP, jinteP } = characterHelpers(queue);
+  const hiddo = hiddoP({});
+  const jinte = jinteP({});
 
   updateBackground({
     image: "livingRoom",
+    kids: false,
+    tv: false,
   });
 
-  const hiddoP = silhouette("hiddo", "Hiddo");
-  const jinteP = silhouette("jinte", "Jinte");
-  const reporterP = silhouette("reporter", "Verslaggever");
-
   fadeIn();
+  pause();
   // playSound(tvSound);
-  hiddoP("Mam, het gaat beginnen!");
+  hiddo("Mam, het gaat beginnen!");
   // tv aan
   updateBackground({
     image: "livingRoom",
@@ -27,7 +34,7 @@ const intro = (queue: Queue) => {
     kids: false,
   });
 
-  jinteP("Zwarte Piet is op de TV!");
+  jinte("Hoofd Piet is op de TV!");
 
   updateBackground({
     image: "livingRoom",
@@ -38,12 +45,12 @@ const intro = (queue: Queue) => {
   pause();
   fadeOut();
   pause(500);
-  updateBackground({ image: "pietenhuis", frontLayer: "news" });
+  updateBackground({ image: "pietenhuis", frontLayer: "news", blur: true });
 
   const { say: piet, pos: pietPos } = manageCharacter(
     "piet",
     "piet",
-    "Zwarte piet",
+    "Hoofd piet",
     {
       x: 350,
       y: 20,
@@ -56,16 +63,20 @@ const intro = (queue: Queue) => {
 
   piet("Hallo kinderen.", { expression: "hmm" });
   piet("We zijn weer in het land!", { expression: "happy" });
-  piet("Maar helaa, niet alles gaat zoals we dat zouden willen.", {
+  piet("Maar helaas, niet alles gaat zoals we dat zouden willen.", {
     expression: "hmm",
   });
-  piet("Er is nog van alles wat we moeten regelen voor pakjes avond.");
-  piet("En ik weet niet of we *alles* op tijd geregeld kunnen krijgen...");
-  reporterP("Wat voor dingen moeten er dan nog geregeld worden?");
-  piet("Nou, van alles...");
-  piet("Maar ik weet wat!");
-  piet("Misschien kunnen de kinderen ons helpen!");
-  piet("Dan komt het vast wel goed!");
+  piet("Er is nog van alles wat we moeten regelen voor pakjes avond.", {
+    expression: "sip",
+  });
+  piet("En ik weet niet of we *alles* op tijd geregeld kunnen krijgen...", {
+    expression: "hmm",
+  });
+  reporter("Wat voor dingen moeten er dan nog geregeld worden?");
+  piet("Nou, van alles...", { expression: "sip" });
+  piet("Maar ik weet wat!", { expression: "happy", body: "pointUp" });
+  piet("Misschien kunnen de kinderen ons helpen!", { expression: "happy" });
+  piet("Dan komt het vast wel goed!", { body: "default" });
   fadeOut();
   pietPos({ visible: false });
 
@@ -73,13 +84,20 @@ const intro = (queue: Queue) => {
     image: "livingRoom",
     tv: true,
     kids: true,
+    frontLayer: undefined,
+    blur: false,
   });
   pause(300);
   fadeIn();
-  jinteP("Mam! We moeten Sinterklaas helpen!");
-  hiddoP("Ze zoeken kinderen om te helpen voorbereiden!");
-  hiddoP("Onze... *slik* kadootjes staan op het spel!");
+  jinte("Mam! We moeten Sinterklaas helpen!");
+  hiddo("Ze zoeken kinderen om te helpen voorbereiden!");
+  hiddo("Onze... *slik* kadootjes staan op het spel!");
   fadeOut();
+  playSound(carStoppingSound);
+  pause(5000);
+  playSound(carDoorClose);
+  pause(400);
+  jump("pietenhuis");
 };
 
 export default intro;
