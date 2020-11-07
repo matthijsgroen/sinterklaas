@@ -3,7 +3,7 @@ import screenHelpers from "../../lib/scripts/screen";
 import { Queue } from "../../lib/types";
 import characterHelpers from "./helpers/characters";
 
-const event = (queue: Queue) => {
+const intro = (queue: Queue) => {
   const { fadeIn, fadeOut } = screenHelpers(queue);
   const { updateBackground, manageCharacter, pause } = sceneHelpers(queue);
   // const { playMusic, playSound, stopMusic } = audioHelpers(queue);
@@ -15,6 +15,7 @@ const event = (queue: Queue) => {
 
   const hiddoP = silhouette("hiddo", "Hiddo");
   const jinteP = silhouette("jinte", "Jinte");
+  const reporterP = silhouette("reporter", "Verslaggever");
 
   fadeIn();
   // playSound(tvSound);
@@ -55,6 +56,30 @@ const event = (queue: Queue) => {
 
   piet("Hallo kinderen.", { expression: "hmm" });
   piet("We zijn weer in het land!", { expression: "happy" });
+  piet("Maar helaa, niet alles gaat zoals we dat zouden willen.", {
+    expression: "hmm",
+  });
+  piet("Er is nog van alles wat we moeten regelen voor pakjes avond.");
+  piet("En ik weet niet of we *alles* op tijd geregeld kunnen krijgen...");
+  reporterP("Wat voor dingen moeten er dan nog geregeld worden?");
+  piet("Nou, van alles...");
+  piet("Maar ik weet wat!");
+  piet("Misschien kunnen de kinderen ons helpen!");
+  piet("Dan komt het vast wel goed!");
+  fadeOut();
+  pietPos({ visible: false });
+
+  updateBackground({
+    image: "livingRoom",
+    tv: true,
+    kids: true,
+  });
+  pause(300);
+  fadeIn();
+  jinteP("Mam! We moeten Sinterklaas helpen!");
+  hiddoP("Ze zoeken kinderen om te helpen voorbereiden!");
+  hiddoP("Onze... *slik* kadootjes staan op het spel!");
+  fadeOut();
 };
 
-export default event;
+export default intro;
