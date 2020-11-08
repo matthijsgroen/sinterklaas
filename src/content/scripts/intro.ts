@@ -81,10 +81,8 @@ const intro = (queue: Queue) => {
   hiddo("Ze zoeken kinderen om te helpen voorbereiden!");
   hiddo("Onze... *slik* kadootjes staan op het spel!");
   fadeOut();
-  playSound(carStoppingSound);
-  pause(5000);
+  playSound(carStoppingSound, { wait: true });
   playSound(carDoorClose);
-  pause(400);
   jump("pietenhuis");
 };
 

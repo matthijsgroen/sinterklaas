@@ -38,6 +38,9 @@ export const handleAudio = async (queueItem: AudioItem): Promise<void> => {
       const duration = fadeIn === true ? 1000 : fadeIn * 1000;
       playingTrack?.setVolume(volume, duration);
     }
+    if (options.wait) {
+      await playingTrack?.process;
+    }
   }
   if (action === "stop" && channel === "music") {
     const { fadeOut = false } = options;

@@ -51,5 +51,6 @@ export type AudioItem = {
     volume?: number;
     fadeIn?: boolean;
     fadeOut?: boolean;
+    wait?: boolean;
   };
 };

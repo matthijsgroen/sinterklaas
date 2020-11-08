@@ -11,7 +11,10 @@ const audioHelpers = (queue: Queue) => {
     ) => {
       audio({ file, action: "play", channel: "music", options });
     },
-    playSound: (file: string, options: { volume?: number } = {}) => {
+    playSound: (
+      file: string,
+      options: { volume?: number; wait?: boolean } = {}
+    ) => {
       audio({ file, action: "play", channel: "sfx", options });
     },
     stopMusic: (options: { fadeOut?: boolean } = {}) => {

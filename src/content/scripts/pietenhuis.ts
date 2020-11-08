@@ -8,9 +8,12 @@ import screenHelpers from "src/lib/scripts/screen";
 
 import doorButton from "src/content/assets/hotspots/mansion-door.png";
 import keyButton from "src/content/assets/hotspots/mansion-key.png";
+import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__door-knock.mp3";
+import audioHelpers from "src/lib/scripts/audio";
 
 const pietenhuis = (queue: Queue) => {
   const hold = holdQ(queue);
+  const { playSound } = audioHelpers(queue);
   const { fadeIn } = screenHelpers(queue);
   const { updateBackground, say, manageCharacter } = sceneHelpers(queue);
   const { onState, updateState } = gameHelpers(queue);
@@ -28,6 +31,7 @@ const pietenhuis = (queue: Queue) => {
     }
   );
 
+  playSound(doorKnock, { volume: 0.00001 });
   updateBackground({ image: "pietenhuis", frontLayer: undefined, blur: false });
   fadeIn();
   hiddo("We zijn er!");
@@ -86,7 +90,8 @@ const pietenhuis = (queue: Queue) => {
               flipped: true,
               visible: true,
             });
-            hiddo("*klop, klop* Hallo?");
+            playSound(doorKnock, { wait: true });
+            hiddo("Hallo?");
             piet("Hallo! Wat fijn dat je ons wil helpen!", {
               expression: "happy",
             });
