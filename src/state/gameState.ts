@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export type GameState = {
-  location?: "bridge" | "personell";
+  mansionKey: boolean;
 };
 
 export default createSlice({
   name: "game",
-  initialState: {} as GameState,
-  reducers: {},
+  initialState: { mansionKey: false } as GameState,
+  reducers: {
+    getKey: state => {
+      state.mansionKey = true;
+    },
+  },
 });

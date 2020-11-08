@@ -1,7 +1,7 @@
 import menu from "src/state/menu";
 import { dispatchQ, executionDelayQ } from "../events";
 import { Queue } from "../types";
-import { Button as ButtonProps } from "src/components/ScreenButtons";
+import { Button as ButtonProps } from "src/components/generic/ScreenButtons";
 import { GameState } from "src/state/gameState";
 import buttonsState from "src/state/buttons";
 

@@ -25,22 +25,10 @@ const intro = (queue: Queue) => {
 
   fadeIn();
   pause();
-  // playSound(tvSound);
   hiddo("Mam, het gaat beginnen!");
-  // tv aan
-  updateBackground({
-    image: "livingRoom",
-    tv: true,
-    kids: false,
-  });
-
+  updateBackground({ image: "livingRoom", tv: true, kids: false });
   jinte("Hoofd Piet is op de TV!");
-
-  updateBackground({
-    image: "livingRoom",
-    tv: true,
-    kids: true,
-  });
+  updateBackground({ image: "livingRoom", tv: true, kids: true });
 
   pause();
   fadeOut();
