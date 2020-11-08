@@ -9,6 +9,7 @@
   height: $windowHeight;
   background-size: cover;
   position: absolute;
+  pointer-events: none;
 }
 .blur {
   filter: blur(4px);

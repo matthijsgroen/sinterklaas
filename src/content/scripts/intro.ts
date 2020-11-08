@@ -27,7 +27,7 @@ const intro = (queue: Queue) => {
   pause();
   hiddo("Mam, het gaat beginnen!");
   updateBackground({ image: "livingRoom", tv: true, kids: false });
-  jinte("Hoofd Piet is op de TV!");
+  jinte("Hoofdpiet is op de TV!");
   updateBackground({ image: "livingRoom", tv: true, kids: true });
 
   pause();
@@ -38,7 +38,7 @@ const intro = (queue: Queue) => {
   const { say: piet, pos: pietPos } = manageCharacter(
     "piet",
     "piet",
-    "Hoofd piet",
+    "Hoofdpiet",
     {
       x: 350,
       y: 20,

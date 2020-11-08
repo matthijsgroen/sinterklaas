@@ -62,9 +62,29 @@ const characterHelpers = (queue: Queue) => {
     dispatch(dialog.actions.hide());
   };
 
+  const pietP = (defaults: DollSettings["piet"] = {}) => (
+    contents: string,
+    pose: DollSettings["piet"] = {}
+  ) => {
+    dispatch(
+      characters.actions.add("pietPortrait", "piet", {
+        x: 820,
+        y: 410,
+        flipped: false,
+        portrait: true,
+        dollSettings: { ...defaults, ...pose },
+      })
+    );
+    dispatch(dialog.actions.say("Hoofdpiet", contents, { paddingRight: 370 }));
+    pause();
+    dispatch(characters.actions.remove("pietPortrait"));
+    dispatch(dialog.actions.hide());
+  };
+
   return {
     hiddoP,
     jinteP,
+    pietP,
     reporter,
   };
 };

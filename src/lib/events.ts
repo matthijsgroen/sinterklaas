@@ -44,7 +44,9 @@ const eventQueue = (): Queue => {
       return () => {
         activeQueue.reverse().forEach(item => prevQueue.unshift(item));
         activeQueue = prevQueue;
-        addSubscribers.forEach(e => e());
+        if (prevQueue === mainQueue) {
+          addSubscribers.forEach(e => e());
+        }
       };
     },
     getNext: () => {

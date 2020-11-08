@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Button } from "src/components/ScreenButtons";
+import { Button } from "src/components/generic/ScreenButtons";
 
 export type ButtonState = {
   selected: string | null;
