@@ -3,12 +3,17 @@ import styles from "./Hiddo.module.scss";
 
 export interface HiddoProps {
   body?: "default";
-  expression?: "happy" | "hmm" | "sip";
+  expression?: "happy";
 }
 
-const Piet: React.FC<HiddoProps> = ({
+const Hiddo: React.FC<HiddoProps> = ({
   body = "default",
   expression = "happy",
-}) => <div className={styles.hiddo}></div>;
+}) => (
+  <div className={styles.hiddo}>
+    <div className={styles.body} />
+    <div className={styles[`exp-${expression}`]} />
+  </div>
+);
 
-export default Piet;
+export default Hiddo;

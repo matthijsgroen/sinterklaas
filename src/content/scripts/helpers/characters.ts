@@ -14,9 +14,9 @@ const characterHelpers = (queue: Queue) => {
   ) => {
     dispatch(
       characters.actions.add("hiddoPortrait", "hiddo", {
-        x: -50,
-        y: 450,
-        flipped: true,
+        x: 810,
+        y: 330,
+        flipped: false,
         portrait: true,
         dollSettings: { ...defaults, ...pose },
       })
@@ -27,22 +27,22 @@ const characterHelpers = (queue: Queue) => {
     dispatch(dialog.actions.hide());
   };
 
-  const jinteP = (defaults: DollSettings["hiddo"] = {}) => (
+  const jinteP = (defaults: DollSettings["jinte"] = {}) => (
     contents: string,
-    pose: DollSettings["hiddo"] = {}
+    pose: DollSettings["jinte"] = {}
   ) => {
     dispatch(
-      characters.actions.add("hiddoPortrait", "hiddo", {
-        x: -50,
-        y: 450,
-        flipped: true,
+      characters.actions.add("jintePortrait", "jinte", {
+        x: 810,
+        y: 330,
+        flipped: false,
         portrait: true,
         dollSettings: { ...defaults, ...pose },
       })
     );
     dispatch(dialog.actions.say("Jinte", contents, { paddingRight: 370 }));
     pause();
-    dispatch(characters.actions.remove("hiddoPortrait"));
+    dispatch(characters.actions.remove("jintePortrait"));
     dispatch(dialog.actions.hide());
   };
 

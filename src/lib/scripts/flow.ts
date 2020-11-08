@@ -67,13 +67,13 @@ const flowHelpers = (queue: Queue) => {
               const selectedButton = buttons.find(b => b.id === currSelected);
               if (selectedButton) {
                 setTimeout(() => {
-                  storeDispatch(buttonsState.actions.deselect());
                   const commit = queue.collectToNewQueue();
                   selectedButton.onClick({
                     remove: () => {
                       dispatch(buttonsState.actions.remove(selectedButton.id));
                     },
                   });
+                  dispatch(buttonsState.actions.deselect());
                   commit();
                 });
               }

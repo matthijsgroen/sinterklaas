@@ -1,6 +1,7 @@
 import { PietProps } from "./Piet";
 import { HiddoProps } from "./Hiddo";
 import { SilhouetteProps } from "./Silhouette";
+import { JinteProps } from "./Jinte";
 
 type Settings<
   TCharacterProps,
@@ -11,4 +12,5 @@ export type DollSettings = {
   piet: Settings<PietProps>;
   silhouette: Settings<SilhouetteProps, "sil">;
   hiddo: Settings<HiddoProps>;
+  jinte: Settings<JinteProps>;
 };

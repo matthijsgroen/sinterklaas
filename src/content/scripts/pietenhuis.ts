@@ -12,16 +12,26 @@ import keyButton from "src/content/assets/hotspots/mansion-key.png";
 const pietenhuis = (queue: Queue) => {
   const hold = holdQ(queue);
   const { fadeIn } = screenHelpers(queue);
-  const { updateBackground, say } = sceneHelpers(queue);
+  const { updateBackground, say, manageCharacter } = sceneHelpers(queue);
   const { onState, updateState } = gameHelpers(queue);
   const { buttons } = flowHelpers(queue);
-  const { hiddoP, pietP } = characterHelpers(queue);
-  const hiddo = hiddoP({});
+  const { pietP } = characterHelpers(queue);
   const piet = pietP({});
+  const { say: hiddo, pos: hiddoPos } = manageCharacter(
+    "hiddo",
+    "hiddo",
+    "Hiddo",
+    {
+      x: 512,
+      y: 130,
+      dollSettings: {},
+    }
+  );
 
   updateBackground({ image: "pietenhuis", frontLayer: undefined, blur: false });
   fadeIn();
   hiddo("We zijn er!");
+  hiddoPos({ visible: false });
 
   buttons([
     {
@@ -32,8 +42,23 @@ const pietenhuis = (queue: Queue) => {
       position: [1060, 654],
       onClick(button) {
         updateState(a => a.getKey());
+        hiddoPos({
+          x: 412,
+          y: 130,
+          flipped: true,
+          visible: true,
+        });
         hiddo("Hey, hier ligt volgens mij een sleutel!");
+        hiddoPos({
+          x: 412,
+          y: 330,
+          flipped: true,
+          visible: true,
+        });
         say(null, "> Je raapt de sleutel op.");
+        hiddoPos({
+          visible: false,
+        });
 
         button.remove();
       },
@@ -55,6 +80,12 @@ const pietenhuis = (queue: Queue) => {
             });
           },
           () => {
+            hiddoPos({
+              x: 212,
+              y: 130,
+              flipped: true,
+              visible: true,
+            });
             hiddo("*klop, klop* Hallo?");
             piet("Hallo! Wat fijn dat je ons wil helpen!", {
               expression: "happy",
@@ -63,6 +94,7 @@ const pietenhuis = (queue: Queue) => {
             piet("Ja graag! Maar ik ben de sleutel kwijtgeraakt.", {
               expression: "sip",
             });
+            hiddoPos({ visible: false });
           }
         );
       },

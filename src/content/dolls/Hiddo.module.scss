@@ -1,10 +1,22 @@
+@mixin img($base) {
+  background-image: url("../assets/doll_Hiddo/" + $base + ".png");
+}
+
 .hiddo {
-  width: 636px;
+  width: 600px;
   height: 800px;
   position: relative;
 }
 .hiddo * {
-  width: 636px;
+  width: 600px;
   height: 800px;
   position: absolute;
+}
+
+.body {
+  @include img("body");
+}
+
+.exp-happy {
+  @include img("01");
 }

@@ -1,6 +1,7 @@
 @import "../style/variables.scss";
 
 .character {
+  pointer-events: none;
   display: inline-block;
   position: absolute;
   transform-origin: top;

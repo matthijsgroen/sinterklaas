@@ -1,5 +1,3 @@
-@import "../../style/variables.scss";
-
 @mixin img($base) {
   background-image: url("../assets/doll_Piet/" + $base + ".png");
 }
