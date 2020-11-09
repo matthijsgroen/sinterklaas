@@ -1,16 +1,16 @@
+import { Queue } from "src/lib/types";
 import sceneHelpers from "src/lib/scripts/scene";
 import screenHelpers from "src/lib/scripts/screen";
-import { Queue } from "src/lib/types";
 import characterHelpers from "./helpers/characters";
 import audioHelpers from "src/lib/scripts/audio";
-import { jumpQ } from "src/lib/events";
+import flowHelpers from "src/lib/scripts/flow";
 
 import carStoppingSound from "../assets/sounds/352744__rosebugg__car-stopping.wav";
 import carDoorClose from "../assets/sounds/208695__monotraum__car-door-close.wav";
 
 const intro = (queue: Queue) => {
-  const jump = jumpQ(queue);
   const { fadeIn, fadeOut } = screenHelpers(queue);
+  const { jump } = flowHelpers(queue);
   const { updateBackground, manageCharacter, pause } = sceneHelpers(queue);
   const { playSound } = audioHelpers(queue);
   const { reporter, hiddoP, jinteP } = characterHelpers(queue);
@@ -79,7 +79,9 @@ const intro = (queue: Queue) => {
   fadeIn();
   jinte("Mam! We moeten Sinterklaas helpen!");
   hiddo("Ze zoeken kinderen om te helpen voorbereiden!");
-  hiddo("Onze... *slik* kadootjes staan op het spel!");
+  hiddo("Onze... *slik* kadootjes staan op het spel!", {
+    expression: "shocked",
+  });
   fadeOut();
   playSound(carStoppingSound, { wait: true });
   playSound(carDoorClose);

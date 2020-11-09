@@ -1,6 +1,6 @@
 import game, { GameState } from "src/state/gameState";
 import { Action } from "redux";
-import { executionDelayQ } from "../events";
+import { executionDelayQ, isPreloading } from "../events";
 import { Queue } from "../types";
 
 type StateTest<T> = (state: T) => boolean;
@@ -20,6 +20,11 @@ const gameHelpers = (queue: Queue) => {
       onFalse?: () => void
     ) => {
       callback(store => {
+        if (isPreloading(store.getState)) {
+          onTrue();
+          onFalse && onFalse();
+          return;
+        }
         const gameState = store.getState().gameState;
         if (stateTest(gameState)) {
           const commit = queue.collectToNewQueue();

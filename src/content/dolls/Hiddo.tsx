@@ -3,7 +3,7 @@ import styles from "./Hiddo.module.scss";
 
 export interface HiddoProps {
   body?: "default";
-  expression?: "happy";
+  expression?: "happy" | "shocked";
 }
 
 const Hiddo: React.FC<HiddoProps> = ({

@@ -1,5 +1,11 @@
 import menu from "src/state/menu";
-import { dispatchQ, executionDelayQ } from "../events";
+import {
+  dispatchQ,
+  executionDelayQ,
+  holdQ,
+  isPreloading,
+  jumpQ,
+} from "../events";
 import { Queue } from "../types";
 import { Button as ButtonProps } from "src/components/generic/ScreenButtons";
 import { GameState } from "src/state/gameState";
@@ -18,12 +24,21 @@ export type Button = {
 const flowHelpers = (queue: Queue) => {
   const callback = executionDelayQ(queue);
   const dispatch = dispatchQ(queue);
+  const jump = jumpQ(queue);
+  const hold = holdQ(queue);
 
   return {
+    jump,
+    hold,
     menu: (options: Record<string, () => void>) => {
       const choices = Object.keys(options);
       dispatch(menu.actions.show(choices));
       callback(async ({ subscribe, getState }) => {
+        if (isPreloading(getState)) {
+          Object.values(options).forEach(option => option());
+          return;
+        }
+
         const result = await new Promise<number>(resolve => {
           const unsub = subscribe(() => {
             const state = getState();
@@ -43,6 +58,18 @@ const flowHelpers = (queue: Queue) => {
     },
     buttons: (buttons: Button[]) => {
       callback(async ({ dispatch: storeDispatch, subscribe, getState }) => {
+        if (isPreloading(getState)) {
+          // preloading data
+          buttons.forEach(button => {
+            button.onClick({
+              remove: () => {
+                // dummy
+              },
+            });
+          });
+          return;
+        }
+
         // Check which buttons to render.
         const renderButtons = buttons.filter(
           b => !b.skip || !b.skip(getState().gameState)

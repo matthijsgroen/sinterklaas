@@ -1,6 +1,6 @@
 import { pause } from "./scene";
 import { audioQ, handleAudio, preloadAudio } from "./events/audio";
-import { Action, Store } from "redux";
+import { Action, Store, createStore } from "redux";
 import {
   AudioItem,
   CallbackItem,
@@ -42,11 +42,13 @@ const eventQueue = (): Queue => {
       activeQueue = [];
 
       return () => {
+        const result = ([] as QueueItem[]).concat(activeQueue);
         activeQueue.reverse().forEach(item => prevQueue.unshift(item));
         activeQueue = prevQueue;
         if (prevQueue === mainQueue) {
           addSubscribers.forEach(e => e());
         }
+        return result;
       };
     },
     getNext: () => {
@@ -106,34 +108,63 @@ const playQueue = async (
   }
 };
 
-const preloadAssets = async (queue: Queue) => {
-  const items = queue.getQueue().reduce((loadingQueue, queueItem) => {
+type Script = (queue: Queue) => void;
+
+interface Scripts {
+  [key: string]: Script;
+}
+
+const FAKE_STATE = {
+  fakeStore: true,
+  message:
+    "When you get an error on this, make sure you use 'isPreloading'." +
+    " This mechanic is to allow discovery of all code paths through the event," +
+    " so that content preloading can be optimised.",
+};
+
+const fakeStore = createStore(() => FAKE_STATE);
+
+export const isPreloading = (getState: () => unknown) =>
+  getState() === FAKE_STATE;
+
+const flattenQueue = (queueItems: QueueItem[], queue: Queue): QueueItem[] =>
+  queueItems.reduce<QueueItem[]>((acc, item) => {
+    if (item.type === "CALLBACK") {
+      const commit = queue.collectToNewQueue();
+      (item as CallbackItem).callback(fakeStore);
+      const items = commit();
+      return acc.concat(flattenQueue(items, queue));
+    }
+    return acc.concat(item);
+  }, []);
+
+const preloadAssets = async (script: Script) => {
+  const queue = eventQueue();
+  script(queue);
+
+  const queueItems = flattenQueue(queue.getQueue(), queue);
+
+  const audioItems = queueItems.reduce((loadingQueue, queueItem) => {
     if (queueItem.type === "AUDIO") {
       return loadingQueue.concat(preloadAudio(queueItem as AudioItem));
     }
     return loadingQueue;
   }, [] as Promise<void>[]);
 
-  await Promise.all(items);
+  await Promise.all(audioItems);
 };
-
-interface Scripts {
-  [key: string]: (queue: Queue) => void;
-}
 
 export const playEvent = async (
   store: Store,
   scripts: Scripts,
   active: string
 ): Promise<void> => {
-  const queue = eventQueue();
-
-  scripts[active](queue);
-
   store.dispatch(screen.actions.loading());
-  await preloadAssets(queue);
+  await preloadAssets(scripts[active]);
   store.dispatch(screen.actions.loadingDone());
 
+  const queue = eventQueue();
+  scripts[active](queue);
   const nextScript = await playQueue(store, queue);
   store.dispatch(characters.actions.reset());
   store.dispatch(buttons.actions.reset());

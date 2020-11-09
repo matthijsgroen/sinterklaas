@@ -26,6 +26,9 @@
 .pietenhuis {
   @include img("pietenhuis.jpg");
 }
+.hall {
+  @include img("hall.jpg");
+}
 .news {
   @include img("news.png");
 }

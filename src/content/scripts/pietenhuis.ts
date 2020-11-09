@@ -1,5 +1,4 @@
 import { Queue } from "src/lib/types";
-import { holdQ } from "src/lib/events";
 import sceneHelpers from "src/lib/scripts/scene";
 import gameHelpers from "src/lib/scripts/game";
 import flowHelpers from "src/lib/scripts/flow";
@@ -12,12 +11,11 @@ import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__doo
 import audioHelpers from "src/lib/scripts/audio";
 
 const pietenhuis = (queue: Queue) => {
-  const hold = holdQ(queue);
   const { playSound } = audioHelpers(queue);
-  const { fadeIn } = screenHelpers(queue);
+  const { fadeIn, fadeOut } = screenHelpers(queue);
   const { updateBackground, say, manageCharacter } = sceneHelpers(queue);
   const { onState, updateState } = gameHelpers(queue);
-  const { buttons } = flowHelpers(queue);
+  const { buttons, jump, hold } = flowHelpers(queue);
   const { pietP } = characterHelpers(queue);
   const piet = pietP({});
   const { say: hiddo, pos: hiddoPos } = manageCharacter(
@@ -31,7 +29,6 @@ const pietenhuis = (queue: Queue) => {
     }
   );
 
-  playSound(doorKnock, { volume: 0.00001 });
   updateBackground({ image: "pietenhuis", frontLayer: undefined, blur: false });
   fadeIn();
   hiddo("We zijn er!");
@@ -78,10 +75,12 @@ const pietenhuis = (queue: Queue) => {
           () => {
             say(null, "> Probeert de sleutel in het slot.");
 
-            // Open de deur
             piet("Welkom!", {
               expression: "happy",
             });
+            updateState(a => a.hasMansionAccess());
+            fadeOut();
+            jump("hall");
           },
           () => {
             hiddoPos({

@@ -11,7 +11,7 @@ export type Unsubscribe = () => void;
 export type Queue = {
   addItem(item: QueueItem): void;
   insertItem(item: QueueItem): void;
-  collectToNewQueue(): () => void;
+  collectToNewQueue(): () => QueueItem[];
   getNext(): QueueItem | undefined;
   getQueue(): QueueItem[];
   onItemAdded(s: Subscriber): Unsubscribe;
