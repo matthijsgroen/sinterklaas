@@ -142,7 +142,8 @@ const preloadAssets = async (script: Script) => {
   const queue = eventQueue();
   script(queue);
 
-  const queueItems = flattenQueue(queue.getQueue(), queue);
+  const items = ([] as QueueItem[]).concat(queue.getQueue());
+  const queueItems = flattenQueue(items, queue);
 
   const audioItems = queueItems.reduce((loadingQueue, queueItem) => {
     if (queueItem.type === "AUDIO") {
