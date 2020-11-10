@@ -31,7 +31,12 @@ const pietenhuis = (queue: Queue) => {
 
   updateBackground({ image: "pietenhuis", frontLayer: undefined, blur: false });
   fadeIn();
-  hiddo("We zijn er!");
+  onState(
+    s => !s.mansionAccess,
+    () => {
+      hiddo("We zijn er!");
+    }
+  );
   hiddoPos({ visible: false });
 
   buttons([
@@ -71,6 +76,13 @@ const pietenhuis = (queue: Queue) => {
       position: [679, 493],
       onClick() {
         onState(
+          s => s.mansionAccess,
+          () => {
+            fadeOut();
+            jump("hall");
+          }
+        );
+        onState(
           state => state.mansionKey,
           () => {
             say(null, "> Probeert de sleutel in het slot.");
@@ -78,7 +90,6 @@ const pietenhuis = (queue: Queue) => {
             piet("Welkom!", {
               expression: "happy",
             });
-            updateState(a => a.hasMansionAccess());
             fadeOut();
             jump("hall");
           },

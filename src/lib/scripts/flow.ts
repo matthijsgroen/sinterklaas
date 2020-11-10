@@ -49,11 +49,12 @@ const flowHelpers = (queue: Queue) => {
             }
           });
         });
-
-        const commit = queue.collectToNewQueue();
-        dispatch(menu.actions.hide());
-        options[choices[result]](); // build up new queue items;
-        commit();
+        setTimeout(() => {
+          const commit = queue.collectToNewQueue();
+          dispatch(menu.actions.hide());
+          options[choices[result]](); // build up new queue items;
+          commit();
+        });
       });
     },
     buttons: (buttons: Button[]) => {
