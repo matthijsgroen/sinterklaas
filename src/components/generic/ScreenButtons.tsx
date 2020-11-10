@@ -5,6 +5,7 @@ import styles from "./ScreenButtons.module.scss";
 export type Button = {
   id: string;
   image: string;
+  visible?: boolean;
   hoverEffect?: "glow";
   position: [number, number];
   scale?: number;
@@ -26,23 +27,25 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
       height: "100%",
     }}
   >
-    {buttons.map(({ id, image, position, scale = 1.0, hoverEffect }) => (
-      <div
-        key={id}
-        onClick={() => onClick(id)}
-        className={className({
-          [styles.image]: true,
-          [styles.glow]: hoverEffect === "glow",
-        })}
-        style={{
-          left: position[0],
-          top: position[1],
-          transform: `scale(${scale})`,
-          backgroundImage: `url(${image}), url(${image})`,
-        }}
-      >
-        <img src={image} alt={id} />
-      </div>
-    ))}
+    {buttons
+      .filter(button => button.visible !== false)
+      .map(({ id, image, position, scale = 1.0, hoverEffect }) => (
+        <div
+          key={id}
+          onClick={() => onClick(id)}
+          className={className({
+            [styles.image]: true,
+            [styles.glow]: hoverEffect === "glow",
+          })}
+          style={{
+            left: position[0],
+            top: position[1],
+            transform: `scale(${scale})`,
+            backgroundImage: `url(${image}), url(${image})`,
+          }}
+        >
+          <img src={image} alt={id} />
+        </div>
+      ))}
   </div>
 );

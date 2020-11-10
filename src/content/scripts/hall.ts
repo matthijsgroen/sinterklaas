@@ -10,8 +10,8 @@ import carpet from "src/content/assets/hotspots/hall-carpet.png";
 const pietenhuis = (queue: Queue) => {
   const { fadeIn, fadeOut } = screenHelpers(queue);
   const { onState, updateState } = gameHelpers(queue);
-  const { updateBackground, manageCharacter } = sceneHelpers(queue);
-  const { buttons, hold, menu, jump } = flowHelpers(queue);
+  const { updateBackground, manageCharacter, jump, hold } = sceneHelpers(queue);
+  const { buttons, menu } = flowHelpers(queue);
   const { say: hiddo, pos: hiddoPos } = manageCharacter(
     "hiddo",
     "hiddo",
@@ -43,7 +43,8 @@ const pietenhuis = (queue: Queue) => {
       hoverEffect: "glow",
       image: hoofdPiet,
       position: [50, 260],
-      onClick() {
+      onClick({ show, hide }) {
+        hide();
         piet("Welkom! Leuk dat je ons wilt komen helpen!", {
           expression: "happy",
         });
@@ -68,6 +69,7 @@ const pietenhuis = (queue: Queue) => {
             hiddoPos({ visible: false });
           },
         });
+        show();
       },
     },
     {

@@ -1,7 +1,7 @@
 import characters, { Character, CharacterSetup } from "src/state/characters";
 import background from "src/state/background";
 import dialog from "src/state/dialog";
-import { dispatchQ, holdQ, pauseQ } from "../events";
+import { dispatchQ, holdQ, pauseQ, jumpQ } from "../events";
 import { Queue } from "../types";
 import { DialogProps } from "src/components/Dialog";
 import { DollSettings } from "src/content/dolls/types";
@@ -56,6 +56,8 @@ const sceneHelpers = (queue: Queue) => {
   const dispatch = dispatchQ(queue);
   const pause = pauseQ(queue);
   const manageCharacter = character(queue);
+  const hold = holdQ(queue);
+  const jump = jumpQ(queue);
 
   return {
     manageCharacter,
@@ -66,7 +68,8 @@ const sceneHelpers = (queue: Queue) => {
     removeCharacter: (...args: Parameters<typeof characters.actions.remove>) =>
       dispatch(characters.actions.remove(...args)),
     pause: (delay?: number) => pause(delay),
-    hold: () => holdQ(queue)(),
+    hold,
+    jump,
     say: (...args: Parameters<typeof dialog.actions.say>) => {
       dispatch(dialog.actions.say(...args));
       pause();

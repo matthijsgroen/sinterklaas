@@ -25,6 +25,12 @@ export default createSlice({
     remove: (state, action: PayloadAction<string>) => {
       delete state.buttons[action.payload];
     },
+    show: (state, action: PayloadAction<string>) => {
+      state.buttons[action.payload].visible = true;
+    },
+    hide: (state, action: PayloadAction<string>) => {
+      state.buttons[action.payload].visible = false;
+    },
     reset: state => {
       state.buttons = {};
       state.selected = null;

@@ -1,11 +1,5 @@
 import menu from "src/state/menu";
-import {
-  dispatchQ,
-  executionDelayQ,
-  holdQ,
-  isPreloading,
-  jumpQ,
-} from "../events";
+import { dispatchQ, executionDelayQ, isPreloading } from "../events";
 import { Queue } from "../types";
 import { Button as ButtonProps } from "src/components/generic/ScreenButtons";
 import { GameState } from "src/state/gameState";
@@ -13,6 +7,8 @@ import buttonsState from "src/state/buttons";
 
 type ButtonSupport = {
   remove: () => void;
+  hide: () => void;
+  show: () => void;
 };
 
 export type Button = {
@@ -24,12 +20,8 @@ export type Button = {
 const flowHelpers = (queue: Queue) => {
   const callback = executionDelayQ(queue);
   const dispatch = dispatchQ(queue);
-  const jump = jumpQ(queue);
-  const hold = holdQ(queue);
 
   return {
-    jump,
-    hold,
     menu: (options: Record<string, () => void>) => {
       const choices = Object.keys(options);
       dispatch(menu.actions.show(choices));
@@ -49,23 +41,30 @@ const flowHelpers = (queue: Queue) => {
             }
           });
         });
-        setTimeout(() => {
-          const commit = queue.collectToNewQueue();
-          dispatch(menu.actions.hide());
-          options[choices[result]](); // build up new queue items;
-          commit();
+
+        await new Promise<number>(resolve => {
+          setTimeout(() => {
+            const commit = queue.collectToNewQueue();
+            dispatch(menu.actions.hide());
+            options[choices[result]](); // build up new queue items;
+            commit();
+            resolve();
+          });
         });
       });
     },
     buttons: (buttons: Button[]) => {
       callback(async ({ dispatch: storeDispatch, subscribe, getState }) => {
         if (isPreloading(getState)) {
+          const noop = () => {
+            // Dummy
+          };
           // preloading data
           buttons.forEach(button => {
             button.onClick({
-              remove: () => {
-                // dummy
-              },
+              remove: noop,
+              hide: noop,
+              show: noop,
             });
           });
           return;
@@ -99,6 +98,12 @@ const flowHelpers = (queue: Queue) => {
                   selectedButton.onClick({
                     remove: () => {
                       dispatch(buttonsState.actions.remove(selectedButton.id));
+                    },
+                    hide: () => {
+                      dispatch(buttonsState.actions.hide(selectedButton.id));
+                    },
+                    show: () => {
+                      dispatch(buttonsState.actions.show(selectedButton.id));
                     },
                   });
                   dispatch(buttonsState.actions.deselect());

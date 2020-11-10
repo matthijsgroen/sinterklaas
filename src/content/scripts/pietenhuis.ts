@@ -13,9 +13,11 @@ import audioHelpers from "src/lib/scripts/audio";
 const pietenhuis = (queue: Queue) => {
   const { playSound } = audioHelpers(queue);
   const { fadeIn, fadeOut } = screenHelpers(queue);
-  const { updateBackground, say, manageCharacter } = sceneHelpers(queue);
+  const { updateBackground, say, manageCharacter, hold, jump } = sceneHelpers(
+    queue
+  );
   const { onState, updateState } = gameHelpers(queue);
-  const { buttons, jump, hold } = flowHelpers(queue);
+  const { buttons } = flowHelpers(queue);
   const { pietP } = characterHelpers(queue);
   const piet = pietP({});
   const { say: hiddo, pos: hiddoPos } = manageCharacter(

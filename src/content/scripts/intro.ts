@@ -3,15 +3,15 @@ import sceneHelpers from "src/lib/scripts/scene";
 import screenHelpers from "src/lib/scripts/screen";
 import characterHelpers from "./helpers/characters";
 import audioHelpers from "src/lib/scripts/audio";
-import flowHelpers from "src/lib/scripts/flow";
 
 import carStoppingSound from "../assets/sounds/352744__rosebugg__car-stopping.wav";
 import carDoorClose from "../assets/sounds/208695__monotraum__car-door-close.wav";
 
 const intro = (queue: Queue) => {
   const { fadeIn, fadeOut } = screenHelpers(queue);
-  const { jump } = flowHelpers(queue);
-  const { updateBackground, manageCharacter, pause } = sceneHelpers(queue);
+  const { updateBackground, manageCharacter, pause, jump } = sceneHelpers(
+    queue
+  );
   const { playSound } = audioHelpers(queue);
   const { reporter, hiddoP, jinteP } = characterHelpers(queue);
   const hiddo = hiddoP({});
