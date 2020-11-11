@@ -1,5 +1,5 @@
 import { Action, Store } from "redux";
-import { AudioType } from "./audio";
+import { AudioType } from "../audio";
 
 export interface QueueItem {
   type: string;

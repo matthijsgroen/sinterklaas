@@ -1,18 +1,20 @@
-import { Queue } from "src/lib/types";
-import sceneHelpers from "src/lib/scripts/scene";
-import screenHelpers from "src/lib/scripts/screen";
+import { Queue } from "src/lib/events/types";
+import scriptHelpers from "src/lib/script-helpers";
 import characterHelpers from "./helpers/characters";
-import audioHelpers from "src/lib/scripts/audio";
 
 import carStoppingSound from "../assets/sounds/352744__rosebugg__car-stopping.wav";
 import carDoorClose from "../assets/sounds/208695__monotraum__car-door-close.wav";
 
 const intro = (queue: Queue) => {
-  const { fadeIn, fadeOut } = screenHelpers(queue);
-  const { updateBackground, manageCharacter, pause, jump } = sceneHelpers(
-    queue
-  );
-  const { playSound } = audioHelpers(queue);
+  const {
+    fadeIn,
+    fadeOut,
+    updateBackground,
+    manageCharacter,
+    pause,
+    jump,
+    playSound,
+  } = scriptHelpers(queue);
   const { reporter, hiddoP, jinteP } = characterHelpers(queue);
   const hiddo = hiddoP({});
   const jinte = jinteP({});

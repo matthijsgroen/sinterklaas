@@ -1,5 +1,5 @@
 import audio, { AudioType } from "../audio";
-import { AudioItem, Queue } from "../types";
+import { AudioItem, Queue } from "./types";
 
 export const audioQ = (queue: Queue) => ({
   file,

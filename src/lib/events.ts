@@ -1,4 +1,3 @@
-import { pause } from "./scene";
 import { audioQ, handleAudio, preloadAudio } from "./events/audio";
 import { Action, Store, createStore } from "redux";
 import {
@@ -10,69 +9,14 @@ import {
   PauseItem,
   Queue,
   QueueItem,
-  Subscriber,
-} from "./types";
+} from "./events/types";
 import characters from "src/state/characters";
-import { RootState } from "src/state/store";
 import buttons from "src/state/buttons";
 import screen from "src/state/screen";
-
-const eventQueue = (): Queue => {
-  const mainQueue: QueueItem[] = [];
-  let activeQueue = mainQueue;
-
-  let addSubscribers: Subscriber[] = [];
-  let endSubscribers: Subscriber[] = [];
-
-  return {
-    addItem: (item: QueueItem) => {
-      activeQueue.push(item);
-      if (mainQueue === activeQueue) {
-        addSubscribers.forEach(e => e());
-      }
-    },
-    insertItem: (item: QueueItem) => {
-      activeQueue.unshift(item);
-      if (mainQueue === activeQueue) {
-        addSubscribers.forEach(e => e());
-      }
-    },
-    collectToNewQueue: () => {
-      const prevQueue = activeQueue;
-      activeQueue = [];
-
-      return () => {
-        const result = ([] as QueueItem[]).concat(activeQueue);
-        activeQueue.reverse().forEach(item => prevQueue.unshift(item));
-        activeQueue = prevQueue;
-        if (prevQueue === mainQueue) {
-          addSubscribers.forEach(e => e());
-        }
-        return result;
-      };
-    },
-    getNext: () => {
-      const next = mainQueue.shift();
-      if (next === undefined) {
-        endSubscribers.forEach(e => e());
-      }
-      return next;
-    },
-    getQueue: () => mainQueue,
-    onItemAdded: (sub: Subscriber) => {
-      addSubscribers = addSubscribers.concat(sub);
-      return () => {
-        addSubscribers = addSubscribers.filter(item => item !== sub);
-      };
-    },
-    onQueueEnded: (sub: Subscriber) => {
-      endSubscribers = endSubscribers.concat(sub);
-      return () => {
-        endSubscribers = endSubscribers.filter(item => item !== sub);
-      };
-    },
-  };
-};
+import eventQueue from "./events/queue";
+import { handlePause, pauseQ } from "./events/pause";
+import { handleCallback, callbackQ } from "./events/callback";
+import { handleHold, holdQ } from "./events/hold";
 
 const playQueue = async (
   store: Store,
@@ -85,7 +29,7 @@ const playQueue = async (
         store.dispatch((event as DispatchItem).action);
         break;
       case "CALLBACK":
-        await (event as CallbackItem).callback(store);
+        await handleCallback(event as CallbackItem, store);
         break;
       case "AUDIO":
         await handleAudio(event as AudioItem);
@@ -96,11 +40,7 @@ const playQueue = async (
       case "JUMP":
         return (event as JumpItem).target;
       case "HOLD":
-        queue.insertItem(event);
-        await new Promise(resolve => {
-          queue.onItemAdded(resolve);
-          queue.onQueueEnded(resolve);
-        });
+        await handleHold(event as HoldItem, queue);
         break;
       default:
         throw new Error(`Unsupported type: ${event.type}`);
@@ -181,18 +121,4 @@ export const dispatchQ = (queue: Queue) => (action: Action): void =>
 export const jumpQ = (queue: Queue) => (target: string): void =>
   queue.addItem({ type: "JUMP", target } as JumpItem);
 
-export const executionDelayQ = (queue: Queue) => (
-  callback: (store: Store<RootState>) => void | Promise<void>
-): void => queue.addItem({ type: "CALLBACK", callback } as CallbackItem);
-
-export const pauseQ = (queue: Queue) => (delay?: number): void =>
-  queue.addItem({ type: "PAUSE", delay } as PauseItem);
-
-export const holdQ = (queue: Queue) => (): void =>
-  queue.addItem({ type: "HOLD" } as HoldItem);
-
-const handlePause = async (queueItem: PauseItem) => {
-  await pause(queueItem.delay);
-};
-
-export { audioQ };
+export { audioQ, pauseQ, callbackQ, holdQ };

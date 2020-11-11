@@ -1,6 +1,6 @@
 import screenState from "src/state/screen";
 import { dispatchQ, pauseQ } from "../events";
-import { Queue } from "../types";
+import { Queue } from "../events/types";
 
 const screenHelpers = (queue: Queue) => {
   const dispatch = dispatchQ(queue);

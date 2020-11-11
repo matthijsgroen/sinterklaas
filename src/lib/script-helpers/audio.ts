@@ -1,5 +1,5 @@
 import { audioQ } from "../events";
-import { Queue } from "../types";
+import { Queue } from "../events/types";
 
 const audioHelpers = (queue: Queue) => {
   const audio = audioQ(queue);

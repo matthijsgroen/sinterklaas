@@ -4,7 +4,7 @@ import menu from "./menu";
 import screen from "./screen";
 import background from "./background";
 import dialog from "./dialog";
-import gameState from "./gameState";
+import gameState from "../content/gameState";
 import buttons from "./buttons";
 import { configureStore } from "@reduxjs/toolkit";
 

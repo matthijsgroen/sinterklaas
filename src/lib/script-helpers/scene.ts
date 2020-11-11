@@ -2,7 +2,7 @@ import characters, { Character, CharacterSetup } from "src/state/characters";
 import background from "src/state/background";
 import dialog from "src/state/dialog";
 import { dispatchQ, holdQ, pauseQ, jumpQ } from "../events";
-import { Queue } from "../types";
+import { Queue } from "../events/types";
 import { DialogProps } from "src/components/Dialog";
 import { DollSettings } from "src/content/dolls/types";
 

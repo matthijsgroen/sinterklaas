@@ -1,6 +1,6 @@
 import { DollSettings } from "../../dolls/types";
 import { dispatchQ, pauseQ } from "src/lib/events";
-import { Queue } from "src/lib/types";
+import { Queue } from "src/lib/events/types";
 import dialog from "src/state/dialog";
 import characters from "src/state/characters";
 

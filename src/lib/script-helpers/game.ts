@@ -1,12 +1,12 @@
-import game, { GameState } from "src/state/gameState";
+import game, { GameState } from "src/content/gameState";
 import { Action } from "redux";
-import { executionDelayQ, isPreloading } from "../events";
-import { Queue } from "../types";
+import { callbackQ, isPreloading } from "../events";
+import { Queue } from "../events/types";
 
 type StateTest<T> = (state: T) => boolean;
 
 const gameHelpers = (queue: Queue) => {
-  const callback = executionDelayQ(queue);
+  const callback = callbackQ(queue);
 
   return {
     updateState: (getAction: (actions: typeof game.actions) => Action) => {

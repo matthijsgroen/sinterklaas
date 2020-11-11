@@ -1,17 +1,22 @@
-import { Queue } from "src/lib/types";
-import sceneHelpers from "src/lib/scripts/scene";
-import screenHelpers from "src/lib/scripts/screen";
-import gameHelpers from "src/lib/scripts/game";
-import flowHelpers from "src/lib/scripts/flow";
+import { Queue } from "src/lib/events/types";
+import scriptHelpers from "src/lib/script-helpers";
 
 import hoofdPiet from "src/content/assets/hotspots/hall-piet.png";
 import carpet from "src/content/assets/hotspots/hall-carpet.png";
 
 const pietenhuis = (queue: Queue) => {
-  const { fadeIn, fadeOut } = screenHelpers(queue);
-  const { onState, updateState } = gameHelpers(queue);
-  const { updateBackground, manageCharacter, jump, hold } = sceneHelpers(queue);
-  const { buttons, menu } = flowHelpers(queue);
+  const {
+    fadeIn,
+    fadeOut,
+    onState,
+    updateState,
+    updateBackground,
+    manageCharacter,
+    jump,
+    hold,
+    buttons,
+    menu,
+  } = scriptHelpers(queue);
   const { say: hiddo, pos: hiddoPos } = manageCharacter(
     "hiddo",
     "hiddo",
@@ -51,7 +56,14 @@ const pietenhuis = (queue: Queue) => {
         hiddoPos({ x: 700, y: 130, visible: true });
         menu({
           "Waarmee kan ik helpen?": () => {
-            piet("Goede vraag! even nadenken...", { expression: "sip" });
+            piet("Goede vraag! even nadenken...", {
+              expression: "sip",
+              body: "think",
+            });
+            piet("Oh ja! Rijmpiet boven heeft hulp nodig.", {
+              expression: "happy",
+              body: "pointUp",
+            });
             pietPos({ visible: false });
             hiddoPos({ visible: false });
           },

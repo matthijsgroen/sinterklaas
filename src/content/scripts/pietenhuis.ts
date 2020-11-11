@@ -1,23 +1,26 @@
-import { Queue } from "src/lib/types";
-import sceneHelpers from "src/lib/scripts/scene";
-import gameHelpers from "src/lib/scripts/game";
-import flowHelpers from "src/lib/scripts/flow";
+import { Queue } from "src/lib/events/types";
+import scriptHelpers from "src/lib/script-helpers";
 import characterHelpers from "./helpers/characters";
-import screenHelpers from "src/lib/scripts/screen";
 
 import doorButton from "src/content/assets/hotspots/mansion-door.png";
 import keyButton from "src/content/assets/hotspots/mansion-key.png";
 import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__door-knock.mp3";
-import audioHelpers from "src/lib/scripts/audio";
 
 const pietenhuis = (queue: Queue) => {
-  const { playSound } = audioHelpers(queue);
-  const { fadeIn, fadeOut } = screenHelpers(queue);
-  const { updateBackground, say, manageCharacter, hold, jump } = sceneHelpers(
-    queue
-  );
-  const { onState, updateState } = gameHelpers(queue);
-  const { buttons } = flowHelpers(queue);
+  const {
+    playSound,
+    fadeOut,
+    fadeIn,
+    updateBackground,
+    say,
+    manageCharacter,
+    hold,
+    jump,
+    onState,
+    updateState,
+    buttons,
+  } = scriptHelpers(queue);
+
   const { pietP } = characterHelpers(queue);
   const piet = pietP({});
   const { say: hiddo, pos: hiddoPos } = manageCharacter(

@@ -1,8 +1,8 @@
 import menu from "src/state/menu";
-import { dispatchQ, executionDelayQ, isPreloading } from "../events";
-import { Queue } from "../types";
+import { dispatchQ, callbackQ, isPreloading } from "../events";
+import { Queue } from "../events/types";
 import { Button as ButtonProps } from "src/components/generic/ScreenButtons";
-import { GameState } from "src/state/gameState";
+import { GameState } from "src/content/gameState";
 import buttonsState from "src/state/buttons";
 
 type ButtonSupport = {
@@ -18,7 +18,7 @@ export type Button = {
 } & ButtonProps;
 
 const flowHelpers = (queue: Queue) => {
-  const callback = executionDelayQ(queue);
+  const callback = callbackQ(queue);
   const dispatch = dispatchQ(queue);
 
   return {
@@ -95,15 +95,16 @@ const flowHelpers = (queue: Queue) => {
               if (selectedButton) {
                 setTimeout(() => {
                   const commit = queue.collectToNewQueue();
+                  const { remove, hide, show } = buttonsState.actions;
                   selectedButton.onClick({
                     remove: () => {
-                      dispatch(buttonsState.actions.remove(selectedButton.id));
+                      dispatch(remove(selectedButton.id));
                     },
                     hide: () => {
-                      dispatch(buttonsState.actions.hide(selectedButton.id));
+                      dispatch(hide(selectedButton.id));
                     },
                     show: () => {
-                      dispatch(buttonsState.actions.show(selectedButton.id));
+                      dispatch(show(selectedButton.id));
                     },
                   });
                   dispatch(buttonsState.actions.deselect());
