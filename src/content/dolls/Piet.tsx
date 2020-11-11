@@ -3,7 +3,7 @@ import className from "src/lib/className";
 import styles from "./Piet.module.scss";
 
 export interface PietProps {
-  body?: "default" | "pointUp";
+  body?: "default" | "pointUp" | "think";
   expression?: "happy" | "hmm" | "sip";
 }
 
@@ -16,6 +16,7 @@ const Piet: React.FC<PietProps> = ({
       className={className({
         [styles.body]: body === undefined || body === "default",
         [styles.pointUp]: body === "pointUp",
+        [styles.think]: body === "think",
       })}
     />
     <div className={styles[`exp-${expression}`]} />

@@ -21,6 +21,10 @@
   @include img("body-point-up");
 }
 
+.think {
+  @include img("body-think");
+}
+
 .exp-happy {
   @include img("01");
 }
