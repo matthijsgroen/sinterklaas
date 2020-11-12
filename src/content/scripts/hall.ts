@@ -94,6 +94,15 @@ const pietenhuis = (queue: Queue) => {
         jump("pietenhuis");
       },
     },
+    {
+      id: "topright",
+      hoverEffect: "glow",
+      coordinates: [730, 0, 919, 0, 890, 95, 730, 191],
+      onClick: () => {
+        fadeOut();
+        jump("poemroom");
+      },
+    },
   ]);
 
   onState(
