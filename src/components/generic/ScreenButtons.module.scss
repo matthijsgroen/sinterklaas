@@ -3,12 +3,27 @@
   display: inline-block;
   background-position: center, center;
   background-repeat: no-repeat;
-  transition: background 0.1s;
+  transition: background-blend-mode 0.2s;
   img {
     visibility: hidden;
     border: none;
   }
 }
+.highlight {
+  position: absolute;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.2s;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.highlight.glow:hover {
+  opacity: 0.3;
+}
+
 .glow:hover {
   background-blend-mode: screen;
   cursor: pointer;

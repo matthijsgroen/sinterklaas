@@ -1,7 +1,10 @@
 import menu from "src/state/menu";
 import { dispatchQ, callbackQ, isPreloading } from "../events";
 import { Queue } from "../events/types";
-import { Button as ButtonProps } from "src/components/generic/ScreenButtons";
+import {
+  Button as ButtonProps,
+  Highlight as HighlightProps,
+} from "src/components/generic/ScreenButtons";
 import { GameState } from "src/content/gameState";
 import buttonsState from "src/state/buttons";
 
@@ -12,10 +15,14 @@ type ButtonSupport = {
 };
 
 export type Button = {
-  id: string;
   skip?: (state: GameState) => boolean;
   onClick: (buttonRef: ButtonSupport) => void;
 } & ButtonProps;
+
+export type Highlight = {
+  skip?: (state: GameState) => boolean;
+  onClick: (buttonRef: ButtonSupport) => void;
+} & HighlightProps;
 
 const flowHelpers = (queue: Queue) => {
   const callback = callbackQ(queue);
@@ -53,7 +60,7 @@ const flowHelpers = (queue: Queue) => {
         });
       });
     },
-    buttons: (buttons: Button[]) => {
+    buttons: (buttons: (Button | Highlight)[]) => {
       callback(async ({ dispatch: storeDispatch, subscribe, getState }) => {
         if (isPreloading(getState)) {
           const noop = () => {
