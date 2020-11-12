@@ -1,4 +1,5 @@
 import { Queue } from "src/lib/events/types";
+import { pause } from "src/lib/scene";
 import scriptHelpers from "src/lib/script-helpers";
 
 const pietenhuis = (queue: Queue) => {
@@ -9,10 +10,32 @@ const pietenhuis = (queue: Queue) => {
     updateBackground,
     buttons,
     hold,
+    hpunch,
+    manageCharacter,
   } = scriptHelpers(queue);
 
   updateBackground({ image: "poemroom", frontLayer: undefined, blur: false });
   fadeIn();
+
+  const { say: poem, pos: poemPos } = manageCharacter(
+    "poem",
+    "piet",
+    "Rijmpiet",
+    {
+      x: 350,
+      y: 100,
+      dollSettings: {
+        color: "red",
+        body: "default",
+        glasses: true,
+      },
+    }
+  );
+  pause(100);
+  hpunch();
+  poem("Hey! wat kom je hier doen??");
+  poemPos({ visible: false });
+
   buttons([
     {
       id: "hall",

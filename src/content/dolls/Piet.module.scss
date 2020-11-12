@@ -25,6 +25,22 @@
   @include img("body-think");
 }
 
+.body2 {
+  @include img("body2");
+}
+
+.pointUp2 {
+  @include img("body2-point-up");
+}
+
+.think2 {
+  @include img("body2-think");
+}
+
+.glasses {
+  @include img("glasses");
+}
+
 .exp-happy {
   @include img("01");
 }
