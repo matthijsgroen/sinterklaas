@@ -5,7 +5,14 @@ import styles from "./Piet.module.scss";
 export interface PietProps {
   color?: "blue" | "red";
   body?: "default" | "pointUp" | "think";
-  expression?: "happy" | "hmm" | "sip";
+  expression?:
+    | "happy"
+    | "hmm"
+    | "sip"
+    | "grin"
+    | "annoyed"
+    | "shout"
+    | "crying";
   glasses?: boolean;
 }
 
