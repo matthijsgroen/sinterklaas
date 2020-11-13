@@ -4,6 +4,7 @@ import { store } from "./state/store";
 import ConnectedScene from "./containers/Scene";
 import { playEvent } from "./lib/events";
 import scripts from "./content/scripts";
+import { startScript } from "./content/gameState";
 
 const App = (): ReactElement => (
   <Provider store={store}>
@@ -12,7 +13,7 @@ const App = (): ReactElement => (
 );
 
 const play = async () => {
-  await playEvent(store, scripts, "intro");
+  await playEvent(store, scripts, startScript);
 };
 play();
 

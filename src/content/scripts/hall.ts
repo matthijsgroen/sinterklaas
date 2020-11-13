@@ -60,10 +60,22 @@ const pietenhuis = (queue: Queue) => {
               expression: "sip",
               body: "think",
             });
-            piet("Oh ja! Rijmpiet boven heeft hulp nodig.", {
-              expression: "happy",
-              body: "pointUp",
-            });
+
+            onState(
+              state => state.poemPiet !== "helped",
+              () => {
+                piet("Oh ja! Rijmpiet boven heeft hulp nodig.", {
+                  expression: "happy",
+                  body: "pointUp",
+                });
+                piet("Maar pas op, hij is een beetje...", {
+                  expression: "hmm",
+                  body: "default",
+                });
+                piet("... Prikkelbaar", { expression: "grin" });
+              }
+            );
+
             pietPos({ visible: false });
             hiddoPos({ visible: false });
           },
