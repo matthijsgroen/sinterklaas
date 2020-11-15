@@ -14,6 +14,7 @@ const pietenhuis = (queue: Queue) => {
     hpunch,
     manageCharacter,
     menu,
+    say,
     onState,
     updateState,
   } = scriptHelpers(queue);
@@ -53,45 +54,86 @@ const pietenhuis = (queue: Queue) => {
     }
   );
 
+  const vraag2 = () => {
+    poem("Wow! Dat is mooi!");
+    poem("*Ahum*");
+    poem("Verder dan...");
+
+    say(null, "Maar ook de switch is erg in trek,"); // TODO: Papier look
+
+    menu({
+      "Want je bent gek op gamen!": () => {
+        fout();
+      },
+      "Ja spelletjes vind je super leuk!": () => {
+        fout();
+      },
+      "Ja spelletjes vindt je te gek!": () => {
+        vraag3();
+      },
+    });
+  };
+
+  const vraag3 = () => {
+    poem("Oooh! Die is goed!");
+    poem("*Ahum*");
+    poem("Verder dan...");
+
+    say(null, "Dus ga nu je cadeau maar opsporen!"); // TODO: Papier look
+
+    menu({
+      "Hij ligt vast in de schoenentoren!": () => {
+        // op papier -> hopelijk zal deze buit je bekoren!
+        klaar();
+      },
+      "Want we hebben hem verstopt!": () => {
+        fout();
+      },
+      "Haha je gaat hem nooit vinden!": () => {
+        fout();
+      },
+    });
+  };
+
+  const klaar = () => {
+    poem("Fantastisch! Wat een goed gedicht!");
+    poem("Die ga ik meteen op dit pakje plakken!");
+    // TODO: Add state
+  };
+
+  const fout = () => {
+    // TODO: Add facial expressions
+    poem("Aiiii dat rijmt niet!");
+    poem("Fout fout fout!");
+    poem("Het lukt ons nooit!");
+  };
+
   const playGame = () => {
     hiddoPos({ visible: true });
     hiddo("Ik heet Hiddo en ik help jou.");
     hiddo("Ja die rijmwoorden schud ik uit mijn mouw.");
     hiddo("Een gedicht is geen uitdaging voor mij.");
     hiddo("Dus Piet zet je zorgen maar op zij.");
+    hiddo("Van mijn rijmen en dichten, zullen alle kinderen zwichten!");
 
-    /**
-     *
-     * - Zeker geen probleem!
-     * Ik ben super goed in rijmen
-     * Ik kan rijmen en dichten
-     * zonder mijn hemd op te lichten!
-     *
-     * - Ok, ok, indrukwekkend...
-     *
-     * Ik zit hier met een gedicht...
-     *
-     * Lieve Tristan,
-     *
-     * Op je kamer heel alleentjes...
-     *
-     * - Speel je graag met stapelbare steentjes,
-     *
-     * Wow! Dat is mooi!
-     * Ahum verder dan...
-     *
-     * Maar ook de switch is erg in trek,
-     *
-     * - Ja spelletjes vindt je te gek!
-     *
-     * Oooh! Die is goed!
-     *
-     * Dus ga nu je cadeau maar opsporen!
-     * hij ligt vast in de schoenentoren!
-     *
-     * op papier -> hopelijk zal deze buit je bekoren!
-     *
-     */
+    poem("Ok, ok, indrukwekkend...");
+    poem("Ik zit hier met een gedicht...");
+
+    say(null, "Lieve Tristan,"); // TODO: Papier look
+    say(null, "Op je kamer heel alleentjes..."); // TODO: Papier look
+
+    menu({
+      "Lig je de hele dag in bed?": () => {
+        fout();
+      },
+      "Speel je graag met stapelbare steentjes,": () => {
+        vraag2();
+      },
+      "Speel je graag met Lego,": () => {
+        fout();
+      },
+    });
+
     poemPos({ visible: false });
     hiddoPos({ visible: false });
   };
