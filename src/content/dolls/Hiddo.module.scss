@@ -17,10 +17,26 @@
   @include img("body");
 }
 
+.bodyFists {
+  @include img("body-fists");
+}
+
 .exp-happy {
   @include img("01");
 }
 
 .exp-shocked {
   @include img("02");
+}
+
+.exp-enthusiastic {
+  @include img("03");
+}
+
+.exp-very-enthusiastic {
+  @include img("04");
+}
+
+.exp-mouth-closed {
+  @include img("05");
 }

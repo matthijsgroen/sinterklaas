@@ -1,9 +1,15 @@
 import React from "react";
+import className from "src/lib/className";
 import styles from "./Hiddo.module.scss";
 
 export interface HiddoProps {
-  body?: "default";
-  expression?: "happy" | "shocked";
+  body?: "default" | "fists";
+  expression?:
+    | "happy"
+    | "shocked"
+    | "enthusiastic"
+    | "very-enthusiastic"
+    | "mouth-closed";
 }
 
 const Hiddo: React.FC<HiddoProps> = ({
@@ -11,7 +17,12 @@ const Hiddo: React.FC<HiddoProps> = ({
   expression = "happy",
 }) => (
   <div className={styles.hiddo}>
-    <div className={styles.body} />
+    <div
+      className={className({
+        [styles.body]: body === "default",
+        [styles.bodyFists]: body === "fists",
+      })}
+    />
     <div className={styles[`exp-${expression}`]} />
   </div>
 );

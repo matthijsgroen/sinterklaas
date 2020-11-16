@@ -41,7 +41,7 @@ const pietenhuis = (queue: Queue) => {
       },
     }
   );
-  const { say: hiddo, pos: hiddoPos } = manageCharacter(
+  const { say: hiddo, pos: hiddoPos, doll: hiddoDoll } = manageCharacter(
     "hiddo",
     "hiddo",
     "Hiddo",
@@ -114,13 +114,12 @@ const pietenhuis = (queue: Queue) => {
   };
 
   const fout = () => {
-    // TODO: Add facial expressions
-    poem("Aiiii dat rijmt niet!");
+    poem("Aiiii dat rijmt niet!", { expression: "annoyed" });
     vpunch();
-    poem("Fout fout fout!");
-    poem("Het lukt ons nooit!");
-    hiddo("Oeps! Sorry...");
-    poem("Ik ga het nog even alleen proberen dan...");
+    poem("Fout fout fout!", { expression: "shout" });
+    poem("Het lukt ons nooit!", { expression: "crying" });
+    hiddo("Oeps! Sorry...", { expression: "shocked" });
+    poem("Ik ga het nog even alleen proberen dan...", { expression: "sip" });
   };
 
   const playGame = () => {
@@ -129,22 +128,31 @@ const pietenhuis = (queue: Queue) => {
       s => s.poemPiet === "new" || s.poemPiet === "visited",
       () => {
         hiddo("Ik heet Hiddo en ik help jou.");
-        hiddo("Ja die rijmwoorden schud ik uit mijn mouw.");
-        hiddo("Een gedicht is geen uitdaging voor mij.");
-        hiddo("Dus Piet zet je zorgen maar op zij.");
-        hiddo("Van mijn rijmen en dichten, zullen alle kinderen zwichten!");
+        hiddo("Ja die rijmwoorden schud ik uit mijn mouw.", {
+          expression: "enthusiastic",
+        });
+        hiddo("Een gedicht is geen uitdaging voor mij.", {
+          expression: "happy",
+        });
+        hiddo("Dus Piet zet je zorgen maar op zij.", {
+          expression: "enthusiastic",
+        });
+        hiddo("Van mijn rijmen en dichten, zullen alle kinderen zwichten!", {
+          expression: "very-enthusiastic",
+        });
+        hiddoDoll({ expression: "mouth-closed" });
 
-        poem("Ok, ok, indrukwekkend...");
+        poem("Ok, ok, indrukwekkend...", { expression: "small-smile" });
         updateState(a => a.updatePoemPiet("q1"));
       },
       () => {
         hiddo("Ja, ik help je graag, vertel me wat is de vraag?");
       }
     );
-    poem("Ik zit hier met een gedicht...");
+    poem("Ik zit hier met een gedicht...", { expression: "grin" });
 
-    write("Lieve Tristan,"); // TODO: Papier look
-    write("Op je kamer heel alleentjes..."); // TODO: Papier look
+    write("Lieve Tristan,");
+    write("Op je kamer heel alleentjes...");
     onState(
       s => s.poemPiet === "q1",
       () => {
@@ -154,8 +162,8 @@ const pietenhuis = (queue: Queue) => {
           },
           "Speel je graag met stapelbare steentjes.": () => {
             updateState(a => a.updatePoemPiet("q2"));
-            poem("Wow! Dat is mooi!");
-            poem("*Ahum*");
+            poem("Wow! Dat is mooi!", { expression: "happy" });
+            poem("*Ahum*", { expression: "small-smile" });
             vraag2();
           },
           "Speel je graag met Lego,": () => {

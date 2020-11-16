@@ -12,7 +12,8 @@ export interface PietProps {
     | "grin"
     | "annoyed"
     | "shout"
-    | "crying";
+    | "crying"
+    | "small-smile";
   glasses?: boolean;
 }
 

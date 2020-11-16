@@ -18,7 +18,7 @@ const devState: GameState = {
   poemPiet: "new",
 };
 
-export const startScript = "hall";
+export const startScript = "poemroom";
 
 export default createSlice({
   name: "game",
