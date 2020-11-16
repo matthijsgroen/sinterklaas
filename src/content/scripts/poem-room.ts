@@ -12,6 +12,7 @@ const pietenhuis = (queue: Queue) => {
     buttons,
     hold,
     hpunch,
+    vpunch,
     manageCharacter,
     menu,
     say,
@@ -21,6 +22,7 @@ const pietenhuis = (queue: Queue) => {
 
   updateBackground({ image: "poemroom", frontLayer: undefined, blur: false });
   fadeIn();
+  const write = (content: string) => say(null, content, { look: "paper" });
 
   const { say: poem, pos: poemPos } = manageCharacter(
     "poem",
@@ -55,35 +57,45 @@ const pietenhuis = (queue: Queue) => {
   );
 
   const vraag2 = () => {
-    poem("Wow! Dat is mooi!");
-    poem("*Ahum*");
-    poem("Verder dan...");
+    onState(
+      s => s.poemPiet === "q2",
+      () => {
+        poem("Verder dan...");
 
-    say(null, "Maar ook de switch is erg in trek,"); // TODO: Papier look
+        write("Maar ook de switch is erg in trek,"); // TODO: Papier look
 
-    menu({
-      "Want je bent gek op gamen!": () => {
-        fout();
+        menu({
+          "Want je bent gek op gamen!": () => {
+            fout();
+          },
+          "Ja spelletjes vind je super leuk!": () => {
+            fout();
+          },
+          "Ja spelletjes vindt je te gek!": () => {
+            updateState(a => a.updatePoemPiet("q3"));
+            poem("Oooh! Die is goed!");
+            poem("*Ahum*");
+            vraag3();
+          },
+        });
       },
-      "Ja spelletjes vind je super leuk!": () => {
-        fout();
-      },
-      "Ja spelletjes vindt je te gek!": () => {
+      () => {
+        write("Maar ook de switch is erg in trek,"); // TODO: Papier look
+        write("Ja spelletjes vindt je te gek!");
         vraag3();
-      },
-    });
+      }
+    );
   };
 
   const vraag3 = () => {
-    poem("Oooh! Die is goed!");
-    poem("*Ahum*");
     poem("Verder dan...");
 
-    say(null, "Dus ga nu je cadeau maar opsporen!"); // TODO: Papier look
+    write("Dus ga nu je cadeau maar opsporen!"); // TODO: Papier look
 
     menu({
       "Hij ligt vast in de schoenentoren!": () => {
         // op papier -> hopelijk zal deze buit je bekoren!
+        updateState(a => a.updatePoemPiet("helped"));
         klaar();
       },
       "Want we hebben hem verstopt!": () => {
@@ -104,35 +116,58 @@ const pietenhuis = (queue: Queue) => {
   const fout = () => {
     // TODO: Add facial expressions
     poem("Aiiii dat rijmt niet!");
+    vpunch();
     poem("Fout fout fout!");
     poem("Het lukt ons nooit!");
+    hiddo("Oeps! Sorry...");
+    poem("Ik ga het nog even alleen proberen dan...");
   };
 
   const playGame = () => {
     hiddoPos({ visible: true });
-    hiddo("Ik heet Hiddo en ik help jou.");
-    hiddo("Ja die rijmwoorden schud ik uit mijn mouw.");
-    hiddo("Een gedicht is geen uitdaging voor mij.");
-    hiddo("Dus Piet zet je zorgen maar op zij.");
-    hiddo("Van mijn rijmen en dichten, zullen alle kinderen zwichten!");
+    onState(
+      s => s.poemPiet === "new" || s.poemPiet === "visited",
+      () => {
+        hiddo("Ik heet Hiddo en ik help jou.");
+        hiddo("Ja die rijmwoorden schud ik uit mijn mouw.");
+        hiddo("Een gedicht is geen uitdaging voor mij.");
+        hiddo("Dus Piet zet je zorgen maar op zij.");
+        hiddo("Van mijn rijmen en dichten, zullen alle kinderen zwichten!");
 
-    poem("Ok, ok, indrukwekkend...");
+        poem("Ok, ok, indrukwekkend...");
+        updateState(a => a.updatePoemPiet("q1"));
+      },
+      () => {
+        hiddo("Ja, ik help je graag, vertel me wat is de vraag?");
+      }
+    );
     poem("Ik zit hier met een gedicht...");
 
-    say(null, "Lieve Tristan,"); // TODO: Papier look
-    say(null, "Op je kamer heel alleentjes..."); // TODO: Papier look
-
-    menu({
-      "Lig je de hele dag in bed?": () => {
-        fout();
+    write("Lieve Tristan,"); // TODO: Papier look
+    write("Op je kamer heel alleentjes..."); // TODO: Papier look
+    onState(
+      s => s.poemPiet === "q1",
+      () => {
+        menu({
+          "Lig je de hele dag in bed?": () => {
+            fout();
+          },
+          "Speel je graag met stapelbare steentjes.": () => {
+            updateState(a => a.updatePoemPiet("q2"));
+            poem("Wow! Dat is mooi!");
+            poem("*Ahum*");
+            vraag2();
+          },
+          "Speel je graag met Lego,": () => {
+            fout();
+          },
+        });
       },
-      "Speel je graag met stapelbare steentjes,": () => {
+      () => {
+        write("Speel je graag met stapelbare steentjes.");
         vraag2();
-      },
-      "Speel je graag met Lego,": () => {
-        fout();
-      },
-    });
+      }
+    );
 
     poemPos({ visible: false });
     hiddoPos({ visible: false });
@@ -183,6 +218,7 @@ const pietenhuis = (queue: Queue) => {
     },
     {
       id: "pietSip",
+      skip: s => s.poemPiet === "helped",
       hoverEffect: "glow",
       image: pietSipHotspot,
       position: [436, 134],

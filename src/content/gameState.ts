@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export type GameState = {
   mansionKey: boolean;
   mansionAccess: boolean;
-  poemPiet: "new" | "visited" | "helped";
+  poemPiet: "new" | "visited" | "q1" | "q2" | "q3" | "helped";
 };
 
 const initialState: GameState = {

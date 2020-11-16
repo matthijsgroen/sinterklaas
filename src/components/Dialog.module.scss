@@ -1,17 +1,33 @@
 @import "../style/variables.scss";
 
-.dialog {
+.base {
   position: relative;
   margin: vh(2) vw(2);
   width: vw(88);
   height: vh(7);
   min-height: vh(14);
   background-size: 100% 100%;
+}
+
+.dialog {
+  @extend .base;
 
   background-color: rgba(#222, 0.8);
   border: 2px solid #666;
 
   color: #ddd;
+  font-size: 175%;
+  padding: vh(3) vw(4) 0 vw(4);
+}
+
+.paper {
+  @extend .base;
+
+  background-color: rgb(245, 230, 164);
+  border: 8px solid #7a624a;
+  border-radius: 20px;
+
+  color: #010101;
   font-size: 175%;
   padding: vh(3) vw(4) 0 vw(4);
 }

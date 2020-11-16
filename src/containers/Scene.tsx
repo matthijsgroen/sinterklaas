@@ -71,8 +71,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
       {dialog.visible && (
         <Dialog
           name={dialog.name}
-          paddingLeft={dialog.settings.paddingLeft}
-          paddingRight={dialog.settings.paddingRight}
+          {...dialog.settings}
           text={dialog.contents || ""}
         />
       )}
