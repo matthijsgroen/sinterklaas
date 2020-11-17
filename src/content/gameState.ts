@@ -12,17 +12,17 @@ const initialState: GameState = {
   poemPiet: "new",
 };
 
-const devState: GameState = {
-  mansionKey: true,
-  mansionAccess: true,
-  poemPiet: "new",
-};
+// const devState: GameState = {
+//   mansionKey: true,
+//   mansionAccess: true,
+//   poemPiet: "new",
+// };
 
-export const startScript = "poemroom";
+export const startScript = "intro";
 
 export default createSlice({
   name: "game",
-  initialState: devState,
+  initialState, //: devState,
   reducers: {
     getKey: state => {
       state.mansionKey = true;

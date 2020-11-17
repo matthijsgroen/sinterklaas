@@ -20,7 +20,7 @@ function createRemotePlayWindow() {
   const result = Object.values(nets).reduce(
     (acc, addresses) =>
       acc.concat(
-        addresses.filter((addr) => addr.family === "IPv4" && !addr.internal)
+        addresses.filter(addr => addr.family === "IPv4" && !addr.internal)
       ),
     []
   );
