@@ -25,12 +25,16 @@
         width: 360px;
         margin: 1rem 0;
       }
+      #qr {
+        margin: 1em;
+        width: 680px;
+      }
     </style>
     <title>Remote play</title>
   </head>
   <body>
     <div class="sideways">
-      <canvas id="qr"></canvas>
+      <div id="qr"></div>
       <div class="explain">
         <p>Scan the QR code on your mobile phone or tablet when using the same
           network to play the game on your mobile device.
@@ -40,18 +44,23 @@
       </div>
     </div>
 
-    <script src="./qrious.min.js"></script>
+    <script src="./qrcode.min.js"></script>
     <script>
       (function() {
         const el = document.querySelector("#root");
         const ip = document.location.search.slice("?address=".length);
         const address = `http://${ip}:8080`;
-      
-        new QRious({
-          element: document.getElementById('qr'),
-          value: address,
-          size: 380
+
+        const qrcode = new QRCode({
+          width: 680,
+          height: 680,
+          content: address,
+          container: "svg-viewbox", //Responsive use
+          join: true //Crisp rendering and 4-5x reduced file size
         });
+        const svg = qrcode.svg();
+        document.getElementById("qr").innerHTML = svg;
+      
         const inp = document.querySelector("input");
         inp.value = address
       })();
