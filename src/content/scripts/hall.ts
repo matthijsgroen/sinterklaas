@@ -73,6 +73,15 @@ const pietenhuis = (queue: Queue) => {
                   body: "default",
                 });
                 piet("... Prikkelbaar", { expression: "grin" });
+              },
+              () => {
+                piet(
+                  "Rijmpiet heb je al geholpen, die is weer helemaal blij...",
+                  {
+                    expression: "happy",
+                    body: "think",
+                  }
+                );
               }
             );
 

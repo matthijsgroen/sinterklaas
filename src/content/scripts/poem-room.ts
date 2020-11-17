@@ -2,6 +2,7 @@ import { Queue } from "src/lib/events/types";
 import { pause } from "src/lib/scene";
 import scriptHelpers from "src/lib/script-helpers";
 import pietSipHotspot from "../assets/hotspots/poem-room-piet.png";
+import pietHappyHotspot from "../assets/hotspots/poem-room-piet2.png";
 
 const pietenhuis = (queue: Queue) => {
   const {
@@ -73,14 +74,14 @@ const pietenhuis = (queue: Queue) => {
           },
           "Ja spelletjes vindt je te gek!": () => {
             updateState(a => a.updatePoemPiet("q3"));
-            poem("Oooh! Die is goed!");
-            poem("*Ahum*");
+            poem("Oooh! Die is goed!", { expression: "happy" });
+            poem("*Ahum*", { expression: "small-smile" });
             vraag3();
           },
         });
       },
       () => {
-        write("Maar ook de switch is erg in trek,"); // TODO: Papier look
+        write("Maar ook de switch is erg in trek,");
         write("Ja spelletjes vindt je te gek!");
         vraag3();
       }
@@ -90,7 +91,7 @@ const pietenhuis = (queue: Queue) => {
   const vraag3 = () => {
     poem("Verder dan...");
 
-    write("Dus ga nu je cadeau maar opsporen!"); // TODO: Papier look
+    write("Dus ga nu je cadeau maar opsporen!");
 
     menu({
       "Hij ligt vast in de schoenentoren!": () => {
@@ -108,12 +109,13 @@ const pietenhuis = (queue: Queue) => {
   };
 
   const klaar = () => {
-    poem("Fantastisch! Wat een goed gedicht!");
-    poem("Die ga ik meteen op dit pakje plakken!");
-    // TODO: Add state
+    poem("Fantastisch! Wat een goed gedicht!", { expression: "happy" });
+    poem("Die ga ik meteen op dit pakje plakken!", { expression: "happy" });
+    hiddo("Woohoo! Yes!", { body: "fists", expression: "very-enthusiastic" });
   };
 
   const fout = () => {
+    hiddoDoll({ expression: "mouth-closed" });
     poem("Aiiii dat rijmt niet!", { expression: "annoyed" });
     vpunch();
     poem("Fout fout fout!", { expression: "shout" });
@@ -134,7 +136,7 @@ const pietenhuis = (queue: Queue) => {
         hiddo("Een gedicht is geen uitdaging voor mij.", {
           expression: "happy",
         });
-        hiddo("Dus Piet zet je zorgen maar op zij.", {
+        hiddo("Dus Piet zet je zorgen maar opzij.", {
           expression: "enthusiastic",
         });
         hiddo("Van mijn rijmen en dichten, zullen alle kinderen zwichten!", {
@@ -146,7 +148,9 @@ const pietenhuis = (queue: Queue) => {
         updateState(a => a.updatePoemPiet("q1"));
       },
       () => {
-        hiddo("Ja, ik help je graag, vertel me wat is de vraag?");
+        hiddo("Ja, ik help je graag, vertel me wat is de vraag?", {
+          expression: "enthusiastic",
+        });
       }
     );
     poem("Ik zit hier met een gedicht...", { expression: "grin" });
@@ -163,6 +167,7 @@ const pietenhuis = (queue: Queue) => {
           "Speel je graag met stapelbare steentjes.": () => {
             updateState(a => a.updatePoemPiet("q2"));
             poem("Wow! Dat is mooi!", { expression: "happy" });
+            hiddoDoll({ expression: "mouth-closed" });
             poem("*Ahum*", { expression: "small-smile" });
             vraag2();
           },
@@ -222,6 +227,28 @@ const pietenhuis = (queue: Queue) => {
       onClick: () => {
         fadeOut();
         jump("hall");
+      },
+    },
+    {
+      id: "pietHappy",
+      skip: s => s.poemPiet !== "helped",
+      hoverEffect: "glow",
+      image: pietHappyHotspot,
+      position: [436, 134],
+      onClick: ({ hide, show }) => {
+        hide();
+        poem("Nog van harte bedankt voor al je begrip!", {
+          expression: "happy",
+        });
+        poem("Dankzij jou ben ik nu uit mijn dip!", {
+          expression: "small-smile",
+        });
+        poem("Ik ga nu weer snel verder met mijn werk.", {
+          expression: "grin",
+        });
+        poem("Want mijn inspiratie is weer sterk!", { expression: "happy" });
+        poemPos({ visible: false });
+        show();
       },
     },
     {

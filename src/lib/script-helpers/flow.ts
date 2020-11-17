@@ -76,20 +76,18 @@ const flowHelpers = (queue: Queue) => {
           });
           return;
         }
-
-        // Check which buttons to render.
-        const renderButtons = buttons.filter(
-          b => !b.skip || !b.skip(getState().gameState)
-        );
-        renderButtons.forEach(b => {
+        buttons.forEach(b => {
+          const visible = !b.skip || !b.skip(getState().gameState);
           const buttonProps = {
             ...b,
+            visible,
           } as Partial<Button> & ButtonProps;
           delete buttonProps["onClick"];
           delete buttonProps["skip"];
 
           storeDispatch(buttonsState.actions.add(buttonProps));
         });
+
         let prevSelected = getState().buttons.selected;
 
         const unsub = subscribe(() => {
@@ -115,6 +113,16 @@ const flowHelpers = (queue: Queue) => {
                     },
                   });
                   dispatch(buttonsState.actions.deselect());
+                  callback(({ getState, dispatch: storeDispatch }) => {
+                    buttons.forEach(b => {
+                      const visible = !b.skip || !b.skip(getState().gameState);
+                      storeDispatch(
+                        visible
+                          ? buttonsState.actions.show(b.id)
+                          : buttonsState.actions.hide(b.id)
+                      );
+                    });
+                  });
                   commit();
                 });
               }
