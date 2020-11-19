@@ -3,7 +3,13 @@ import styles from "./Background.module.scss";
 import className from "src/lib/className";
 
 export interface BackgroundProps {
-  image?: "black" | "livingRoom" | "pietenhuis" | "hall" | "poemroom";
+  image?:
+    | "black"
+    | "livingRoom"
+    | "pietenhuis"
+    | "hall"
+    | "poemroom"
+    | "sintroom";
   kids?: boolean;
   tv?: boolean;
   blur?: boolean;
@@ -20,6 +26,7 @@ const Background: React.FC<BackgroundProps> = ({ image, kids, tv, blur }) => (
         [styles.pietenhuis]: image === "pietenhuis",
         [styles.hall]: image === "hall",
         [styles.poemroom]: image === "poemroom",
+        [styles.sintroom]: image === "sintroom",
         [styles.blur]: !!blur,
         [styles.background]: true,
       })}

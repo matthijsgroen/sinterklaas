@@ -4,7 +4,7 @@ import scriptHelpers from "src/lib/script-helpers";
 import pietSipHotspot from "../assets/hotspots/poem-room-piet.png";
 import pietHappyHotspot from "../assets/hotspots/poem-room-piet2.png";
 
-const pietenhuis = (queue: Queue) => {
+const poemroom = (queue: Queue) => {
   const {
     fadeIn,
     fadeOut,
@@ -268,4 +268,4 @@ const pietenhuis = (queue: Queue) => {
   hold();
 };
 
-export default pietenhuis;
+export default poemroom;
