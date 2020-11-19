@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import Sint from "./Sint";
 import Piet from "./Piet";
 import Hiddo from "./Hiddo";
 import Jinte from "./Jinte";
@@ -17,6 +18,8 @@ export const Doll = <T extends keyof DollSettings>({
   switch (doll) {
     case "piet":
       return <Piet {...(settings as DollSettings["piet"])} />;
+    case "sint":
+      return <Sint {...(settings as DollSettings["sint"])} />;
     case "hiddo":
       return <Hiddo {...(settings as DollSettings["hiddo"])} />;
     case "jinte":

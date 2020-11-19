@@ -1,0 +1,22 @@
+@mixin img($base) {
+  background-image: url("../assets/doll_Sint/" + $base + ".png");
+}
+
+.sint {
+  width: 636px;
+  height: 800px;
+  position: relative;
+}
+.sint * {
+  width: 636px;
+  height: 800px;
+  position: absolute;
+}
+
+.body {
+  @include img("body");
+}
+
+.exp-happy {
+  @include img("01");
+}
