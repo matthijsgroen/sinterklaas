@@ -1,5 +1,5 @@
 import { audioQ, handleAudio, preloadAudio } from "./events/audio";
-import { Action, Store, createStore } from "redux";
+import { Action, Store, createStore, AnyAction } from "redux";
 import {
   AudioItem,
   CallbackItem,
@@ -12,11 +12,12 @@ import {
 } from "./events/types";
 import characters from "src/state/characters";
 import buttons from "src/state/buttons";
-import screen from "src/state/screen";
+import loader, { DollQueueItem } from "src/state/loader";
 import eventQueue from "./events/queue";
 import { handlePause, pauseQ } from "./events/pause";
 import { handleCallback, callbackQ } from "./events/callback";
 import { handleHold, holdQ } from "./events/hold";
+import { DollSettings } from "src/content/dolls/types";
 
 const playQueue = async (
   store: Store,
@@ -78,12 +79,53 @@ const flattenQueue = (queueItems: QueueItem[], queue: Queue): QueueItem[] =>
     return acc.concat(item);
   }, []);
 
-const preloadAssets = async (script: Script) => {
+const isAddCharacterAction = (
+  action: AnyAction | ReturnType<typeof characters.actions.add>
+): action is ReturnType<typeof characters.actions.add> =>
+  action.type === characters.actions.add.type;
+
+const isDollUpdateAction = (
+  action: AnyAction | ReturnType<typeof characters.actions.dollUpdate>
+): action is ReturnType<typeof characters.actions.dollUpdate> =>
+  action.type === characters.actions.dollUpdate.type;
+
+const preloadAssets = async (script: Script, store: Store) => {
   const queue = eventQueue();
   script(queue);
 
   const items = ([] as QueueItem[]).concat(queue.getQueue());
   const queueItems = flattenQueue(items, queue);
+  const hasItem = (item: DollQueueItem, list: DollQueueItem[]): boolean =>
+    !!list.find(
+      listItem =>
+        item.doll === listItem.doll &&
+        JSON.stringify(item.settings) === JSON.stringify(listItem.settings)
+    );
+
+  const dollMapping: { [key: string]: keyof DollSettings } = {};
+
+  const dollSettings = queueItems.reduce((result, queueItem) => {
+    if (queueItem.type === "DISPATCH") {
+      const action = (queueItem as DispatchItem).action;
+      if (isAddCharacterAction(action)) {
+        dollMapping[action.payload.id] = action.payload.doll;
+        const newItem: DollQueueItem = {
+          doll: action.payload.doll,
+          settings: action.payload.settings.dollSettings,
+        };
+        return hasItem(newItem, result) ? result : result.concat(newItem);
+      }
+      if (isDollUpdateAction(action)) {
+        const newItem: DollQueueItem = {
+          doll: dollMapping[action.payload.id],
+          settings: action.payload.update,
+        };
+        return hasItem(newItem, result) ? result : result.concat(newItem);
+      }
+    }
+    return result;
+  }, [] as DollQueueItem[]);
+  store.dispatch(loader.actions.preloadDolls(dollSettings));
 
   const audioItems = queueItems.reduce((loadingQueue, queueItem) => {
     if (queueItem.type === "AUDIO") {
@@ -100,9 +142,9 @@ export const playEvent = async (
   scripts: Scripts,
   active: string
 ): Promise<void> => {
-  store.dispatch(screen.actions.loading());
-  await preloadAssets(scripts[active]);
-  store.dispatch(screen.actions.loadingDone());
+  store.dispatch(loader.actions.loading());
+  await preloadAssets(scripts[active], store);
+  store.dispatch(loader.actions.loadingDone());
 
   const queue = eventQueue();
   scripts[active](queue);

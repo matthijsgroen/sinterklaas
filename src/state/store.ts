@@ -4,6 +4,7 @@ import menu from "./menu";
 import screen from "./screen";
 import background from "./background";
 import dialog from "./dialog";
+import loader from "./loader";
 import gameState from "../content/gameState";
 import buttons from "./buttons";
 import { configureStore } from "@reduxjs/toolkit";
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   dialog: dialog.reducer,
   gameState: gameState.reducer,
   buttons: buttons.reducer,
+  loader: loader.reducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;

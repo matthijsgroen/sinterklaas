@@ -22,6 +22,7 @@ interface ConnectedSceneProps {
   characters: CharacterType<keyof DollSettings>[];
   background: RootState["background"];
   screen: RootState["screen"];
+  loader: RootState["loader"];
   buttons: Button[];
   stopPunch: typeof screenState.actions.stopPunch;
   pressButton: typeof buttons.actions.select;
@@ -31,6 +32,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
   background,
   dialog,
   characters,
+  loader,
   screen,
   buttons,
   stopPunch,
@@ -88,7 +90,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
           />
         ))}
       <Menu />
-      {screen.loading && <Loading />}
+      {loader.isLoading && <Loading />}
     </Scene>
   );
 };
@@ -97,9 +99,11 @@ const mapStateToProps = (state: RootState) => ({
   characters: Object.values(state.characters),
   buttons: Object.values(state.buttons.buttons),
   screen: state.screen,
+  loader: state.loader,
   background: state.background,
   dialog: state.dialog,
 });
+
 const mapDispatchToProps = {
   stopPunch: screenState.actions.stopPunch,
   pressButton: buttons.actions.select,
