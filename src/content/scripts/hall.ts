@@ -85,6 +85,26 @@ const pietenhuis = (queue: Queue) => {
               }
             );
 
+            onState(
+              state => state.sint !== "helped",
+              () => {
+                piet("Sinterklaas heeft wat problemen met zijn boek.", {
+                  expression: "hmm",
+                  body: "think",
+                });
+                piet("Ik denk dat je hem wel goed kan helpen!", {
+                  expression: "happy",
+                  body: "pointUp",
+                });
+              },
+              () => {
+                piet("Sinterklaas was erg blij met alle hulp die je gaf.", {
+                  expression: "happy",
+                  body: "think",
+                });
+              }
+            );
+
             pietPos({ visible: false });
             hiddoPos({ visible: false });
           },

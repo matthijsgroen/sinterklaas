@@ -4,18 +4,21 @@ export type GameState = {
   mansionKey: boolean;
   mansionAccess: boolean;
   poemPiet: "new" | "visited" | "q1" | "q2" | "q3" | "helped";
+  sint: "new" | "visited" | "helped";
 };
 
 const initialState: GameState = {
   mansionKey: false,
   mansionAccess: false,
   poemPiet: "new",
+  sint: "new",
 };
 
 // const devState: GameState = {
 //   mansionKey: true,
 //   mansionAccess: true,
 //   poemPiet: "new",
+//   sint: "new",
 // };
 
 export const startScript = "intro";

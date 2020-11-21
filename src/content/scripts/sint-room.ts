@@ -1,5 +1,7 @@
 import { Queue } from "src/lib/events/types";
 import scriptHelpers from "src/lib/script-helpers";
+import sintHotspot from "../assets/hotspots/sint-room-sint.png";
+import bookHotspot from "../assets/hotspots/sint-room-book.png";
 
 const sintroom = (queue: Queue) => {
   const {
@@ -22,6 +24,25 @@ const sintroom = (queue: Queue) => {
       onClick: () => {
         fadeOut();
         jump("hall");
+      },
+    },
+    {
+      id: "book",
+      image: bookHotspot,
+      position: [610, 360],
+      onClick: ({ hide, show }) => {
+        hide();
+        show();
+      },
+    },
+    {
+      id: "sint",
+      hoverEffect: "glow",
+      image: sintHotspot,
+      position: [783, 149],
+      onClick: ({ hide, show }) => {
+        hide();
+        show();
       },
     },
   ]);
