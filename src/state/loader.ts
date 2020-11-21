@@ -10,18 +10,27 @@ export type DollQueueItem<
 
 type LoadingState = {
   isLoading: boolean;
+  imageLoading: boolean;
   dollPreloading: DollQueueItem[];
 };
 
 export default createSlice({
   name: "loading",
-  initialState: { isLoading: false, dollPreloading: [] } as LoadingState,
+  initialState: {
+    isLoading: false,
+    imageLoading: false,
+    dollPreloading: [],
+  } as LoadingState,
   reducers: {
     loading: state => {
       state.isLoading = true;
+      state.imageLoading = true;
     },
     loadingDone: state => {
       state.isLoading = false;
+    },
+    imageLoadingDone: state => {
+      state.imageLoading = false;
     },
     preloadDolls: (state, action: PayloadAction<DollQueueItem[]>) => {
       state.dollPreloading = action.payload;

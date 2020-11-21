@@ -18,6 +18,7 @@ import { handlePause, pauseQ } from "./events/pause";
 import { handleCallback, callbackQ } from "./events/callback";
 import { handleHold, holdQ } from "./events/hold";
 import { DollSettings } from "src/content/dolls/types";
+import { RootState } from "src/state/store";
 
 const playQueue = async (
   store: Store,
@@ -126,6 +127,18 @@ const preloadAssets = async (script: Script, store: Store) => {
     return result;
   }, [] as DollQueueItem[]);
   store.dispatch(loader.actions.preloadDolls(dollSettings));
+  let resolver: () => void;
+
+  const loadingPromise = new Promise<void>(res => {
+    resolver = res;
+  });
+
+  store.subscribe(() => {
+    const s: RootState = store.getState();
+    if (!s.loader.imageLoading) {
+      resolver();
+    }
+  });
 
   const audioItems = queueItems.reduce((loadingQueue, queueItem) => {
     if (queueItem.type === "AUDIO") {
@@ -134,7 +147,7 @@ const preloadAssets = async (script: Script, store: Store) => {
     return loadingQueue;
   }, [] as Promise<void>[]);
 
-  await Promise.all(audioItems);
+  await Promise.all([...audioItems, loadingPromise]);
 };
 
 export const playEvent = async (

@@ -14,15 +14,14 @@ import { Character as CharacterType } from "src/state/characters";
 import { Doll } from "src/content/dolls";
 import { ScreenButtons, Button } from "src/components/generic/ScreenButtons";
 import buttons from "src/state/buttons";
-import Loading from "src/components/Loading";
 import FrontLayer from "src/components/Frontlayer";
+import Loader from "./Loader";
 
 interface ConnectedSceneProps {
   dialog: DialogState;
   characters: CharacterType<keyof DollSettings>[];
   background: RootState["background"];
   screen: RootState["screen"];
-  loader: RootState["loader"];
   buttons: Button[];
   stopPunch: typeof screenState.actions.stopPunch;
   pressButton: typeof buttons.actions.select;
@@ -32,7 +31,6 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
   background,
   dialog,
   characters,
-  loader,
   screen,
   buttons,
   stopPunch,
@@ -90,7 +88,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
           />
         ))}
       <Menu />
-      {loader.isLoading && <Loading />}
+      <Loader />
     </Scene>
   );
 };
@@ -99,7 +97,6 @@ const mapStateToProps = (state: RootState) => ({
   characters: Object.values(state.characters),
   buttons: Object.values(state.buttons.buttons),
   screen: state.screen,
-  loader: state.loader,
   background: state.background,
   dialog: state.dialog,
 });
