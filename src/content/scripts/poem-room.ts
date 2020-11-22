@@ -134,7 +134,7 @@ const poemroom = (queue: Queue) => {
     onState(
       s => s.poemPiet === "new" || s.poemPiet === "visited",
       () => {
-        playMusic(rapTrack);
+        playMusic(rapTrack, { volume: 0.6 });
         hiddo("Ik heet Hiddo en ik help jou.");
         hiddo("Ja die rijmwoorden schud ik uit mijn mouw.", {
           expression: "enthusiastic",
@@ -245,7 +245,7 @@ const poemroom = (queue: Queue) => {
       position: [436, 134],
       onClick: ({ hide, show }) => {
         hide();
-        playMusic(rapTrack);
+        playMusic(rapTrack, { volume: 0.6 });
         poem("Nog van harte bedankt voor al je begrip!", {
           expression: "happy",
         });

@@ -4,6 +4,8 @@ import scriptHelpers from "src/lib/script-helpers";
 import hoofdPiet from "src/content/assets/hotspots/hall-piet.png";
 import carpet from "src/content/assets/hotspots/hall-carpet.png";
 
+import backgroundTrack from "src/content/assets/sounds/background.mp3";
+
 const pietenhuis = (queue: Queue) => {
   const {
     fadeIn,
@@ -16,6 +18,8 @@ const pietenhuis = (queue: Queue) => {
     hold,
     buttons,
     menu,
+    playMusic,
+    stopMusic,
   } = scriptHelpers(queue);
   const { say: hiddo, pos: hiddoPos } = manageCharacter(
     "hiddo",
@@ -24,6 +28,7 @@ const pietenhuis = (queue: Queue) => {
     {
       x: 512,
       y: 130,
+      visible: false,
       dollSettings: {},
     }
   );
@@ -42,6 +47,8 @@ const pietenhuis = (queue: Queue) => {
 
   updateBackground({ image: "hall", frontLayer: undefined, blur: false });
   fadeIn();
+  playMusic(backgroundTrack, { volume: 0.1 });
+
   buttons([
     {
       id: "hoofdPiet",
@@ -131,6 +138,7 @@ const pietenhuis = (queue: Queue) => {
       image: carpet,
       position: [230, 640],
       onClick: () => {
+        stopMusic();
         fadeOut();
         jump("pietenhuis");
       },
@@ -140,6 +148,7 @@ const pietenhuis = (queue: Queue) => {
       hoverEffect: "glow",
       coordinates: [730, 0, 919, 0, 890, 95, 730, 191],
       onClick: () => {
+        stopMusic();
         fadeOut();
         jump("poemroom");
       },
@@ -149,6 +158,7 @@ const pietenhuis = (queue: Queue) => {
       hoverEffect: "glow",
       coordinates: [370, 0, 550, 0, 550, 195, 400, 100],
       onClick: () => {
+        stopMusic();
         fadeOut();
         jump("sintroom");
       },

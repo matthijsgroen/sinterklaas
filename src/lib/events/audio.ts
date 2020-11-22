@@ -44,9 +44,11 @@ export const handleAudio = async (queueItem: AudioItem): Promise<void> => {
   }
   if (action === "stop" && channel === "music") {
     const { fadeOut = false } = options;
-    if (fadeOut !== false) {
+    if (fadeOut === true) {
       audio.fadeMusicVolume(0, 3000);
-      setTimeout(() => audio.stopMusic(), 1000);
+      setTimeout(() => {
+        audio.stopMusic();
+      }, 1000);
     } else {
       audio.stopMusic();
     }

@@ -87,7 +87,7 @@ const pietenhuis = (queue: Queue) => {
         onState(
           s => s.mansionAccess,
           () => {
-            stopMusic({ fadeOut: true });
+            stopMusic();
             fadeOut();
             jump("hall");
           }
@@ -100,7 +100,7 @@ const pietenhuis = (queue: Queue) => {
             piet("Welkom!", {
               expression: "happy",
             });
-            stopMusic({ fadeOut: true });
+            stopMusic();
             fadeOut();
             jump("hall");
           },
