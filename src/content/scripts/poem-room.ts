@@ -171,7 +171,7 @@ const poemroom = (queue: Queue) => {
             poem("*Ahum*", { expression: "small-smile" });
             vraag2();
           },
-          "Speel je graag met Lego,": () => {
+          "Speel je graag met Lego.": () => {
             fout();
           },
         });

@@ -2,8 +2,8 @@ import { Queue } from "src/lib/events/types";
 import scriptHelpers from "src/lib/script-helpers";
 import characterHelpers from "./helpers/characters";
 
-import carStoppingSound from "../assets/sounds/352744__rosebugg__car-stopping.wav";
-import carDoorClose from "../assets/sounds/208695__monotraum__car-door-close.wav";
+import carStoppingSound from "../assets/sounds/352744__rosebugg__car-stopping.mp3";
+import carDoorClose from "../assets/sounds/208695__monotraum__car-door-close.mp3";
 
 const intro = (queue: Queue) => {
   const {

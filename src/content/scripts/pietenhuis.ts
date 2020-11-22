@@ -5,10 +5,13 @@ import characterHelpers from "./helpers/characters";
 import doorButton from "src/content/assets/hotspots/mansion-door.png";
 import keyButton from "src/content/assets/hotspots/mansion-key.png";
 import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__door-knock.mp3";
+import birdsTrack from "src/content/assets/sounds/345852__hargissssound__spring-birds-loop-with-low-cut-new-jersey.mp3";
 
 const pietenhuis = (queue: Queue) => {
   const {
     playSound,
+    playMusic,
+    stopMusic,
     fadeOut,
     fadeIn,
     updateBackground,
@@ -36,6 +39,7 @@ const pietenhuis = (queue: Queue) => {
 
   updateBackground({ image: "pietenhuis", frontLayer: undefined, blur: false });
   fadeIn();
+  playMusic(birdsTrack, { fadeIn: true });
   onState(
     s => !s.mansionAccess,
     () => {
@@ -83,6 +87,7 @@ const pietenhuis = (queue: Queue) => {
         onState(
           s => s.mansionAccess,
           () => {
+            stopMusic({ fadeOut: true });
             fadeOut();
             jump("hall");
           }
@@ -95,6 +100,7 @@ const pietenhuis = (queue: Queue) => {
             piet("Welkom!", {
               expression: "happy",
             });
+            stopMusic({ fadeOut: true });
             fadeOut();
             jump("hall");
           },

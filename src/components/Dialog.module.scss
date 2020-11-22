@@ -1,5 +1,15 @@
 @import "../style/variables.scss";
 
+@font-face {
+  font-family: "DialogFont";
+  src: url("../content/assets/fonts/Signika-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: "WritingFont";
+  src: url("../content/assets/fonts/GloriaHallelujah-Regular.ttf");
+}
+
 .base {
   position: relative;
   margin: vh(2) vw(2);
@@ -8,6 +18,7 @@
   min-height: vh(14);
   background-size: 100% 100%;
   cursor: pointer;
+  font-family: DialogFont;
 }
 
 .dialog {
@@ -24,6 +35,8 @@
 .paper {
   @extend .base;
 
+  font-family: WritingFont;
+
   background-color: rgb(245, 230, 164);
   border: 8px solid #7a624a;
   border-radius: 20px;
@@ -35,14 +48,15 @@
 
 .name {
   position: absolute;
-  top: vh(-7);
+  top: vh(-7.5);
   left: vw(3);
   background-size: 100% 100%;
   background-color: #999;
   border: 2px solid #666;
 
   color: #333;
-  font-size: 90%;
+  font-weight: bold;
+  font-size: 100%;
   padding: vh(2) vw(3) vh(2) vw(3);
 }
 

@@ -72,7 +72,7 @@ const pietenhuis = (queue: Queue) => {
                   expression: "hmm",
                   body: "default",
                 });
-                piet("... Prikkelbaar", { expression: "grin" });
+                piet("... Prikkelbaar.", { expression: "grin" });
               },
               () => {
                 piet(
