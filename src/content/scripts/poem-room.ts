@@ -1,11 +1,16 @@
 import { Queue } from "src/lib/events/types";
 import { pause } from "src/lib/scene";
 import scriptHelpers from "src/lib/script-helpers";
+
 import pietSipHotspot from "../assets/hotspots/poem-room-piet.png";
 import pietHappyHotspot from "../assets/hotspots/poem-room-piet2.png";
 
+import rapTrack from "../assets/sounds/372069__swagmasterlord__80-s-old-school-rap-drum-loop.mp3";
+
 const poemroom = (queue: Queue) => {
   const {
+    playMusic,
+    stopMusic,
     fadeIn,
     fadeOut,
     jump,
@@ -129,6 +134,7 @@ const poemroom = (queue: Queue) => {
     onState(
       s => s.poemPiet === "new" || s.poemPiet === "visited",
       () => {
+        playMusic(rapTrack);
         hiddo("Ik heet Hiddo en ik help jou.");
         hiddo("Ja die rijmwoorden schud ik uit mijn mouw.", {
           expression: "enthusiastic",
@@ -143,6 +149,8 @@ const poemroom = (queue: Queue) => {
           expression: "very-enthusiastic",
         });
         hiddoDoll({ expression: "mouth-closed" });
+
+        stopMusic({ fadeOut: true });
 
         poem("Ok, ok, indrukwekkend...", { expression: "small-smile" });
         updateState(a => a.updatePoemPiet("q1"));
@@ -237,6 +245,7 @@ const poemroom = (queue: Queue) => {
       position: [436, 134],
       onClick: ({ hide, show }) => {
         hide();
+        playMusic(rapTrack);
         poem("Nog van harte bedankt voor al je begrip!", {
           expression: "happy",
         });
@@ -247,6 +256,7 @@ const poemroom = (queue: Queue) => {
           expression: "grin",
         });
         poem("Want mijn inspiratie is weer sterk!", { expression: "happy" });
+        stopMusic({ fadeOut: true });
         poemPos({ visible: false });
         show();
       },
