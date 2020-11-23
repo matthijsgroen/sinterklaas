@@ -24,19 +24,37 @@ export type Highlight = {
   onClick: (buttonRef: ButtonSupport) => void;
 } & HighlightProps;
 
+interface MenuOptions {
+  [key: string]:
+    | (() => void)
+    | {
+        skip?: (state: GameState) => boolean;
+        onClick: () => void;
+      };
+}
+
 const flowHelpers = (queue: Queue) => {
   const callback = callbackQ(queue);
   const dispatch = dispatchQ(queue);
 
   return {
-    menu: (options: Record<string, () => void>) => {
-      const choices = Object.keys(options);
-      dispatch(menu.actions.show(choices));
-      callback(async ({ subscribe, getState }) => {
+    menu: (options: MenuOptions) => {
+      callback(async ({ subscribe, getState, dispatch: storeDispatch }) => {
         if (isPreloading(getState)) {
-          Object.values(options).forEach(option => option());
+          Object.values(options).forEach(option =>
+            "onClick" in option ? option.onClick() : option()
+          );
           return;
         }
+        const choices = Object.entries(options)
+          .filter(
+            ([, handler]) =>
+              !("onClick" in handler
+                ? handler.skip && handler.skip(getState().gameState)
+                : false)
+          )
+          .map(([option]) => option);
+        storeDispatch(menu.actions.show(choices));
 
         const result = await new Promise<number>(resolve => {
           const unsub = subscribe(() => {
@@ -53,7 +71,8 @@ const flowHelpers = (queue: Queue) => {
           setTimeout(() => {
             const commit = queue.collectToNewQueue();
             dispatch(menu.actions.hide());
-            options[choices[result]](); // build up new queue items;
+            const handler = options[choices[result]];
+            "onClick" in handler ? handler.onClick() : handler();
             commit();
             resolve();
           });

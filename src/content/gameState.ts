@@ -4,7 +4,7 @@ export type GameState = {
   mansionKey: boolean;
   mansionAccess: boolean;
   poemPiet: "new" | "visited" | "q1" | "q2" | "q3" | "helped";
-  sint: "new" | "visited" | "helped";
+  sint: "new" | "visited" | "glasses" | "details" | "helped";
 };
 
 const initialState: GameState = {
@@ -35,6 +35,9 @@ export default createSlice({
     },
     updatePoemPiet: (state, action: PayloadAction<GameState["poemPiet"]>) => {
       state.poemPiet = action.payload;
+    },
+    updateSint: (state, action: PayloadAction<GameState["sint"]>) => {
+      state.sint = action.payload;
     },
   },
 });

@@ -204,6 +204,23 @@ const poemroom = (queue: Queue) => {
         poem("Ok...", { expression: "sip" });
         poemPos({ visible: false });
       },
+      "Zou ik jouw bril mogen lenen?": {
+        skip: state => state.sint !== "glasses",
+        onClick: () => {
+          poemPos({ visible: true });
+          hiddoPos({ visible: true });
+          // TODO: Expressions
+          poem("Waarom? deze sterkte is precies voor mij.");
+          hiddo("Ook als we Sinterklaas ermee zouden helpen?");
+          poem("Ik zou de Sint graag willen helpen!");
+          poem("Maar ik heb een hele andere sterkte dan hij...");
+          poem("Misschien kun je beneden bij de pakjes een goede bril vinden?");
+          hiddo("Bedankt voor de tip!");
+
+          poemPos({ visible: false });
+          hiddoPos({ visible: false });
+        },
+      },
     });
   };
 
