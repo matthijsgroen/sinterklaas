@@ -16,18 +16,46 @@ const sintroom = (queue: Queue) => {
     hold,
     stopMusic,
     playMusic,
+    onState,
+    updateState,
+    manageCharacter,
   } = scriptHelpers(queue);
+
+  const { say: sint, pos: sintPos } = manageCharacter(
+    "sint",
+    "sint",
+    "Sinterklaas",
+    {
+      x: 600,
+      y: 30,
+      visible: false,
+      dollSettings: {},
+    }
+  );
 
   updateBackground({ image: "sintroom", frontLayer: undefined, blur: false });
   fadeIn();
   playMusic(backgroundTrack, { volume: 0.1 });
+  onState(
+    state => state.sint === "new",
+    () => {
+      sintPos({ visible: true });
+      sint("Hey, Hiddo, wat gezellig dat je er bent!");
+
+      sintPos({ visible: false });
+      updateState(actions => actions.updateSint("visited"));
+    }
+  );
   buttons([
     {
       id: "hall",
       hoverEffect: "glow",
       coordinates: [78, -10, 263, 100, 260, 450, 70, 630],
       color: "black",
-      onClick: () => {
+      onClick: ({ hide }) => {
+        hide("sint");
+        sintPos({ visible: true });
+        sint("Dag hoor!");
         stopMusic();
         fadeOut();
         jump("hall");

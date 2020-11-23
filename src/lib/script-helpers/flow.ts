@@ -10,8 +10,8 @@ import buttonsState from "src/state/buttons";
 
 type ButtonSupport = {
   remove: () => void;
-  hide: () => void;
-  show: () => void;
+  hide: (id?: string) => void;
+  show: (id?: string) => void;
 };
 
 export type Button = {
@@ -105,11 +105,11 @@ const flowHelpers = (queue: Queue) => {
                     remove: () => {
                       dispatch(remove(selectedButton.id));
                     },
-                    hide: () => {
-                      dispatch(hide(selectedButton.id));
+                    hide: (id?: string) => {
+                      dispatch(hide(id || selectedButton.id));
                     },
-                    show: () => {
-                      dispatch(show(selectedButton.id));
+                    show: (id?: string) => {
+                      dispatch(show(id || selectedButton.id));
                     },
                   });
                   dispatch(buttonsState.actions.deselect());

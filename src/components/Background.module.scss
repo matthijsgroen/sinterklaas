@@ -20,6 +20,9 @@
 .livingRoom {
   @include img("living-room.jpg");
 }
+.living {
+  @include img("living.jpg");
+}
 .livingRoomKids {
   @include img("living-room-kids.png");
 }

@@ -14,6 +14,7 @@ function createWindow() {
 }
 
 function createRemotePlayWindow() {
+  // https://gist.github.com/maximilian-lindsey/a446a7ee87838a62099d
   const { networkInterfaces } = require("os");
 
   const nets = networkInterfaces();

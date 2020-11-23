@@ -163,6 +163,20 @@ const pietenhuis = (queue: Queue) => {
         jump("sintroom");
       },
     },
+    {
+      id: "right",
+      hoverEffect: "glow",
+      color: "black",
+      // prettier-ignore
+      coordinates: [
+        1195, 195, 1195, 476, 1185, 477,
+        1180, 539, 1020, 475, 1018, 245,
+      ],
+      onClick: () => {
+        fadeOut();
+        jump("living");
+      },
+    },
   ]);
 
   onState(

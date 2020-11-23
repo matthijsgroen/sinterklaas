@@ -9,7 +9,8 @@ export interface BackgroundProps {
     | "pietenhuis"
     | "hall"
     | "poemroom"
-    | "sintroom";
+    | "sintroom"
+    | "living";
   kids?: boolean;
   tv?: boolean;
   blur?: boolean;
@@ -27,6 +28,7 @@ const Background: React.FC<BackgroundProps> = ({ image, kids, tv, blur }) => (
         [styles.hall]: image === "hall",
         [styles.poemroom]: image === "poemroom",
         [styles.sintroom]: image === "sintroom",
+        [styles.living]: image === "living",
         [styles.blur]: !!blur,
         [styles.background]: true,
       })}
