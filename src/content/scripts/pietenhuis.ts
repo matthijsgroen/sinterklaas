@@ -2,7 +2,6 @@ import { Queue } from "src/lib/events/types";
 import scriptHelpers from "src/lib/script-helpers";
 import characterHelpers from "./helpers/characters";
 
-import doorButton from "src/content/assets/hotspots/mansion-door.png";
 import keyButton from "src/content/assets/hotspots/mansion-key.png";
 import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__door-knock.mp3";
 import birdsTrack from "src/content/assets/sounds/345852__hargissssound__spring-birds-loop-with-low-cut-new-jersey.mp3";
@@ -81,8 +80,7 @@ const pietenhuis = (queue: Queue) => {
     {
       id: "door",
       hoverEffect: "glow",
-      image: doorButton,
-      position: [679, 493],
+      coordinates: [680, 495, 735, 495, 737, 596, 680, 596],
       onClick() {
         onState(
           s => s.mansionAccess,
