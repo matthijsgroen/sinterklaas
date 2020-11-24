@@ -37,6 +37,18 @@
   @include img("body2-think");
 }
 
+.body3 {
+  @include img("body3");
+}
+
+.pointUp3 {
+  @include img("body3-point-up");
+}
+
+.think3 {
+  @include img("body3-think");
+}
+
 .glasses {
   @include img("glasses");
 }
