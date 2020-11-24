@@ -35,6 +35,12 @@
 .news {
   @include img("news.png");
 }
+.drawing1 {
+  @include img("drawing1.jpg");
+}
+.drawing2 {
+  @include img("drawing2.jpg");
+}
 .tv {
   @include img("living-room-tv.png");
 }

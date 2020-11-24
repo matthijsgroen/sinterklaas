@@ -14,7 +14,7 @@ export interface BackgroundProps {
   kids?: boolean;
   tv?: boolean;
   blur?: boolean;
-  frontLayer?: "news";
+  frontLayer?: "news" | "drawing1" | "drawing2";
 }
 
 const Background: React.FC<BackgroundProps> = ({ image, kids, tv, blur }) => (

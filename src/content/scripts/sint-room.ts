@@ -3,6 +3,8 @@ import scriptHelpers from "src/lib/script-helpers";
 
 import sintHotspot from "../assets/hotspots/sint-room-sint.png";
 import bookHotspot from "../assets/hotspots/sint-room-book.png";
+import drawing1Hotspot from "../assets/hotspots/sint-room-drawing1.png";
+import drawing2Hotspot from "../assets/hotspots/sint-room-drawing2.png";
 
 import backgroundTrack from "src/content/assets/sounds/background-sint.mp3";
 
@@ -14,6 +16,7 @@ const sintroom = (queue: Queue) => {
     updateBackground,
     buttons,
     hold,
+    pause,
     stopMusic,
     playMusic,
     onState,
@@ -81,6 +84,45 @@ const sintroom = (queue: Queue) => {
       onClick: ({ hide, show }) => {
         hide();
         show();
+      },
+    },
+    {
+      id: "drawing1",
+      hoverEffect: "glow",
+      image: drawing1Hotspot,
+      position: [300, 70],
+      onClick: () => {
+        fadeOut();
+        updateBackground({ image: "sintroom", frontLayer: "drawing1" });
+        pause(100);
+        fadeIn();
+        sint("Och ik heb zulke prachtige tekeningen gehad!");
+        sint("Deze zijn gemaakt door Jinte en Catootje.");
+        pause();
+        fadeOut();
+        pause(100);
+        updateBackground({ image: "sintroom", frontLayer: undefined });
+        fadeIn();
+      },
+    },
+    {
+      id: "drawing2",
+      hoverEffect: "glow",
+      image: drawing2Hotspot,
+      position: [760, 90],
+      onClick: () => {
+        fadeOut();
+        updateBackground({ image: "sintroom", frontLayer: "drawing2" });
+        pause(100);
+        fadeIn();
+        // show image
+        sint("Och ik heb zulke prachtige tekeningen gehad!");
+        sint("Deze zijn gemaakt door Catootje en Jinte.");
+        pause();
+        fadeOut();
+        pause(100);
+        updateBackground({ image: "sintroom", frontLayer: undefined });
+        fadeIn();
       },
     },
     {
