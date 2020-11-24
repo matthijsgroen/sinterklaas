@@ -96,7 +96,7 @@ const sintroom = (queue: Queue) => {
         updateBackground({ image: "sintroom", frontLayer: "drawing1" });
         pause(100);
         fadeIn();
-        sint("Och ik heb zulke prachtige tekeningen gehad!");
+        sint("Och, ik heb zulke prachtige tekeningen gehad!");
         sint("Deze zijn gemaakt door Jinte en Catootje.");
         pause();
         fadeOut();
@@ -115,8 +115,7 @@ const sintroom = (queue: Queue) => {
         updateBackground({ image: "sintroom", frontLayer: "drawing2" });
         pause(100);
         fadeIn();
-        // show image
-        sint("Och ik heb zulke prachtige tekeningen gehad!");
+        sint("Ik vindt deze kunstwerken echt prachtig!");
         sint("Deze zijn gemaakt door Catootje en Jinte.");
         pause();
         fadeOut();
