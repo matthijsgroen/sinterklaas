@@ -21,6 +21,7 @@ export type Highlight = {
 
 interface ScreenButtonProps {
   buttons: (Button | Highlight)[];
+  buttonActive: boolean;
   onClick: (buttonId: string) => void;
 }
 
@@ -36,6 +37,7 @@ const coordinatesToPolygon = (coords: number[]) => {
 
 export const ScreenButtons: React.FC<ScreenButtonProps> = ({
   buttons,
+  buttonActive,
   onClick,
 }) => {
   const renderButton = ({
@@ -50,7 +52,7 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
       onClick={() => onClick(id)}
       className={className({
         [styles.image]: true,
-        [styles.glow]: hoverEffect === "glow",
+        [styles.glow]: hoverEffect === "glow" && !buttonActive,
       })}
       style={{
         left: position[0],
@@ -62,6 +64,7 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
       <img src={image} alt={id} />
     </div>
   );
+
   const renderHighlight = ({
     id,
     coordinates,
@@ -73,7 +76,7 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
       onClick={() => onClick(id)}
       className={className({
         [styles.highlight]: true,
-        [styles.glow]: hoverEffect === "glow",
+        [styles.glow]: hoverEffect === "glow" && !buttonActive,
       })}
       style={{
         clipPath: coordinatesToPolygon(coordinates),

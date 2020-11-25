@@ -114,7 +114,7 @@ const flowHelpers = (queue: Queue) => {
         const unsub = subscribe(() => {
           const state = getState();
           const currSelected = state.buttons.selected;
-          if (currSelected !== prevSelected) {
+          if (currSelected !== prevSelected && prevSelected === null) {
             prevSelected = currSelected;
             if (currSelected !== null) {
               const selectedButton = buttons.find(b => b.id === currSelected);
@@ -146,6 +146,7 @@ const flowHelpers = (queue: Queue) => {
                           : buttonsState.actions.hide(b.id)
                       );
                     });
+                    prevSelected = null;
                   });
                   commit();
                 });

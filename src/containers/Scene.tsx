@@ -23,6 +23,7 @@ interface ConnectedSceneProps {
   background: RootState["background"];
   screen: RootState["screen"];
   buttons: Button[];
+  buttonActive: boolean;
   stopPunch: typeof screenState.actions.stopPunch;
   pressButton: typeof buttons.actions.select;
 }
@@ -33,6 +34,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
   characters,
   screen,
   buttons,
+  buttonActive,
   stopPunch,
   pressButton,
 }) => {
@@ -49,6 +51,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
       <Background {...background} />
       <ScreenButtons
         buttons={buttons}
+        buttonActive={buttonActive}
         onClick={id => {
           pressButton(id);
         }}
@@ -96,6 +99,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
 const mapStateToProps = (state: RootState) => ({
   characters: Object.values(state.characters),
   buttons: Object.values(state.buttons.buttons),
+  buttonActive: !!state.buttons.selected,
   screen: state.screen,
   background: state.background,
   dialog: state.dialog,

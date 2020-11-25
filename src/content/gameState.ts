@@ -5,6 +5,7 @@ export type GameState = {
   mansionAccess: boolean;
   poemPiet: "new" | "visited" | "q1" | "q2" | "q3" | "helped";
   sint: "new" | "visited" | "glasses" | "details" | "helped";
+  bakingPiet: "new" | "visited" | "helped";
 };
 
 const initialState: GameState = {
@@ -12,6 +13,7 @@ const initialState: GameState = {
   mansionAccess: false,
   poemPiet: "new",
   sint: "new",
+  bakingPiet: "new",
 };
 
 // const devState: GameState = {
