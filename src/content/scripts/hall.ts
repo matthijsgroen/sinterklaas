@@ -5,6 +5,7 @@ import hoofdPiet from "src/content/assets/hotspots/hall-piet.png";
 import carpet from "src/content/assets/hotspots/hall-carpet.png";
 
 import backgroundTrack from "src/content/assets/sounds/background.mp3";
+import { MenuType } from "src/lib/script-helpers/flow";
 
 const pietenhuis = (queue: Queue) => {
   const {
@@ -61,74 +62,107 @@ const pietenhuis = (queue: Queue) => {
           expression: "happy",
         });
         hiddoPos({ x: 700, y: 130, visible: true });
-        menu({
-          "Waarmee kan ik helpen?": () => {
-            piet("Goede vraag! even nadenken...", {
-              expression: "sip",
-              body: "think",
-            });
+        menu(
+          {
+            "Waarmee kan ik helpen?": () => {
+              piet("Goede vraag! even nadenken...", {
+                expression: "sip",
+                body: "think",
+              });
 
-            onState(
-              state => state.poemPiet !== "helped",
-              () => {
-                piet("Oh ja! Rijmpiet boven heeft hulp nodig.", {
-                  expression: "happy",
-                  body: "pointUp",
-                });
-                piet("Maar pas op, hij is een beetje...", {
-                  expression: "hmm",
-                  body: "default",
-                });
-                piet("... Prikkelbaar.", { expression: "grin" });
-              },
-              () => {
-                piet(
-                  "Rijmpiet heb je al geholpen, die is weer helemaal blij...",
-                  {
+              onState(
+                state => state.poemPiet !== "helped",
+                () => {
+                  piet("Oh ja! Rijmpiet boven heeft hulp nodig.", {
+                    expression: "happy",
+                    body: "pointUp",
+                  });
+                  piet("Maar pas op, hij is een beetje...", {
+                    expression: "hmm",
+                    body: "default",
+                  });
+                  piet("... Prikkelbaar.", { expression: "grin" });
+                },
+                () => {
+                  piet(
+                    "Rijmpiet heb je al geholpen, die is weer helemaal blij...",
+                    {
+                      expression: "happy",
+                      body: "think",
+                    }
+                  );
+                }
+              );
+
+              onState(
+                state => state.sint !== "helped",
+                () => {
+                  piet("Sinterklaas heeft wat problemen met zijn boek.", {
+                    expression: "hmm",
+                    body: "think",
+                  });
+                  piet("Ik denk dat je hem wel goed kan helpen!", {
+                    expression: "happy",
+                    body: "pointUp",
+                  });
+                },
+                () => {
+                  piet("Sinterklaas was erg blij met alle hulp die je gaf.", {
                     expression: "happy",
                     body: "think",
-                  }
-                );
-              }
-            );
+                  });
+                }
+              );
 
-            onState(
-              state => state.sint !== "helped",
-              () => {
-                piet("Sinterklaas heeft wat problemen met zijn boek.", {
-                  expression: "hmm",
-                  body: "think",
-                });
-                piet("Ik denk dat je hem wel goed kan helpen!", {
-                  expression: "happy",
-                  body: "pointUp",
+              onState(
+                state => state.bakingPiet !== "helped",
+                () => {
+                  piet(
+                    "Bakpiet hiernaast lijkt maar geen pepernoten te kunnen bakken....",
+                    {
+                      expression: "hmm",
+                      body: "think",
+                    }
+                  );
+                  piet("Ik weet niet of jij goed in bakken bent?", {
+                    expression: "hmm",
+                    body: "think",
+                  });
+                },
+                () => {
+                  piet(
+                    "Bakpiet gaat zo weer aan de slag! Ik kan niet wachten om straks wat bij hem te gaan snoepen...",
+                    {
+                      expression: "happy",
+                      body: "default",
+                    }
+                  );
+                }
+              );
+            },
+            "Waar is Sinterklaas?": () => {
+              piet("Sinterklaas is boven in zijn werkkamer.", {
+                expression: "sip",
+              });
+              piet("Hier de trap op en dan naar links.", { expression: "sip" });
+            },
+            "Over die pakjes zakken hiernaast....": {
+              skip: s => !(s.sint === "glasses" && s.livingVisited),
+              onClick: () => {
+                piet("TODO", {
+                  expression: "sip",
                 });
               },
-              () => {
-                piet("Sinterklaas was erg blij met alle hulp die je gaf.", {
-                  expression: "happy",
-                  body: "think",
-                });
-              }
-            );
-
-            pietPos({ visible: false });
-            hiddoPos({ visible: false });
+            },
+            "Ik kijk nog even rond": ({ endDialog }) => {
+              piet("Ok.", { expression: "sip" });
+              endDialog();
+              pietPos({ visible: false });
+              hiddoPos({ visible: false });
+            },
           },
-          "Waar is Sinterklaas?": () => {
-            piet("Sinterklaas is boven in zijn werkkamer.", {
-              expression: "sip",
-            });
-            piet("Hier de trap op en dan naar links.", { expression: "sip" });
-            pietPos({ visible: false });
-            hiddoPos({ visible: false });
-          },
-          "Ik kijk nog even rond": () => {
-            piet("Ok.", { expression: "sip" });
-            pietPos({ visible: false });
-            hiddoPos({ visible: false });
-          },
-        });
+          MenuType.Dialog
+        );
         show();
       },
     },

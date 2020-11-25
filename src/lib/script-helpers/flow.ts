@@ -1,4 +1,4 @@
-import menu from "src/state/menu";
+import menuState from "src/state/menu";
 import { dispatchQ, callbackQ, isPreloading } from "../events";
 import { Queue } from "../events/types";
 import {
@@ -25,67 +25,99 @@ export type Highlight = {
   onClick: (buttonRef: ButtonSupport) => void;
 } & HighlightProps;
 
+type MenuOptionHandler = (dialogHandlers: { endDialog: () => void }) => void;
+
 interface MenuOptions {
   [key: string]:
-    | (() => void)
+    | MenuOptionHandler
     | {
         skip?: (state: GameState) => boolean;
-        onClick: () => void;
+        onClick: MenuOptionHandler;
       };
 }
+
+export enum MenuType {
+  SingleOption,
+  Dialog,
+}
+
+const noop = () => {
+  // Dummy
+};
 
 const flowHelpers = (queue: Queue) => {
   const callback = callbackQ(queue);
   const dispatch = dispatchQ(queue);
 
-  return {
-    menu: (options: MenuOptions) => {
-      callback(async ({ subscribe, getState, dispatch: storeDispatch }) => {
-        if (isPreloading(getState)) {
-          Object.values(options).forEach(option =>
-            "onClick" in option ? option.onClick() : option()
-          );
-          return;
-        }
-        const choices = Object.entries(options)
-          .filter(
-            ([, handler]) =>
-              !("onClick" in handler
-                ? handler.skip && handler.skip(getState().gameState)
-                : false)
-          )
-          .map(([option]) => option);
-        storeDispatch(menu.actions.show(choices));
+  const menu = (
+    options: MenuOptions,
+    menuType: MenuType = MenuType.SingleOption
+  ) => {
+    callback(async ({ subscribe, getState, dispatch: storeDispatch }) => {
+      if (isPreloading(getState)) {
+        Object.values(options).forEach(option =>
+          "onClick" in option
+            ? option.onClick({ endDialog: noop })
+            : option({ endDialog: noop })
+        );
+        return;
+      }
+      const choices = Object.entries(options)
+        .filter(
+          ([, handler]) =>
+            !("onClick" in handler
+              ? handler.skip && handler.skip(getState().gameState)
+              : false)
+        )
+        .map(([option]) => option);
+      storeDispatch(menuState.actions.show(choices));
 
-        const result = await new Promise<number>(resolve => {
-          const unsub = subscribe(() => {
-            const state = getState();
-            const currSelected = state.menu.selected;
-            if (currSelected !== null) {
-              unsub();
-              resolve(currSelected);
-            }
-          });
-        });
-
-        await new Promise<number>(resolve => {
-          setTimeout(() => {
-            const commit = queue.collectToNewQueue();
-            dispatch(menu.actions.hide());
-            const handler = options[choices[result]];
-            "onClick" in handler ? handler.onClick() : handler();
-            commit();
-            resolve();
-          });
+      const result = await new Promise<number>(resolve => {
+        const unsub = subscribe(() => {
+          const state = getState();
+          const currSelected = state.menu.selected;
+          if (currSelected !== null) {
+            unsub();
+            resolve(currSelected);
+          }
         });
       });
-    },
+
+      let dialogEnded = false;
+      const dialogHandlers = {
+        endDialog: () => {
+          dialogEnded = true;
+        },
+      };
+
+      await new Promise<number>(resolve => {
+        setTimeout(() => {
+          const commit = queue.collectToNewQueue();
+          dispatch(menuState.actions.hide());
+          const handler = options[choices[result]];
+          "onClick" in handler
+            ? handler.onClick(dialogHandlers)
+            : handler(dialogHandlers);
+
+          callback(() => {
+            if (menuType === MenuType.Dialog && !dialogEnded) {
+              const commit = queue.collectToNewQueue();
+              menu(options, menuType);
+              commit();
+            }
+          });
+          commit();
+          resolve();
+        });
+      });
+    });
+  };
+
+  return {
+    menu,
     buttons: (buttons: (Button | Highlight)[]) => {
       callback(async ({ dispatch: storeDispatch, subscribe, getState }) => {
         if (isPreloading(getState)) {
-          const noop = () => {
-            // Dummy
-          };
           // preloading data
           buttons.forEach(button => {
             button.onClick({

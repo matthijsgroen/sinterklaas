@@ -13,6 +13,8 @@ const living = (queue: Queue) => {
     jump,
     buttons,
     manageCharacter,
+    onState,
+    updateState,
   } = scriptHelpers(queue);
 
   const { say: bakpiet, pos: bakpietPos } = manageCharacter(
@@ -27,8 +29,48 @@ const living = (queue: Queue) => {
     }
   );
 
+  const { say: hiddo, pos: hiddoPos } = manageCharacter(
+    "hiddo",
+    "hiddo",
+    "Hiddo",
+    {
+      x: 300,
+      y: 110,
+      visible: false,
+      dollSettings: {},
+    }
+  );
+
   updateBackground({ image: "living", frontLayer: undefined, blur: false });
   fadeIn();
+  updateState(s => s.hasVisitedLiving());
+
+  const bagInterest = () => {
+    hiddoPos({ visible: true, x: 300, y: 110, flipped: false });
+    hiddo("Oeh! Pakjes zakken....");
+
+    onState(
+      s => s.sint === "glasses",
+      () => {
+        hiddo(
+          "Misschien zit in een van deze zakken wel een bril voor Sinterklaas?"
+        );
+      },
+      () => {
+        hiddo("Wat zou hier in zitten?");
+      }
+    );
+
+    hiddo("... ... ...");
+    hiddo("Het is niet netjes om zo maar in een zak te gaan rommelen.");
+    onState(
+      s => s.sint === "glasses",
+      () => {
+        hiddo("Hoe kan ik er achter komen welke zak onze pakjes bevat?");
+      }
+    );
+    hiddoPos({ visible: false });
+  };
 
   buttons([
     {
@@ -37,9 +79,7 @@ const living = (queue: Queue) => {
       image: bagHotspot,
       position: [570, 430],
       onClick: () => {
-        bakpietPos({ visible: true });
-        bakpiet("Hallo daar!");
-        bakpietPos({ visible: false });
+        bagInterest();
       },
     },
     {
@@ -48,9 +88,7 @@ const living = (queue: Queue) => {
       image: bagHotspot,
       position: [410, 430],
       onClick: () => {
-        bakpietPos({ visible: true });
-        bakpiet("Hallo daar!");
-        bakpietPos({ visible: false });
+        bagInterest();
       },
     },
     {
@@ -59,9 +97,7 @@ const living = (queue: Queue) => {
       image: bagHotspot,
       position: [680, 430],
       onClick: () => {
-        bakpietPos({ visible: true });
-        bakpiet("Hallo daar!");
-        bakpietPos({ visible: false });
+        bagInterest();
       },
     },
     {
@@ -72,8 +108,32 @@ const living = (queue: Queue) => {
       onClick: ({ hide }) => {
         hide();
         bakpietPos({ visible: true });
-        bakpiet("Hallo daar!");
+        hiddoPos({ visible: true, x: 200, y: 110, flipped: true });
+        onState(
+          s => s.bakingPiet === "new",
+          () => {
+            bakpiet("Hallo daar! Fijn dat je ons komt helpen!");
+            hiddo("Hee, bakpiet! Hoor jij niet in de keuken te zijn?");
+            bakpiet(
+              "Ja, ik wou dat ik daar kon zijn... Maar ik ben mijn recept voor pepernoten kwijt!"
+            );
+            bakpiet("Volgens mij moet het ergens tussen deze pakjes liggen...");
+            hiddo(
+              "Misschien kan ik je wel helpen met het vinden van het recept!"
+            );
+            bakpiet("Ooh dat zou echt geweldig zijn.");
+
+            updateState(a => a.updateBakingPiet("visited"));
+          },
+          () => {
+            hiddo("En, het recept al kunnen vinden?");
+            bakpiet("Nee, ik heb hier denk ik ook bijna overal gezocht...");
+            hiddo("Ik heb ook nog niets gevonden...");
+          }
+        );
+
         bakpietPos({ visible: false });
+        hiddoPos({ visible: false });
       },
     },
     {
