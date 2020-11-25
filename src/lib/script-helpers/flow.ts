@@ -11,6 +11,7 @@ import buttonsState from "src/state/buttons";
 type ButtonSupport = {
   remove: () => void;
   hide: (id?: string) => void;
+  hideAll: () => void;
   show: (id?: string) => void;
 };
 
@@ -90,6 +91,7 @@ const flowHelpers = (queue: Queue) => {
             button.onClick({
               remove: noop,
               hide: noop,
+              hideAll: noop,
               show: noop,
             });
           });
@@ -119,13 +121,16 @@ const flowHelpers = (queue: Queue) => {
               if (selectedButton) {
                 setTimeout(() => {
                   const commit = queue.collectToNewQueue();
-                  const { remove, hide, show } = buttonsState.actions;
+                  const { remove, hide, show, hideAll } = buttonsState.actions;
                   selectedButton.onClick({
                     remove: () => {
                       dispatch(remove(selectedButton.id));
                     },
                     hide: (id?: string) => {
                       dispatch(hide(id || selectedButton.id));
+                    },
+                    hideAll: () => {
+                      dispatch(hideAll());
                     },
                     show: (id?: string) => {
                       dispatch(show(id || selectedButton.id));

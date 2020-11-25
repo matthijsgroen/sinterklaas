@@ -1,5 +1,4 @@
 import { Queue } from "src/lib/events/types";
-import { pause } from "src/lib/scene";
 import scriptHelpers from "src/lib/script-helpers";
 
 import pietSipHotspot from "../assets/hotspots/poem-room-piet.png";
@@ -13,6 +12,7 @@ const poemroom = (queue: Queue) => {
     stopMusic,
     fadeIn,
     fadeOut,
+    pause,
     jump,
     updateBackground,
     buttons,

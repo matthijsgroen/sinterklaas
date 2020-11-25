@@ -2,6 +2,7 @@ import { Queue } from "src/lib/events/types";
 import scriptHelpers from "src/lib/script-helpers";
 
 import bakpietHotspot from "../assets/hotspots/living-bakpiet.png";
+import bagHotspot from "../assets/hotspots/living-bag.png";
 
 const living = (queue: Queue) => {
   const {
@@ -30,6 +31,39 @@ const living = (queue: Queue) => {
   fadeIn();
 
   buttons([
+    {
+      id: "bag1",
+      hoverEffect: "glow",
+      image: bagHotspot,
+      position: [570, 430],
+      onClick: () => {
+        bakpietPos({ visible: true });
+        bakpiet("Hallo daar!");
+        bakpietPos({ visible: false });
+      },
+    },
+    {
+      id: "bag2",
+      hoverEffect: "glow",
+      image: bagHotspot,
+      position: [410, 430],
+      onClick: () => {
+        bakpietPos({ visible: true });
+        bakpiet("Hallo daar!");
+        bakpietPos({ visible: false });
+      },
+    },
+    {
+      id: "bag3",
+      hoverEffect: "glow",
+      image: bagHotspot,
+      position: [680, 430],
+      onClick: () => {
+        bakpietPos({ visible: true });
+        bakpiet("Hallo daar!");
+        bakpietPos({ visible: false });
+      },
+    },
     {
       id: "bakpiet",
       hoverEffect: "glow",

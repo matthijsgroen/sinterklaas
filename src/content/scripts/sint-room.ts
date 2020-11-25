@@ -91,8 +91,9 @@ const sintroom = (queue: Queue) => {
       hoverEffect: "glow",
       image: drawing1Hotspot,
       position: [300, 70],
-      onClick: () => {
+      onClick: ({ hideAll }) => {
         fadeOut();
+        hideAll();
         updateBackground({ image: "sintroom", frontLayer: "drawing1" });
         pause(100);
         fadeIn();
@@ -110,8 +111,9 @@ const sintroom = (queue: Queue) => {
       hoverEffect: "glow",
       image: drawing2Hotspot,
       position: [760, 90],
-      onClick: () => {
+      onClick: ({ hideAll }) => {
         fadeOut();
+        hideAll();
         updateBackground({ image: "sintroom", frontLayer: "drawing2" });
         pause(100);
         fadeIn();

@@ -31,6 +31,11 @@ export default createSlice({
     hide: (state, action: PayloadAction<string>) => {
       state.buttons[action.payload].visible = false;
     },
+    hideAll: state => {
+      Object.keys(state.buttons).forEach(buttonId => {
+        state.buttons[buttonId].visible = false;
+      });
+    },
     reset: state => {
       state.buttons = {};
       state.selected = null;
