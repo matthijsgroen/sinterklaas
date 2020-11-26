@@ -50,7 +50,7 @@ const living = (queue: Queue) => {
     hiddo("Oeh! Pakjes zakken....");
 
     onState(
-      s => s.sint === "glasses",
+      s => s.sint === "glasses" && s.glasses !== "inventory",
       () => {
         hiddo(
           "Misschien zit in een van deze zakken wel een bril voor Sinterklaas?"
@@ -64,7 +64,7 @@ const living = (queue: Queue) => {
     hiddo("... ... ...");
     hiddo("Het is niet netjes om zo maar in een zak te gaan rommelen.");
     onState(
-      s => s.sint === "glasses",
+      s => s.sint === "glasses" && s.glasses !== "inventory",
       () => {
         hiddo("Hoe kan ik er achter komen welke zak onze pakjes bevat?");
       }
@@ -97,7 +97,14 @@ const living = (queue: Queue) => {
       image: bagHotspot,
       position: [680, 430],
       onClick: () => {
-        bagInterest();
+        onState(
+          s => s.glasses !== "none",
+          () => {
+            fadeOut();
+            jump("bag");
+          },
+          bagInterest
+        );
       },
     },
     {

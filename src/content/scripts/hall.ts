@@ -149,9 +149,21 @@ const pietenhuis = (queue: Queue) => {
             "Over die pakjes zakken hiernaast....": {
               skip: s => !(s.sint === "glasses" && s.livingVisited),
               onClick: () => {
-                piet("TODO", {
-                  expression: "sip",
-                });
+                piet("Ja wat wil je weten?");
+                hiddo("Ik vroeg me af welke zak met pakjes voor ons was...");
+                piet(
+                  "Oeh, wil je ze helpen bezorgen? Dat hoeft niet hoor, dat doen de pieten wel!"
+                );
+                hiddo(
+                  "Nou ik wilde kijken of er misschien iets tussenzat om aan de Sint te geven..."
+                );
+                piet(
+                  "Oh dat is aardig! Het is natuurlijk tenslotte zijn verjaardag!"
+                );
+                hiddo("Eh, ja, dat is precies de reden!");
+                piet("De rechter zak met pakjes is voor jullie.");
+                hiddo("Super, bedankt!");
+                updateState(a => a.updateGlasses("location"));
               },
             },
             "Ik kijk nog even rond": ({ endDialog }) => {
