@@ -10,6 +10,7 @@ const living = (queue: Queue) => {
     fadeIn,
     updateBackground,
     hold,
+
     jump,
     buttons,
     manageCharacter,
@@ -112,31 +113,50 @@ const living = (queue: Queue) => {
       hoverEffect: "glow",
       image: bakpietHotspot,
       position: [970, 293],
+      skip: s => s.bakingPiet === "helped",
       onClick: ({ hide }) => {
         hide();
         bakpietPos({ visible: true });
         hiddoPos({ visible: true, x: 200, y: 110, flipped: true });
         onState(
-          s => s.bakingPiet === "new",
+          s => s.recipe === "inventory",
           () => {
-            bakpiet("Hallo daar! Fijn dat je ons komt helpen!");
-            hiddo("Hee, bakpiet! Hoor jij niet in de keuken te zijn?");
+            hiddo("Hoi Bakpiet, ik heb je recept gevonden!");
+            bakpiet("Oooh super fijn! Dank je wel!");
+            bakpiet("... ... ...");
+            bakpiet("Ik heb meteen zin om wat lekkers te gaan maken!");
             bakpiet(
-              "Ja, ik wou dat ik daar kon zijn... Maar ik ben mijn recept voor pepernoten kwijt!"
+              "Als je zin hebt in pepernoten, kom dan straks maar langs in de keuken!"
             );
-            bakpiet("Volgens mij moet het ergens tussen deze pakjes liggen...");
-            hiddo(
-              "Misschien kan ik je wel helpen met het vinden van het recept!"
-            );
-            bakpiet("Ooh dat zou echt geweldig zijn.");
-
-            updateState(a => a.updateBakingPiet("visited"));
+            updateState(a => a.updateBakingPiet("helped"));
+            updateState(a => a.updateRecipe("done"));
           },
-          () => {
-            hiddo("En, het recept al kunnen vinden?");
-            bakpiet("Nee, ik heb hier denk ik ook bijna overal gezocht...");
-            hiddo("Ik heb ook nog niets gevonden...");
-          }
+          () =>
+            onState(
+              s => s.bakingPiet === "new",
+              () => {
+                bakpiet("Hallo daar! Fijn dat je ons komt helpen!");
+                hiddo("Hee, bakpiet! Hoor jij niet in de keuken te zijn?");
+                bakpiet(
+                  "Ja, ik wou dat ik daar kon zijn... Maar ik ben mijn recept voor pepernoten kwijt!"
+                );
+                bakpiet(
+                  "Volgens mij moet het ergens tussen deze pakjes liggen..."
+                );
+                hiddo(
+                  "Misschien kan ik je wel helpen met het vinden van het recept!"
+                );
+                bakpiet("Ooh dat zou echt geweldig zijn.");
+
+                updateState(a => a.updateBakingPiet("visited"));
+                updateState(a => a.updateRecipe("desired"));
+              },
+              () => {
+                hiddo("En, het recept al kunnen vinden?");
+                bakpiet("Nee, ik heb hier denk ik ook bijna overal gezocht...");
+                hiddo("Ik heb ook nog niets gevonden...");
+              }
+            )
         );
 
         bakpietPos({ visible: false });

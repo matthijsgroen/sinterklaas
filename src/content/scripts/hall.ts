@@ -147,7 +147,10 @@ const pietenhuis = (queue: Queue) => {
               piet("Hier de trap op en dan naar links.", { expression: "sip" });
             },
             "Over die pakjes zakken hiernaast....": {
-              skip: s => !(s.sint === "glasses" && s.livingVisited),
+              skip: s =>
+                !(s.sint === "glasses" && s.livingVisited) ||
+                s.glasses === "inventory" ||
+                s.glasses === "done",
               onClick: () => {
                 piet("Ja wat wil je weten?");
                 hiddo("Ik vroeg me af welke zak met pakjes voor ons was...");

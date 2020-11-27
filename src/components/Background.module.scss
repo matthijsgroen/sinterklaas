@@ -41,6 +41,9 @@
 .drawing2 {
   @include img("drawing2.jpg");
 }
+.recipe {
+  @include img("recipe.jpg");
+}
 .tv {
   @include img("living-room-tv.png");
 }

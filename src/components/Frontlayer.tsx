@@ -10,6 +10,7 @@ const FrontLayer: React.FC<BackgroundProps> = ({ frontLayer }) => (
         [styles.news]: frontLayer === "news",
         [styles.drawing1]: frontLayer === "drawing1",
         [styles.drawing2]: frontLayer === "drawing2",
+        [styles.recipe]: frontLayer === "recipe",
         [styles.background]: true,
       })}
     />

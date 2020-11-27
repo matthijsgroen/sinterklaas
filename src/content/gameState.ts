@@ -8,6 +8,11 @@ export type GameState = {
   glasses: "none" | "location" | "inventory" | "done";
   livingVisited: boolean;
   bakingPiet: "new" | "visited" | "helped";
+  recipe: "none" | "desired" | "inventory" | "done";
+  sintProblems: {
+    problem1Solved: boolean;
+    problem2Solved: boolean;
+};
 };
 
 const initialState: GameState = {
@@ -17,7 +22,12 @@ const initialState: GameState = {
   sint: "new",
   bakingPiet: "new",
   glasses: "none",
+  recipe: "none",
   livingVisited: false,
+  sintProblems: {
+    problem1Solved: false,
+    problem2Solved: false,
+  },
 };
 
 // const devState: GameState = {
@@ -54,8 +64,19 @@ export default createSlice({
     updateGlasses: (state, action: PayloadAction<GameState["glasses"]>) => {
       state.glasses = action.payload;
     },
+    updateRecipe: (state, action: PayloadAction<GameState["recipe"]>) => {
+      state.recipe = action.payload;
+    },
     hasVisitedLiving: state => {
       state.livingVisited = true;
+    },
+    solveSintProblem: (state, action: PayloadAction<1 | 2>) => {
+      if (action.payload === 1) {
+        state.sintProblems.problem1Solved = true;
+      }
+      if (action.payload === 2) {
+        state.sintProblems.problem2Solved = true;
+      }
     },
   },
 });
