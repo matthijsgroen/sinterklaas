@@ -1,19 +1,21 @@
-import intro from "./intro";
-import pietenhuis from "./pietenhuis";
+import bag from "./bag";
 import hall from "./hall";
+import intro from "./intro";
+import kitchen from "./kitchen";
+import living from "./living";
+import pietenhuis from "./pietenhuis";
 import poemroom from "./poem-room";
 import sintroom from "./sint-room";
-import living from "./living";
-import bag from "./bag";
 
 const scripts = {
-  intro,
-  pietenhuis,
+  bag,
   hall,
+  intro,
+  kitchen,
+  living,
+  pietenhuis,
   poemroom,
   sintroom,
-  living,
-  bag,
 };
 
 export default scripts;

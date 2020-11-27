@@ -226,6 +226,27 @@ const pietenhuis = (queue: Queue) => {
         jump("living");
       },
     },
+    {
+      id: "kitchen",
+      hoverEffect: "glow",
+      color: "black",
+      // prettier-ignore
+      coordinates: [
+        861, 266, 866, 336, 892,337, 896, 456, 935, 454, 938, 265
+      ],
+      onClick: () => {
+        onState(
+          s => s.bakingPiet === "helped",
+          () => {
+            fadeOut();
+            jump("kitchen");
+          },
+          () => {
+            hiddo("Hmm, de deur zit op slot.");
+          }
+        );
+      },
+    },
   ]);
 
   onState(

@@ -53,6 +53,9 @@
 .sintroom {
   @include img("sint-room.jpg");
 }
+.kitchen {
+  @include img("kitchen.jpg");
+}
 .bag {
   @include img("bag-contents.jpg");
 }
