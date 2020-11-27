@@ -4,7 +4,7 @@ import styles from "./Piet.module.scss";
 
 export interface PietProps {
   color?: "blue" | "red" | "white";
-  body?: "default" | "pointUp" | "think";
+  body?: "default" | "pointUp" | "think" | "cooking";
   expression?:
     | "happy"
     | "hmm"
@@ -38,6 +38,7 @@ const Piet: React.FC<PietProps> = ({
           color === "white" && (body === undefined || body === "default"),
         [styles.pointUp3]: color === "white" && body === "pointUp",
         [styles.think3]: color === "white" && body === "think",
+        [styles.cooking3]: color === "white" && body === "cooking",
       })}
     />
     <div className={styles[`exp-${expression}`]} />

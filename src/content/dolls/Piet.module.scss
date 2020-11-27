@@ -41,6 +41,10 @@
   @include img("body3");
 }
 
+.cooking3 {
+  @include img("body3-cook");
+}
+
 .pointUp3 {
   @include img("body3-point-up");
 }

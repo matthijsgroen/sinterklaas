@@ -1,12 +1,14 @@
 import { Queue } from "src/lib/events/types";
 import scriptHelpers from "src/lib/script-helpers";
 
+import bakpietHotspot from "../assets/hotspots/kitchen-bakpiet.png";
+
 const keuken = (queue: Queue) => {
   const {
     fadeIn,
     fadeOut,
     updateBackground,
-    // manageCharacter,
+    manageCharacter,
     jump,
     hold,
     buttons,
@@ -24,17 +26,17 @@ const keuken = (queue: Queue) => {
   //     }
   //   );
 
-  //   const { say: bakpiet, pos: bakpietPos } = manageCharacter(
-  //     "bakpiet",
-  //     "piet",
-  //     "Bakpiet",
-  //     {
-  //       x: 650,
-  //       y: 110,
-  //       visible: false,
-  //       dollSettings: { color: "white" },
-  //     }
-  //   );
+  const { say: bakpiet, pos: bakpietPos } = manageCharacter(
+    "bakpiet",
+    "piet",
+    "Bakpiet",
+    {
+      x: 650,
+      y: 110,
+      visible: false,
+      dollSettings: { color: "white", body: "cooking" },
+    }
+  );
 
   updateBackground({ image: "kitchen", frontLayer: undefined, blur: false });
   fadeIn();
@@ -48,6 +50,18 @@ const keuken = (queue: Queue) => {
       onClick: () => {
         fadeOut();
         jump("hall");
+      },
+    },
+    {
+      id: "bakpiet",
+      hoverEffect: "glow",
+      image: bakpietHotspot,
+      position: [610, 113],
+      onClick: ({ hide }) => {
+        hide();
+        bakpietPos({ visible: true });
+        bakpiet("Ah heerlijk om weer pepernoten te kunnen maken!");
+        bakpietPos({ visible: false });
       },
     },
   ]);
