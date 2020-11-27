@@ -44,7 +44,7 @@ const keuken = (queue: Queue) => {
       id: "hall",
       hoverEffect: "glow",
       color: "black",
-      coordinates: [0, 100, 189, 80, 200, 475, 0, 531],
+      coordinates: [0, 86, 189, 80, 204, 470, 0, 531],
       onClick: () => {
         fadeOut();
         jump("hall");
