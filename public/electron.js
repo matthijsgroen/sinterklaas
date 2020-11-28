@@ -1,5 +1,5 @@
 // eslint-env node
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, powerSaveBlocker } = require("electron");
 const express = require("express");
 const path = require("path");
 const isDev = require("electron-is-dev");
@@ -31,6 +31,7 @@ function createRemotePlayWindow() {
   server.set("port", process.env.PORT || 8080);
   server.use(express.static(path.join(__dirname, "../build/")));
   const instance = server.listen(server.get("port"));
+  const id = powerSaveBlocker.start("prevent-app-suspension");
 
   const win = new BrowserWindow({ width: 800, height: 420, resizable: false });
   win.loadURL(
@@ -43,6 +44,7 @@ function createRemotePlayWindow() {
   );
   win.on("close", () => {
     instance.close();
+    powerSaveBlocker.stop(id);
   });
 }
 
