@@ -9,8 +9,8 @@ export type GameState = {
   livingVisited: boolean;
   bakingPiet: "new" | "visited" | "helped";
   recipe: "none" | "desired" | "inventory" | "done";
+  listCarl: "none" | "desired" | "inventory" | "done";
   sintProblems: {
-    problem1Solved: boolean;
     problem2Solved: boolean;
 };
 };
@@ -67,13 +67,13 @@ export default createSlice({
     updateRecipe: (state, action: PayloadAction<GameState["recipe"]>) => {
       state.recipe = action.payload;
     },
+    updateListCarl: (state, action: PayloadAction<GameState["listCarl"]>) => {
+      state.listCarl = action.payload;
+    },
     hasVisitedLiving: state => {
       state.livingVisited = true;
     },
-    solveSintProblem: (state, action: PayloadAction<1 | 2>) => {
-      if (action.payload === 1) {
-        state.sintProblems.problem1Solved = true;
-      }
+    solveSintProblem: (state, action: PayloadAction<2>) => {
       if (action.payload === 2) {
         state.sintProblems.problem2Solved = true;
       }

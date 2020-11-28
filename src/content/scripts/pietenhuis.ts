@@ -54,7 +54,7 @@ const pietenhuis = (queue: Queue) => {
       hoverEffect: "glow",
       image: keyButton,
       position: [1060, 654],
-      onClick(button) {
+      onClick: () => {
         updateState(a => a.getKey());
         hiddoPos({
           x: 412,
@@ -73,15 +73,13 @@ const pietenhuis = (queue: Queue) => {
         hiddoPos({
           visible: false,
         });
-
-        button.remove();
       },
     },
     {
       id: "door",
       hoverEffect: "glow",
       coordinates: [680, 495, 735, 495, 737, 596, 680, 596],
-      onClick() {
+      onClick: () => {
         onState(
           s => s.mansionAccess,
           () => {

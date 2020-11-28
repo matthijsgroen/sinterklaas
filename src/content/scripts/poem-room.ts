@@ -3,6 +3,7 @@ import scriptHelpers from "src/lib/script-helpers";
 
 import pietSipHotspot from "../assets/hotspots/poem-room-piet.png";
 import pietHappyHotspot from "../assets/hotspots/poem-room-piet2.png";
+import bookCarl from "../assets/hotspots/poem-room-carl.png";
 
 import rapTrack from "../assets/sounds/372069__swagmasterlord__80-s-old-school-rap-drum-loop.mp3";
 
@@ -201,7 +202,7 @@ const poemroom = (queue: Queue) => {
         onClick: playGame,
       },
       "Hoe gaat het nu?": {
-        skip: s => s.poemPiet !== "helped",
+        condition: s => s.poemPiet === "helped",
         onClick: () => {
           playMusic(rapTrack, { volume: 0.6 });
           poem("Nog van harte bedankt voor al je begrip!", {
@@ -218,8 +219,28 @@ const poemroom = (queue: Queue) => {
           poemPos({ visible: false });
         },
       },
+      "Hoi Rijmpiet, heb jij het lijstje van Carl?": {
+        condition: s => s.listCarl === "desired" && s.poemPiet === "helped",
+        onClick: () => {
+          poemPos({ visible: true });
+          playMusic(rapTrack, { volume: 0.6 });
+
+          poem("Carl... Even denken, wat wilde hij voor geschenken?");
+          poem("Ik ben ze wel gaan bewaren, maar ik had wat bezwaren...");
+          poem("Ze lijken allemaal op elkaar, echt ieder jaar...");
+
+          poem("PSV Sokken, PSV Mokken, een PSV sjaal of andere PSV praal.");
+          poem(
+            "Ik heb hier alle PSV verzoek. Neem maar mee voor de Sint zijn boek."
+          );
+
+          updateState(a => a.updateListCarl("inventory"));
+          stopMusic({ fadeOut: true });
+          poemPos({ visible: false });
+        },
+      },
       "Zou ik jouw bril mogen lenen?": {
-        skip: s => s.sint !== "glasses",
+        condition: s => s.sint === "glasses" && s.glasses !== "inventory",
         onClick: () => {
           poemPos({ visible: true });
           hiddoPos({ visible: true });
@@ -243,7 +264,7 @@ const poemroom = (queue: Queue) => {
         },
       },
       "Ik ga weer even verder...": {
-        skip: s => s.poemPiet !== "helped",
+        condition: s => s.poemPiet === "helped",
         onClick: () => {
           poemPos({ visible: true });
           poem("Ok, tot later! Mijn gedichten stromen nu toch als water!.");
@@ -284,6 +305,15 @@ const poemroom = (queue: Queue) => {
       },
     },
     {
+      id: "book",
+      image: bookCarl,
+      position: [936, 14],
+      skip: s => s.listCarl === "inventory" || s.listCarl === "done",
+      onClick() {
+        // no actions
+      },
+    },
+    {
       id: "pietHappy",
       skip: s => s.poemPiet !== "helped",
       hoverEffect: "glow",
@@ -291,6 +321,7 @@ const poemroom = (queue: Queue) => {
       position: [436, 134],
       onClick: ({ hide, show }) => {
         hide();
+        poem("Hee Hiddo.", { expression: "happy" });
         playChoice();
         show();
       },

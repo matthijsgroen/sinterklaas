@@ -147,10 +147,10 @@ const pietenhuis = (queue: Queue) => {
               piet("Hier de trap op en dan naar links.", { expression: "sip" });
             },
             "Over die pakjes zakken hiernaast....": {
-              skip: s =>
-                !(s.sint === "glasses" && s.livingVisited) ||
-                s.glasses === "inventory" ||
-                s.glasses === "done",
+              condition: s =>
+                s.sint === "glasses" &&
+                s.livingVisited &&
+                (s.glasses === "location" || s.glasses === "none"),
               onClick: () => {
                 piet("Ja wat wil je weten?");
                 hiddo("Ik vroeg me af welke zak met pakjes voor ons was...");
@@ -158,7 +158,7 @@ const pietenhuis = (queue: Queue) => {
                   "Oeh, wil je ze helpen bezorgen? Dat hoeft niet hoor, dat doen de pieten wel!"
                 );
                 hiddo(
-                  "Nou ik wilde kijken of er misschien iets tussenzat om aan de Sint te geven..."
+                  "Nou ik wilde kijken of er misschien iets tussen zat om aan de Sint te geven..."
                 );
                 piet(
                   "Oh dat is aardig! Het is natuurlijk tenslotte zijn verjaardag!"

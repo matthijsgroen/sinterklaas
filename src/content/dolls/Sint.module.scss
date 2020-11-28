@@ -17,6 +17,10 @@
   @include img("body");
 }
 
+.glasses {
+  @include img("glasses");
+}
+
 .exp-happy {
   @include img("01");
 }

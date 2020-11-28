@@ -75,7 +75,7 @@ const sintroom = (queue: Queue) => {
 
   const explainProblem2 = () => {
     sint(
-      "Oh, ik lees hier net dat Catoote heel erg gek is op pepernotentaart..."
+      "Oh, ik lees hier net dat Catootje heel erg gek is op pepernotentaart..."
     );
     sint(
       "Dat zou leuk zijn om te geven, misshien kan je er een aan Bakpiet vragen?"
@@ -194,10 +194,30 @@ const sintroom = (queue: Queue) => {
             });
             menu(
               {
-                "Over het lijstje van Carl...": () => {
-                  hiddo(
-                    "Ow ik weet het weer, ik moest even naar Rijmpiet toe."
-                  );
+                "Over het lijstje van Carl...": {
+                  skip: s => s.listCarl === "done",
+                  onClick: () => {
+                    onState(
+                      s => s.listCarl === "inventory",
+                      () => {
+                        hiddo("Ik heb denk ik wat u zoekt.");
+                        sint(
+                          "Ow dat wat fijn, dan kan ik mijn boek weer bijwerken"
+                        );
+                        sint("... ... ...");
+                        sint("Ow... alweer dat... nouja dat mag hoor.");
+                        sint("Super bedankt!");
+                        updateState(a => a.updateListCarl("done"));
+
+                        // All complete? Wrap up game
+                      },
+                      () => {
+                        hiddo(
+                          "Ow ik weet het weer, ik moest even naar Rijmpiet toe."
+                        );
+                      }
+                    );
+                  },
                 },
                 "Over de pepernoten taart...": () => {
                   onState(
@@ -215,7 +235,7 @@ const sintroom = (queue: Queue) => {
                           );
                           sint("Och, ik ben ook wel eens iets kwijt.");
                           sint(
-                            "Vaak helpt het om gewoon even rust te creeren in je hoofd voordat je gaat zoeken...."
+                            "Vaak helpt het om gewoon even rust te scheppen in je hoofd voordat je gaat zoeken...."
                           );
                           sint(
                             "Ik doe dat vaak door even naar de prachtige kindertekening in mijn kamer te kijken."
@@ -244,9 +264,12 @@ const sintroom = (queue: Queue) => {
                 });
                 hiddo("Sinterklaas, ik heb een bril voor u!");
                 sint("Ow wat fijn! Ik ben benieuwd.");
+
                 updateState(a => a.updateSint("details"));
                 updateState(a => a.updateGlasses("done"));
-                sint("Ooh dit is echt heel fijn."); // TODO: Add glasses!!
+                updateState(a => a.updateListCarl("desired"));
+
+                sint("Ooh dit is echt heel fijn.", { glasses: true });
                 pause(200);
                 sint("Nou, kan ik eindelijk in het grote boek kijken...");
                 sint("Ik weet dat ik wat dingetjes mis...");

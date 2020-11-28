@@ -15,15 +15,14 @@ type ButtonSupport = {
   show: (id?: string) => void;
 };
 
-export type Button = {
+type ButtonActions = {
   skip?: (state: GameState) => boolean;
+  condition?: (state: GameState) => boolean;
   onClick: (buttonRef: ButtonSupport) => void;
-} & ButtonProps;
+};
 
-export type Highlight = {
-  skip?: (state: GameState) => boolean;
-  onClick: (buttonRef: ButtonSupport) => void;
-} & HighlightProps;
+export type Button = ButtonActions & ButtonProps;
+export type Highlight = ButtonActions & HighlightProps;
 
 type MenuOptionHandler = (dialogHandlers: { endDialog: () => void }) => void;
 
@@ -32,6 +31,7 @@ interface MenuOptions {
     | MenuOptionHandler
     | {
         skip?: (state: GameState) => boolean;
+        condition?: (state: GameState) => boolean;
         onClick: MenuOptionHandler;
       };
 }
@@ -66,7 +66,8 @@ const flowHelpers = (queue: Queue) => {
         .filter(
           ([, handler]) =>
             !("onClick" in handler
-              ? handler.skip && handler.skip(getState().gameState)
+              ? (handler.skip && handler.skip(getState().gameState)) ||
+                (handler.condition && !handler.condition(getState().gameState))
               : false)
         )
         .map(([option]) => option);
@@ -130,7 +131,10 @@ const flowHelpers = (queue: Queue) => {
           return;
         }
         buttons.forEach(b => {
-          const visible = !b.skip || !b.skip(getState().gameState);
+          const visible =
+            (!b.skip || !b.skip(getState().gameState)) &&
+            (!b.condition || b.condition(getState().gameState));
+
           const buttonProps = {
             ...b,
             visible,
@@ -171,7 +175,10 @@ const flowHelpers = (queue: Queue) => {
                   dispatch(buttonsState.actions.deselect());
                   callback(({ getState, dispatch: storeDispatch }) => {
                     buttons.forEach(b => {
-                      const visible = !b.skip || !b.skip(getState().gameState);
+                      const visible =
+                        (!b.skip || !b.skip(getState().gameState)) &&
+                        (!b.condition || b.condition(getState().gameState));
+
                       storeDispatch(
                         visible
                           ? buttonsState.actions.show(b.id)
