@@ -196,21 +196,34 @@ const poemroom = (queue: Queue) => {
 
   const playChoice = () => {
     menu({
-      "Ja zeker!": () => {
-        playGame();
+      "Ja zeker!": {
+        skip: state => state.poemPiet === "helped",
+        onClick: playGame,
       },
-      "Is het goed als ik je straks kom helpen?": () => {
-        poemPos({ visible: true });
-        poem("Ok...", { expression: "sip" });
-        poemPos({ visible: false });
+      "Hoe gaat het nu?": {
+        skip: s => s.poemPiet !== "helped",
+        onClick: () => {
+          playMusic(rapTrack, { volume: 0.6 });
+          poem("Nog van harte bedankt voor al je begrip!", {
+            expression: "happy",
+          });
+          poem("Dankzij jou ben ik nu uit mijn dip!", {
+            expression: "small-smile",
+          });
+          poem("Ik ga nu weer snel verder met mijn werk.", {
+            expression: "grin",
+          });
+          poem("Want mijn inspiratie is weer sterk!", { expression: "happy" });
+          stopMusic({ fadeOut: true });
+          poemPos({ visible: false });
+        },
       },
       "Zou ik jouw bril mogen lenen?": {
-        skip: state => state.sint !== "glasses",
+        skip: s => s.sint !== "glasses",
         onClick: () => {
           poemPos({ visible: true });
           hiddoPos({ visible: true });
-          // TODO: Expressions
-          poem("Waarom? deze sterkte is precies voor mij.");
+          poem("Oei, deze sterkte is precies voor mij.");
           hiddo("Ook als we Sinterklaas ermee zouden helpen?");
           poem("Ik zou de Sint graag willen helpen!");
           poem("Maar ik heb een hele andere sterkte dan hij...");
@@ -219,6 +232,22 @@ const poemroom = (queue: Queue) => {
 
           poemPos({ visible: false });
           hiddoPos({ visible: false });
+        },
+      },
+      "Is het goed als ik je straks kom helpen?": {
+        skip: s => s.poemPiet === "helped",
+        onClick: () => {
+          poemPos({ visible: true });
+          poem("Ok...", { expression: "sip" });
+          poemPos({ visible: false });
+        },
+      },
+      "Ik ga weer even verder...": {
+        skip: s => s.poemPiet !== "helped",
+        onClick: () => {
+          poemPos({ visible: true });
+          poem("Ok, tot later! Mijn gedichten stromen nu toch als water!.");
+          poemPos({ visible: false });
         },
       },
     });
@@ -262,19 +291,7 @@ const poemroom = (queue: Queue) => {
       position: [436, 134],
       onClick: ({ hide, show }) => {
         hide();
-        playMusic(rapTrack, { volume: 0.6 });
-        poem("Nog van harte bedankt voor al je begrip!", {
-          expression: "happy",
-        });
-        poem("Dankzij jou ben ik nu uit mijn dip!", {
-          expression: "small-smile",
-        });
-        poem("Ik ga nu weer snel verder met mijn werk.", {
-          expression: "grin",
-        });
-        poem("Want mijn inspiratie is weer sterk!", { expression: "happy" });
-        stopMusic({ fadeOut: true });
-        poemPos({ visible: false });
+        playChoice();
         show();
       },
     },

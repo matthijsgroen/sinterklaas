@@ -200,8 +200,32 @@ const sintroom = (queue: Queue) => {
                   );
                 },
                 "Over de pepernoten taart...": () => {
-                  // TODO: 1. Hint voor vinden recept
-                  // TODO: 2. Hints voor vinden ingredienten
+                  onState(
+                    s => s.bakingPiet === "new",
+                    () => {
+                      sint("Ben je al bij bakpiet geweest?");
+                      hiddo("Ownee, dat was het, ik moest naar Bakpiet toe!");
+                    },
+                    () =>
+                      onState(
+                        s => s.bakingPiet === "visited",
+                        () => {
+                          hiddo(
+                            "Ik wil het graag aan Bakpiet vragen, maar hij is een recept kwijt."
+                          );
+                          sint("Och, ik ben ook wel eens iets kwijt.");
+                          sint(
+                            "Vaak helpt het om gewoon even rust te creeren in je hoofd voordat je gaat zoeken...."
+                          );
+                          sint(
+                            "Ik doe dat vaak door even naar de prachtige kindertekening in mijn kamer te kijken."
+                          );
+                        },
+                        () => {
+                          // TODO: 2. Hints voor vinden ingredienten
+                        }
+                      )
+                  );
                 },
                 "Ik ga weer verder.": ({ endDialog }) => {
                   endDialog();
