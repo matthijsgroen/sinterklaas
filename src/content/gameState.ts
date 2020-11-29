@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type Ingredient = "flour" | "eggs" | "milk" | "gingerherbs";
 export type GameState = {
   mansionKey: boolean;
   mansionAccess: boolean;
@@ -10,9 +11,13 @@ export type GameState = {
   bakingPiet: "new" | "visited" | "helped";
   recipe: "none" | "desired" | "inventory" | "done";
   listCarl: "none" | "desired" | "inventory" | "done";
-  sintProblems: {
-    problem2Solved: boolean;
-};
+  gingerbreadButtonPie:
+    | "none"
+    | "desired"
+    | "ingredients"
+    | "inventory"
+    | "done";
+  neededIngriedients: Ingredient[];
 };
 
 const initialState: GameState = {
@@ -24,10 +29,9 @@ const initialState: GameState = {
   glasses: "none",
   recipe: "none",
   livingVisited: false,
-  sintProblems: {
-    problem1Solved: false,
-    problem2Solved: false,
-  },
+  listCarl: "none",
+  gingerbreadButtonPie: "none",
+  neededIngriedients: ["eggs", "flour", "gingerherbs", "milk"],
 };
 
 // const devState: GameState = {
@@ -70,13 +74,19 @@ export default createSlice({
     updateListCarl: (state, action: PayloadAction<GameState["listCarl"]>) => {
       state.listCarl = action.payload;
     },
+    updateGingerbreadButtonPie: (
+      state,
+      action: PayloadAction<GameState["gingerbreadButtonPie"]>
+    ) => {
+      state.gingerbreadButtonPie = action.payload;
+    },
+    findIngredient: (state, action: PayloadAction<Ingredient>) => {
+      state.neededIngriedients = state.neededIngriedients.filter(
+        ingriedient => ingriedient !== action.payload
+      );
+    },
     hasVisitedLiving: state => {
       state.livingVisited = true;
-    },
-    solveSintProblem: (state, action: PayloadAction<2>) => {
-      if (action.payload === 2) {
-        state.sintProblems.problem2Solved = true;
-      }
     },
   },
 });

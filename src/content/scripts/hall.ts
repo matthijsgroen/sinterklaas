@@ -242,7 +242,7 @@ const pietenhuis = (queue: Queue) => {
             jump("kitchen");
           },
           () => {
-            hiddo("Hmm, de deur zit op slot.");
+            hiddo("Hmm, de deur van de keuken zit op slot.");
           }
         );
       },

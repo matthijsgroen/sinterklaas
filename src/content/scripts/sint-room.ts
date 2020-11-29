@@ -66,22 +66,6 @@ const sintroom = (queue: Queue) => {
     }
   );
 
-  const explainProblem1 = () => {
-    sint("Ik ben het verlanglijstje van Carl kwijtgeraakt.");
-    sint("Ik kan er helemaal niets van vinden in mijn boek.");
-    sint("Rijmpiet heeft het lijstje van Carl vast in zijn boekenkast.");
-    sint("Hij houd altijd erg goed dit soort zaken bij.");
-  };
-
-  const explainProblem2 = () => {
-    sint(
-      "Oh, ik lees hier net dat Catootje heel erg gek is op pepernotentaart..."
-    );
-    sint(
-      "Dat zou leuk zijn om te geven, misshien kan je er een aan Bakpiet vragen?"
-    );
-  };
-
   buttons([
     {
       id: "hall",
@@ -267,7 +251,6 @@ const sintroom = (queue: Queue) => {
 
                 updateState(a => a.updateSint("details"));
                 updateState(a => a.updateGlasses("done"));
-                updateState(a => a.updateListCarl("desired"));
 
                 sint("Ooh dit is echt heel fijn.", { glasses: true });
                 pause(200);
@@ -275,10 +258,25 @@ const sintroom = (queue: Queue) => {
                 sint("Ik weet dat ik wat dingetjes mis...");
 
                 sint("...even kijken hoor.");
-                onState(s => !s.sintProblems.problem1Solved, explainProblem1);
+
+                sint("Ik ben het verlanglijstje van Carl kwijtgeraakt.");
+                sint("Ik kan er helemaal niets van vinden in mijn boek.");
+                sint(
+                  "Rijmpiet heeft het lijstje van Carl vast in zijn boekenkast."
+                );
+                sint("Hij houd altijd erg goed dit soort zaken bij.");
+                updateState(a => a.updateListCarl("desired"));
+
                 sint("En verder...");
-                onState(s => !s.sintProblems.problem2Solved, explainProblem2);
-                sint("En ten slotte...");
+                sint(
+                  "Oh, ik lees hier net dat Catootje heel erg gek is op pepernotentaart..."
+                );
+                sint(
+                  "Dat zou leuk zijn om te geven, misschien wil Bakpiet er wel eentje maken?"
+                );
+                updateState(a => a.updateGingerbreadButtonPie("desired"));
+
+                sint("En, ten slotte...");
                 sint("Nee, dit was alles!");
               },
               () => {
