@@ -3,6 +3,7 @@ import scriptHelpers from "src/lib/script-helpers";
 import characterHelpers from "./helpers/characters";
 
 import keyButton from "src/content/assets/hotspots/mansion-key.png";
+import chickenButton from "src/content/assets/hotspots/mansion-chickens.png";
 import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__door-knock.mp3";
 import birdsTrack from "src/content/assets/sounds/345852__hargissssound__spring-birds-loop-with-low-cut-new-jersey.mp3";
 
@@ -73,6 +74,25 @@ const pietenhuis = (queue: Queue) => {
         hiddoPos({
           visible: false,
         });
+      },
+    },
+    {
+      id: "chickensInactive",
+      image: chickenButton,
+      position: [110, 632],
+      skip: s => s.gingerbreadButtonPie === "ingredients",
+      onClick: () => {
+        // No action yet
+      },
+    },
+    {
+      id: "chickens",
+      image: chickenButton,
+      position: [110, 632],
+      hoverEffect: "glow",
+      condition: s => s.gingerbreadButtonPie === "ingredients",
+      onClick: () => {
+        // TODO: Pick up eggs
       },
     },
     {
