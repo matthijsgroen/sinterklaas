@@ -39,8 +39,16 @@ const initialState: GameState = {
 // const devState: GameState = {
 //   mansionKey: true,
 //   mansionAccess: true,
-//   poemPiet: "new",
-//   sint: "new",
+//   poemPiet: "helped",
+//   sint: "details",
+//   bakingPiet: "helped",
+//   glasses: "done",
+//   recipe: "done",
+//   livingVisited: true,
+//   listCarl: "done",
+//   gingerbreadButtonPie: "inventory",
+//   neededIngriedients: [],
+//   newIngredientsFound: false,
 // };
 
 export const startScript = "intro";

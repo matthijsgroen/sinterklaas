@@ -131,10 +131,30 @@ const keuken = (queue: Queue) => {
                     );
                   },
                   () => {
-                    const [first, ...rest] = stillNeeded;
-                    bakpiet(`We zoeken nog ${rest.join(", ")} en ${first}.`);
+                    if (stillNeeded.length === 0) {
+                      bakpiet("We hebben alles! We kunnen aan de slag!");
+                      hiddo("Woohoo!");
+                      fadeOut();
+                      pause();
+                      fadeIn();
+                      bakpiet(
+                        "Alsjeblieft! Een heerlijke verse pepernoten taart."
+                      );
+                      bakpiet(
+                        "En kinderen thuis, er staat iets lekkers voor jullie in de oven!"
+                      );
+                      updateState(a =>
+                        a.updateGingerbreadButtonPie("inventory")
+                      );
+                    } else {
+                      const [first, ...rest] = stillNeeded;
+                      bakpiet(`We zoeken nog ${rest.join(", ")} en ${first}.`);
+                    }
                   }
                 );
+              },
+              () => {
+                bakpiet("Nog bedankt voor alle hulp!");
               }
             )
         );

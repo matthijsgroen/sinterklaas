@@ -67,6 +67,20 @@ const sintroom = (queue: Queue) => {
     }
   );
 
+  const gameComplete = () => {
+    onState(
+      s => s.gingerbreadButtonPie === "done" && s.listCarl === "done",
+      () => {
+        updateState(a => a.updateSint("helped"));
+        sint("Nou, volgens mij is alles weer op orde!");
+        sint("We gaan het gewoon toch weer redden dit jaar!");
+        fadeOut();
+        stopMusic();
+        jump("gameComplete");
+      }
+    );
+  };
+
   buttons([
     {
       id: "hall",
@@ -214,7 +228,7 @@ const sintroom = (queue: Queue) => {
                         sint("Super bedankt!");
                         updateState(a => a.updateListCarl("done"));
 
-                        // All complete? Wrap up game
+                        gameComplete();
                       },
                       () => {
                         hiddo(
@@ -247,7 +261,24 @@ const sintroom = (queue: Queue) => {
                           );
                         },
                         () => {
-                          // TODO: 2. Hints voor vinden ingredienten
+                          onState(
+                            s => s.gingerbreadButtonPie === "inventory",
+                            () => {
+                              hiddo(
+                                "Hij is klaar Sinterklaas! Ik heb de taart hier."
+                              );
+                              sint(
+                                "Ow dat zal Catootje heerlijk vinden. Dank je wel."
+                              );
+                              updateState(a =>
+                                a.updateGingerbreadButtonPie("done")
+                              );
+                              gameComplete();
+                            },
+                            () => {
+                              hiddo("We zijn er druk mee bezig.");
+                            }
+                          );
                         }
                       )
                   );

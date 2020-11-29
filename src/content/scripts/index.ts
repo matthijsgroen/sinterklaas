@@ -6,6 +6,7 @@ import living from "./living";
 import pietenhuis from "./pietenhuis";
 import poemroom from "./poem-room";
 import sintroom from "./sint-room";
+import gameComplete from "./gameComplete";
 
 const scripts = {
   bag,
@@ -16,6 +17,7 @@ const scripts = {
   pietenhuis,
   poemroom,
   sintroom,
+  gameComplete,
 };
 
 export default scripts;
