@@ -135,7 +135,7 @@ const keuken = (queue: Queue) => {
                       bakpiet("We hebben alles! We kunnen aan de slag!");
                       hiddo("Woohoo!");
                       fadeOut();
-                      pause();
+                      pause(3000);
                       fadeIn();
                       bakpiet(
                         "Alsjeblieft! Een heerlijke verse pepernoten taart."
@@ -145,6 +145,9 @@ const keuken = (queue: Queue) => {
                       );
                       updateState(a =>
                         a.updateGingerbreadButtonPie("inventory")
+                      );
+                      bakpiet(
+                        "Hiddo, wil je deze taart naar Sinterklaas brengen?"
                       );
                     } else {
                       const [first, ...rest] = stillNeeded;

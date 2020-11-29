@@ -79,7 +79,7 @@ const poemroom = (queue: Queue) => {
           "Ja spelletjes vind je super leuk!": () => {
             fout();
           },
-          "Ja spelletjes vindt je te gek!": () => {
+          "Ja spelletjes vind je te gek!": () => {
             updateState(a => a.updatePoemPiet("q3"));
             poem("Oooh! Die is goed!", { expression: "happy" });
             poem("*Ahum*", { expression: "small-smile" });
@@ -89,7 +89,7 @@ const poemroom = (queue: Queue) => {
       },
       () => {
         write("Maar ook de switch is erg in trek,");
-        write("Ja spelletjes vindt je te gek!");
+        write("Ja spelletjes vind je te gek!");
         vraag3();
       }
     );
@@ -136,7 +136,7 @@ const poemroom = (queue: Queue) => {
     onState(
       s => s.poemPiet === "new" || s.poemPiet === "visited",
       () => {
-        playMusic(rapTrack, { volume: 0.6 });
+        playMusic(rapTrack, { volume: 0.3 });
         hiddo("Ik heet Hiddo en ik help jou.");
         hiddo("Ja die rijmwoorden schud ik uit mijn mouw.", {
           expression: "enthusiastic",
@@ -205,7 +205,7 @@ const poemroom = (queue: Queue) => {
       "Hoe gaat het nu?": {
         condition: s => s.poemPiet === "helped",
         onClick: () => {
-          playMusic(rapTrack, { volume: 0.6 });
+          playMusic(rapTrack, { volume: 0.3 });
           poem("Nog van harte bedankt voor al je begrip!", {
             expression: "happy",
           });
@@ -224,7 +224,7 @@ const poemroom = (queue: Queue) => {
         condition: s => s.listCarl === "desired" && s.poemPiet === "helped",
         onClick: () => {
           poemPos({ visible: true });
-          playMusic(rapTrack, { volume: 0.6 });
+          playMusic(rapTrack, { volume: 0.3 });
 
           poem("Carl... Even denken, wat wilde hij voor geschenken?");
           poem("Ik ben ze wel gaan bewaren, maar ik had wat bezwaren...");
@@ -342,7 +342,7 @@ const poemroom = (queue: Queue) => {
           s => s.poemPiet === "helped",
           () => {
             hiddo("Hoi Rijmpiet, zou ik deze speculaaskruiden mogen hebben?");
-            playMusic(rapTrack, { volume: 0.6 });
+            playMusic(rapTrack, { volume: 0.3 });
 
             poem(
               "Dat is geen enkel bezwaar. Die kruiden staan daar alleen maar."

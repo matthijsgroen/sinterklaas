@@ -156,7 +156,7 @@ const pietenhuis = (queue: Queue) => {
             });
             playSound(doorKnock, { wait: true });
             hiddo("Hallo?");
-            piet("Hallo! Wat fijn dat je ons wil helpen!", {
+            piet("Hallo! Wat fijn dat je ons wilt helpen!", {
               expression: "happy",
             });
             hiddo("Zeker, zou je de deur open willen doen?");

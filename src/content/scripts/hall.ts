@@ -65,7 +65,7 @@ const pietenhuis = (queue: Queue) => {
         menu(
           {
             "Waarmee kan ik helpen?": () => {
-              piet("Goede vraag! even nadenken...", {
+              piet("Goede vraag! Even nadenken...", {
                 expression: "sip",
                 body: "think",
               });

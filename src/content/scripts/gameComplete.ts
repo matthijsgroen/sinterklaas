@@ -90,7 +90,7 @@ const gameComplete = (queue: Queue) => {
     }
   );
 
-  playMusic(rapTrack, { fadeIn: true });
+  playMusic(rapTrack, { volume: 0.3 });
   poem(
     "Maar dat was nog niet alles, oh nee. Hiddo hielp mij uit de ratsmodee."
   );

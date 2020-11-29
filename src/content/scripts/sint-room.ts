@@ -179,7 +179,7 @@ const sintroom = (queue: Queue) => {
         fadeIn();
         hiddo("Hee dit is helemaal geen kindertekening.");
         sint(
-          "Oh inderdaad. Dat is niet om naar te kijken, maar lekker op te snoepen."
+          "Oh inderdaad. Dat is niet om naar te kijken, maar lekker om op te snoepen."
         );
         pause();
         onState(
@@ -221,7 +221,7 @@ const sintroom = (queue: Queue) => {
                       () => {
                         hiddo("Ik heb denk ik wat u zoekt.");
                         sint(
-                          "Ow dat wat fijn, dan kan ik mijn boek weer bijwerken"
+                          "Ow wat fijn, dan kan ik mijn boek weer bijwerken."
                         );
                         sint("... ... ...");
                         sint("Ow... alweer dat... nouja dat mag hoor.");
@@ -316,7 +316,7 @@ const sintroom = (queue: Queue) => {
                 sint(
                   "Rijmpiet heeft het lijstje van Carl vast in zijn boekenkast."
                 );
-                sint("Hij houd altijd erg goed dit soort zaken bij.");
+                sint("Hij houdt altijd erg goed dit soort zaken bij.");
                 updateState(a => a.updateListCarl("desired"));
 
                 sint("En verder...");
@@ -328,7 +328,7 @@ const sintroom = (queue: Queue) => {
                 );
                 updateState(a => a.updateGingerbreadButtonPie("desired"));
 
-                sint("En, ten slotte...");
+                sint("En, tenslotte...");
                 sint("Nee, dit was alles!");
               },
               () => {
