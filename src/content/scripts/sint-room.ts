@@ -6,6 +6,7 @@ import bookHotspot from "../assets/hotspots/sint-room-book.png";
 import drawing1Hotspot from "../assets/hotspots/sint-room-drawing1.png";
 import drawing2Hotspot from "../assets/hotspots/sint-room-drawing2.png";
 import recipeHotspot from "../assets/hotspots/sint-room-recipe.png";
+import milkHotspot from "../assets/hotspots/sint-room-milk.png";
 
 import backgroundTrack from "src/content/assets/sounds/background-sint.mp3";
 import { MenuType } from "src/lib/script-helpers/flow";
@@ -82,12 +83,32 @@ const sintroom = (queue: Queue) => {
       },
     },
     {
+      id: "Milk",
+      image: milkHotspot,
+      position: [580, 310],
+      hoverEffect: "glow",
+      condition: s =>
+        s.gingerbreadButtonPie === "ingredients" &&
+        s.neededIngriedients.includes("milk"),
+      onClick: ({ hide }) => {
+        hiddoPos({ visible: true });
+        sintPos({ visible: true });
+        hiddo("Hoi Sinterklaas, mag ik deze melk meenemen?");
+        sint("Ja hoor, geen probleem, ik heb net mijn glas gevuld.");
+        hide();
+        updateState(a => a.findIngredient("milk"));
+
+        hiddo("Bedankt!");
+        hiddoPos({ visible: false });
+        sintPos({ visible: false });
+      },
+    },
+    {
       id: "book",
       image: bookHotspot,
       position: [610, 360],
-      onClick: ({ hide, show }) => {
-        hide();
-        show();
+      onClick: () => {
+        // no action
       },
     },
     {

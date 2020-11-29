@@ -1,4 +1,3 @@
-import { pauseQ } from "src/lib/events";
 import { Queue } from "src/lib/events/types";
 import scriptHelpers from "src/lib/script-helpers";
 
@@ -72,7 +71,7 @@ const keuken = (queue: Queue) => {
               s.gingerbreadButtonPie === "ingredients" ||
               s.gingerbreadButtonPie === "inventory"
             ),
-          () => bakpiet("Ah heerlijk om weer pepernoten te kunnen maken!")
+          () => bakpiet("Ah, heerlijk om weer pepernoten te kunnen maken!")
         );
 
         onState(
@@ -83,16 +82,16 @@ const keuken = (queue: Queue) => {
             hiddo("Catootje is namelijk helemaal gek op taart...");
             hiddo("Dus vroeg hij of je misschien een lekkere taart kon maken?");
             pause(1000);
-            bakpiet("Ja dat is ook een goed idee!");
-            bakpiet("AI! Probleem!");
+            bakpiet("Ja, dat is ook een goed idee!");
+            bakpiet("Ai! Probleem!");
             bakpiet(
-              "Ik heb alleen net al mijn ingredienten gebruikt om pepernoten te maken...."
+              "Ik heb alleen net al mijn ingrediënten gebruikt om pepernoten te maken...."
             );
             bakpiet(
-              "...dus moeten we nieuwe ingredienten regelen voor de taart!"
+              "...dus moeten we nieuwe ingrediënten regelen voor de taart!"
             );
             bakpiet("... even denken. Ik heb nodig:");
-            bakpiet("Melk. Eieren. Meel en speculaaskruiden.");
+            bakpiet("Melk, Eieren, Meel en speculaaskruiden.");
             bakpiet("Denk je dat je die kunt vinden voor mij?");
 
             hiddo("Tuurlijk! Geen probleem!");
@@ -110,6 +109,13 @@ const keuken = (queue: Queue) => {
                   gingerherbs: "Speculaaskruiden",
                   milk: "Melk",
                 };
+                onState(
+                  s => s.newIngredientsFound,
+                  () => {
+                    bakpiet("Ah, meer ingrediënten, fijn!");
+                    updateState(a => a.deliverIngredients());
+                  }
+                );
 
                 let stillNeeded: string[] = [];
                 onState(
@@ -125,7 +131,8 @@ const keuken = (queue: Queue) => {
                     );
                   },
                   () => {
-                    bakpiet(`We zoeken nog ${stillNeeded.join(", ")}.`);
+                    const [first, ...rest] = stillNeeded;
+                    bakpiet(`We zoeken nog ${rest.join(", ")} en ${first}.`);
                   }
                 );
               }

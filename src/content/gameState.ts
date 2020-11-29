@@ -18,6 +18,7 @@ export type GameState = {
     | "inventory"
     | "done";
   neededIngriedients: Ingredient[];
+  newIngredientsFound: boolean;
 };
 
 const initialState: GameState = {
@@ -32,6 +33,7 @@ const initialState: GameState = {
   listCarl: "none",
   gingerbreadButtonPie: "none",
   neededIngriedients: ["eggs", "flour", "gingerherbs", "milk"],
+  newIngredientsFound: false,
 };
 
 // const devState: GameState = {
@@ -84,6 +86,10 @@ export default createSlice({
       state.neededIngriedients = state.neededIngriedients.filter(
         ingriedient => ingriedient !== action.payload
       );
+      state.newIngredientsFound = true;
+    },
+    deliverIngredients: state => {
+      state.newIngredientsFound = false;
     },
     hasVisitedLiving: state => {
       state.livingVisited = true;

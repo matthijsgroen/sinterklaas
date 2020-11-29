@@ -3,6 +3,7 @@ import scriptHelpers from "src/lib/script-helpers";
 
 import bakpietHotspot from "../assets/hotspots/living-bakpiet.png";
 import bagHotspot from "../assets/hotspots/living-bag.png";
+import flourHotspot from "../assets/hotspots/living-flour.png";
 
 const living = (queue: Queue) => {
   const {
@@ -74,6 +75,36 @@ const living = (queue: Queue) => {
   };
 
   buttons([
+    {
+      id: "flourInactive",
+      image: flourHotspot,
+      position: [380, 390],
+      skip: s =>
+        s.gingerbreadButtonPie === "ingredients" ||
+        s.gingerbreadButtonPie === "inventory" ||
+        s.gingerbreadButtonPie === "done",
+      onClick: () => {
+        // no action
+      },
+    },
+    {
+      id: "flour",
+      image: flourHotspot,
+      position: [380, 390],
+      hoverEffect: "glow",
+      condition: s =>
+        s.gingerbreadButtonPie === "ingredients" &&
+        s.neededIngriedients.includes("flour"),
+      onClick: ({ hide }) => {
+        hiddoPos({ visible: true });
+        hiddo("Hee, dat is geen zak pakjes, dat is een zak meel!");
+        hide();
+
+        hiddo("Oef! Die is zwaar");
+        updateState(a => a.findIngredient("flour"));
+        hiddoPos({ visible: false });
+      },
+    },
     {
       id: "bag1",
       hoverEffect: "glow",

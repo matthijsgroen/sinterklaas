@@ -6,11 +6,13 @@ import keyButton from "src/content/assets/hotspots/mansion-key.png";
 import chickenButton from "src/content/assets/hotspots/mansion-chickens.png";
 import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__door-knock.mp3";
 import birdsTrack from "src/content/assets/sounds/345852__hargissssound__spring-birds-loop-with-low-cut-new-jersey.mp3";
+import chickenAlarm from "src/content/assets/sounds/316920__rudmer-rotteveel__chicken-single-alarm-call.mp3";
 
 const pietenhuis = (queue: Queue) => {
   const {
     playSound,
     playMusic,
+    pause,
     stopMusic,
     fadeOut,
     fadeIn,
@@ -92,7 +94,32 @@ const pietenhuis = (queue: Queue) => {
       hoverEffect: "glow",
       condition: s => s.gingerbreadButtonPie === "ingredients",
       onClick: () => {
-        // TODO: Pick up eggs
+        hiddoPos({ visible: true });
+        onState(
+          s => s.neededIngriedients.includes("eggs"),
+          () => {
+            hiddo("Hee kippetjes, hebben jullie misschien ook eieren?");
+            playSound(chickenAlarm);
+            hiddo("... ... ...");
+            hiddoPos({
+              x: 412,
+              y: 330,
+              visible: true,
+            });
+            hiddo("Dank je wel!");
+            hiddoPos({
+              x: 512,
+              y: 130,
+              visible: true,
+            });
+            pause(200);
+            updateState(a => a.findIngredient("eggs"));
+          },
+          () => {
+            hiddo("Nog bedankt voor de eitjes!");
+          }
+        );
+        hiddoPos({ visible: false });
       },
     },
     {

@@ -4,6 +4,7 @@ import scriptHelpers from "src/lib/script-helpers";
 import pietSipHotspot from "../assets/hotspots/poem-room-piet.png";
 import pietHappyHotspot from "../assets/hotspots/poem-room-piet2.png";
 import bookCarl from "../assets/hotspots/poem-room-carl.png";
+import herbs from "../assets/hotspots/poem-room-herbs.png";
 
 import rapTrack from "../assets/sounds/372069__swagmasterlord__80-s-old-school-rap-drum-loop.mp3";
 
@@ -311,6 +312,57 @@ const poemroom = (queue: Queue) => {
       skip: s => s.listCarl === "inventory" || s.listCarl === "done",
       onClick() {
         // no actions
+      },
+    },
+    {
+      id: "herbsInactive",
+      image: herbs,
+      position: [826, 233],
+      skip: s =>
+        s.gingerbreadButtonPie === "ingredients" ||
+        s.gingerbreadButtonPie === "inventory" ||
+        s.gingerbreadButtonPie === "done",
+      onClick() {
+        // no actions
+      },
+    },
+    {
+      id: "herbs",
+      image: herbs,
+      position: [826, 233],
+      hoverEffect: "glow",
+      condition: s =>
+        s.gingerbreadButtonPie === "ingredients" &&
+        s.neededIngriedients.includes("gingerherbs"),
+      onClick({ hide }) {
+        hiddoPos({ visible: true });
+        poemPos({ visible: true });
+
+        onState(
+          s => s.poemPiet === "helped",
+          () => {
+            hiddo("Hoi Rijmpiet, zou ik deze speculaaskruiden mogen hebben?");
+            playMusic(rapTrack, { volume: 0.6 });
+
+            poem(
+              "Dat is geen enkel bezwaar. Die kruiden staan daar alleen maar."
+            );
+            poem(
+              "Jij kan er vast iemand mee van dienst zijn. En die gedachte vind ik fijn!"
+            );
+            stopMusic({ fadeOut: true });
+          },
+          () => {
+            hiddo("Hoi Rijmpiet, zou ik deze speculaaskruiden mogen hebben?");
+            poem("Jah... is goed... neem maar mee...");
+          }
+        );
+        hide();
+        hiddo("Bedankt!");
+        updateState(a => a.findIngredient("gingerherbs"));
+
+        hiddoPos({ visible: false });
+        poemPos({ visible: false });
       },
     },
     {

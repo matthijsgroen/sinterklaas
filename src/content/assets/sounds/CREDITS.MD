@@ -6,3 +6,4 @@
 - 'Spring Birds Loop with Low-Cut (New Jersey)' by [hargissssound](https://freesound.org/people/hargissssound/) - CC0 1.0
 - '80's Old School Rap Drum Loop' by [SwagMasterLord](https://freesound.org/people/SwagMasterLord/) - CC0 1.0
 - 'Paper Ripping' by [EminYildirim](https://freesound.org/people/EminYildirim/) - CC0 1.0
+- 'Chicken Single Alarm Call' by [Rudmer_Rotteveel](https://freesound.org/people/Rudmer_Rotteveel/) - CC0 1.0
