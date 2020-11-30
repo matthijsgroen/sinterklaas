@@ -26,13 +26,20 @@ const character = (queue: Queue) => <TDoll extends keyof DollSettings>(
     doll: (pose: DollSettings[TDoll]) => {
       dispatch(characters.actions.dollUpdate(id, pose));
     },
-    say: (contents: string, pose?: DollSettings[TDoll]) => {
+    say: (
+      contents: string,
+      pose?: DollSettings[TDoll],
+      afterPose?: DollSettings[TDoll]
+    ) => {
       if (pose) {
         dispatch(characters.actions.dollUpdate(id, pose));
       }
       dispatch(dialog.actions.say(name, contents));
       pause();
       dispatch(dialog.actions.hide());
+      if (afterPose) {
+        dispatch(characters.actions.dollUpdate(id, afterPose));
+      }
     },
     portrait: (contents: string, pose?: DollSettings[TDoll]) => {
       dispatch(

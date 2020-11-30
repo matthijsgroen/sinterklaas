@@ -65,8 +65,10 @@ const intro = (queue: Queue) => {
   reporter("Wat voor dingen moeten er dan nog geregeld worden?");
   piet("Nou, van alles...", { expression: "sip" });
   piet("Maar ik weet wat!", { expression: "happy", body: "pointUp" });
-  piet("Misschien kunnen de kinderen ons helpen!", { expression: "happy" });
-  piet("Dan komt het vast wel goed!", { body: "default" });
+  piet("Misschien kunnen de kinderen ons helpen!", {
+    expression: "small-smile",
+  });
+  piet("Dan komt het vast wel goed!", { body: "default", expression: "happy" });
   fadeOut();
   pietPos({ visible: false });
 

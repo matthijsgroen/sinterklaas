@@ -3,13 +3,16 @@ import className from "src/lib/className";
 import styles from "./Hiddo.module.scss";
 
 export interface HiddoProps {
-  body?: "default" | "fists";
+  body?: "default" | "fists" | "open" | "chin";
   expression?:
     | "happy"
     | "shocked"
     | "enthusiastic"
     | "very-enthusiastic"
-    | "mouth-closed";
+    | "mouth-closed"
+    | "question"
+    | "sip"
+    | "think";
 }
 
 const Hiddo: React.FC<HiddoProps> = ({
@@ -21,6 +24,8 @@ const Hiddo: React.FC<HiddoProps> = ({
       className={className({
         [styles.body]: body === "default",
         [styles.bodyFists]: body === "fists",
+        [styles.bodyOpen]: body === "open",
+        [styles.chin]: body === "chin",
       })}
     />
     <div className={styles[`exp-${expression}`]} />

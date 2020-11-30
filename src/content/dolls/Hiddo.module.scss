@@ -21,6 +21,14 @@
   @include img("body-fists");
 }
 
+.bodyOpen {
+  @include img("body-arms-open");
+}
+
+.chin {
+  @include img("chin");
+}
+
 .exp-happy {
   @include img("01");
 }
@@ -39,4 +47,16 @@
 
 .exp-mouth-closed {
   @include img("05");
+}
+
+.exp-question {
+  @include img("06");
+}
+
+.exp-sip {
+  @include img("07");
+}
+
+.exp-think {
+  @include img("08");
 }

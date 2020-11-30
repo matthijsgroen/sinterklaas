@@ -22,7 +22,7 @@ const pietenhuis = (queue: Queue) => {
     playMusic,
     stopMusic,
   } = scriptHelpers(queue);
-  const { say: hiddo, pos: hiddoPos } = manageCharacter(
+  const { say: hiddo, pos: hiddoPos, doll: hiddoDoll } = manageCharacter(
     "hiddo",
     "hiddo",
     "Hiddo",
@@ -33,7 +33,7 @@ const pietenhuis = (queue: Queue) => {
       dollSettings: {},
     }
   );
-  const { say: piet, pos: pietPos } = manageCharacter(
+  const { say: piet, pos: pietPos, doll: pietDoll } = manageCharacter(
     "piet",
     "piet",
     "Hoofdpiet",
@@ -61,6 +61,7 @@ const pietenhuis = (queue: Queue) => {
         piet("Welkom! Leuk dat je ons wilt komen helpen!", {
           expression: "happy",
         });
+        pietDoll({ expression: "small-smile" });
         hiddoPos({ x: 700, y: 130, visible: true });
         menu(
           {
@@ -142,9 +143,11 @@ const pietenhuis = (queue: Queue) => {
             },
             "Waar is Sinterklaas?": () => {
               piet("Sinterklaas is boven in zijn werkkamer.", {
-                expression: "sip",
+                expression: "small-smile",
               });
-              piet("Hier de trap op en dan naar links.", { expression: "sip" });
+              piet("Hier de trap op en dan naar links.", {
+                expression: "happy",
+              });
             },
             "Over die pakjes zakken hiernaast....": {
               condition: s =>
@@ -152,25 +155,52 @@ const pietenhuis = (queue: Queue) => {
                 s.livingVisited &&
                 (s.glasses === "location" || s.glasses === "none"),
               onClick: () => {
-                piet("Ja wat wil je weten?");
-                hiddo("Ik vroeg me af welke zak met pakjes voor ons was...");
+                hiddoDoll({ expression: "mouth-closed" });
                 piet(
-                  "Oeh, wil je ze helpen bezorgen? Dat hoeft niet hoor, dat doen de pieten wel!"
+                  "Ja wat wil je weten?",
+                  { expression: "grin" },
+                  { expression: "small-smile" }
                 );
                 hiddo(
-                  "Nou ik wilde kijken of er misschien iets tussen zat om aan de Sint te geven..."
+                  "Ik vroeg me af welke zak met pakjes voor ons was...",
+                  { expression: "question" },
+                  { expression: "mouth-closed" }
                 );
                 piet(
-                  "Oh dat is aardig! Het is natuurlijk tenslotte zijn verjaardag!"
+                  "Oeh, wil je ze helpen bezorgen? Dat hoeft niet hoor, dat doen de pieten wel!",
+                  { expression: "happy" },
+                  { expression: "small-smile" }
                 );
-                hiddo("Eh, ja, dat is precies de reden!");
-                piet("De rechter zak met pakjes is voor jullie.");
-                hiddo("Super, bedankt!");
+                hiddo(
+                  "Nou ik wilde kijken of er misschien iets tussen zat om aan de Sint te geven...",
+                  { expression: "enthusiastic", body: "open" },
+                  { expression: "mouth-closed", body: "default" }
+                );
+                piet(
+                  "Oh dat is aardig! Het is natuurlijk tenslotte zijn verjaardag!",
+                  { expression: "happy" },
+                  { expression: "small-smile" }
+                );
+                hiddo(
+                  "Eh, ja, dat is precies de reden!",
+                  { expression: "very-enthusiastic" },
+                  { expression: "mouth-closed" }
+                );
+                piet(
+                  "De rechter zak met pakjes is voor jullie.",
+                  { expression: "happy" },
+                  { expression: "small-smile" }
+                );
+                hiddo("Super, bedankt!", {
+                  body: "fists",
+                  expression: "very-enthusiastic",
+                });
                 updateState(a => a.updateGlasses("location"));
+                hiddoDoll({ body: "default", expression: "mouth-closed" });
               },
             },
             "Ik kijk nog even rond": ({ endDialog }) => {
-              piet("Ok.", { expression: "sip" });
+              piet("Ok.", { expression: "small-smile" });
               endDialog();
               pietPos({ visible: false });
               hiddoPos({ visible: false });

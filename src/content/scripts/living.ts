@@ -49,26 +49,36 @@ const living = (queue: Queue) => {
 
   const bagInterest = () => {
     hiddoPos({ visible: true, x: 300, y: 110, flipped: false });
-    hiddo("Oeh! Pakjes zakken....");
+    hiddo("Oeh! Pakjes zakken....", { expression: "very-enthusiastic" });
 
     onState(
       s => s.sint === "glasses" && s.glasses !== "inventory",
       () => {
         hiddo(
-          "Misschien zit in een van deze zakken wel een bril voor Sinterklaas?"
+          "Misschien zit in een van deze zakken wel een bril voor Sinterklaas?",
+          { body: "chin", expression: "question" }
         );
       },
       () => {
-        hiddo("Wat zou hier in zitten?");
+        hiddo("Wat zou hier in zitten?", {
+          body: "chin",
+          expression: "question",
+        });
       }
     );
 
-    hiddo("... ... ...");
-    hiddo("Het is niet netjes om zo maar in een zak te gaan rommelen.");
+    hiddo("... ... ...", { expression: "mouth-closed" });
+    hiddo("Het is niet netjes om zo maar in een zak te gaan rommelen.", {
+      expression: "sip",
+      body: "default",
+    });
     onState(
       s => s.sint === "glasses" && s.glasses !== "inventory",
       () => {
-        hiddo("Hoe kan ik er achter komen welke zak onze pakjes bevat?");
+        hiddo("Hoe kan ik er achter komen welke zak onze pakjes bevat?", {
+          body: "chin",
+          expression: "think",
+        });
       }
     );
     hiddoPos({ visible: false });
@@ -148,39 +158,61 @@ const living = (queue: Queue) => {
       onClick: ({ hide }) => {
         hide();
         bakpietPos({ visible: true });
-        hiddoPos({ visible: true, x: 200, y: 110, flipped: true });
+        hiddoPos({
+          visible: true,
+          x: 200,
+          y: 110,
+          flipped: true,
+          dollSettings: { body: "default", expression: "mouth-closed" },
+        });
+
         onState(
-          s => s.recipe === "inventory",
+          s => s.bakingPiet === "new",
           () => {
-            hiddo("Hoi Bakpiet, ik heb je recept gevonden!");
-            bakpiet("Oooh super fijn! Dank je wel!");
-            bakpiet("... ... ...");
-            bakpiet("Ik heb meteen zin om wat lekkers te gaan maken!");
             bakpiet(
-              "Als je zin hebt in pepernoten, kom dan straks maar langs in de keuken!"
+              "Hallo daar! Fijn dat je ons komt helpen!",
+              { expression: "happy" },
+              { expression: "small-smile" }
             );
-            updateState(a => a.updateBakingPiet("helped"));
-            updateState(a => a.updateRecipe("done"));
+            hiddo(
+              "Hee, bakpiet! Hoor jij niet in de keuken te zijn?",
+              {
+                expression: "question",
+              },
+              { expression: "mouth-closed" }
+            );
+            bakpiet(
+              "Ja, ik wou dat ik daar kon zijn... Maar ik ben mijn recept voor pepernoten kwijt!",
+              { expression: "sip" }
+            );
+            bakpiet(
+              "Volgens mij moet het ergens tussen deze pakjes liggen...",
+              { expression: "sip-open" },
+              { expression: "sip2" }
+            );
+            hiddo(
+              "Misschien kan ik je wel helpen met het vinden van het recept!",
+              { body: "open", expression: "happy" },
+              { body: "default", expression: "mouth-closed" }
+            );
+            bakpiet("Ooh dat zou echt geweldig zijn.", { expression: "happy" });
+
+            updateState(a => a.updateBakingPiet("visited"));
+            updateState(a => a.updateRecipe("desired"));
           },
           () =>
             onState(
-              s => s.bakingPiet === "new",
+              s => s.recipe === "inventory",
               () => {
-                bakpiet("Hallo daar! Fijn dat je ons komt helpen!");
-                hiddo("Hee, bakpiet! Hoor jij niet in de keuken te zijn?");
+                hiddo("Hoi Bakpiet, ik heb je recept gevonden!");
+                bakpiet("Oooh super fijn! Dank je wel!");
+                bakpiet("... ... ...");
+                bakpiet("Ik heb meteen zin om wat lekkers te gaan maken!");
                 bakpiet(
-                  "Ja, ik wou dat ik daar kon zijn... Maar ik ben mijn recept voor pepernoten kwijt!"
+                  "Als je zin hebt in pepernoten, kom dan straks maar langs in de keuken!"
                 );
-                bakpiet(
-                  "Volgens mij moet het ergens tussen deze pakjes liggen..."
-                );
-                hiddo(
-                  "Misschien kan ik je wel helpen met het vinden van het recept!"
-                );
-                bakpiet("Ooh dat zou echt geweldig zijn.");
-
-                updateState(a => a.updateBakingPiet("visited"));
-                updateState(a => a.updateRecipe("desired"));
+                updateState(a => a.updateBakingPiet("helped"));
+                updateState(a => a.updateRecipe("done"));
               },
               () => {
                 hiddo("En, het recept al kunnen vinden?");

@@ -28,7 +28,7 @@ const pietenhuis = (queue: Queue) => {
 
   const { pietP } = characterHelpers(queue);
   const piet = pietP({});
-  const { say: hiddo, pos: hiddoPos } = manageCharacter(
+  const { say: hiddo, pos: hiddoPos, doll: hiddoDoll } = manageCharacter(
     "hiddo",
     "hiddo",
     "Hiddo",
@@ -64,6 +64,7 @@ const pietenhuis = (queue: Queue) => {
           y: 130,
           flipped: true,
           visible: true,
+          dollSettings: { expression: "happy" },
         });
         hiddo("Hey, hier ligt volgens mij een sleutel!");
         hiddoPos({
@@ -106,7 +107,7 @@ const pietenhuis = (queue: Queue) => {
               y: 330,
               visible: true,
             });
-            hiddo("Dank je wel!");
+            hiddo("Dank je wel!", { expression: "very-enthusiastic" });
             hiddoPos({
               x: 512,
               y: 130,
@@ -153,13 +154,15 @@ const pietenhuis = (queue: Queue) => {
               y: 130,
               flipped: true,
               visible: true,
+              dollSettings: { expression: "mouth-closed" },
             });
             playSound(doorKnock, { wait: true });
-            hiddo("Hallo?");
+            hiddo("Hallo?", { expression: "happy" });
             piet("Hallo! Wat fijn dat je ons wilt helpen!", {
               expression: "happy",
             });
             hiddo("Zeker, zou je de deur open willen doen?");
+            hiddoDoll({ expression: "mouth-closed" });
             piet("Ja graag! Maar ik ben de sleutel kwijtgeraakt.", {
               expression: "sip",
             });
