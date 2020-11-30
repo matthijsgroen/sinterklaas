@@ -25,12 +25,12 @@
     "wait-on": "^5.2.0"
   },
   "dependencies": {
-    "express": "4.17.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "electron-is-dev": "^1.2.0",
+    "express": "4.17.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-redux": "^7.2.2",
@@ -45,19 +45,30 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/ --ext .js,.ts,.jsx,.tsx",
-    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js --publish never",
+    "package": "electron-builder build --mac --win --linux deb -c.extraMetadata.main=build/electron/main.js --publish never",
     "preelectron-pack": "yarn build",
-    "electron-pack": "electron-builder build --mac --win --c.extraMetadata.main=build/electron.js",
+    "electron-pack": "electron-builder build --mac --win --linux deb --c.extraMetadata.main=build/electron.js",
     "release": "yarn build && yarn build-electron && yarn package"
   },
   "build": {
     "appId": "com.example.electron-cra",
     "files": [
       "build/**/*",
+      "build/icon.png",
       "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "assets"
+    },
+    "win": {
+      "icon": "build/icon.png"
+    },
+    "mac": { 
+      "category": "public.app-category.adventure-games",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "category": "AdventureGame"
     }
   },
   "browserslist": {
@@ -95,11 +106,15 @@
       ],
       "@typescript-eslint/explicit-module-boundary-types": "off"
     },
-    "overrides": [{
-      "files": ["public/electron.js"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off"
+    "overrides": [
+      {
+        "files": [
+          "public/electron.js"
+        ],
+        "rules": {
+          "@typescript-eslint/no-var-requires": "off"
+        }
       }
-    }]
+    ]
   }
 }
