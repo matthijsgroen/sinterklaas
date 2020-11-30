@@ -1,9 +1,9 @@
 {
   "name": "sint-adventure",
-  "productName": "Sinterklaas avontuur",
+  "productName": "Hiddo redt het Sinterklaasfeest",
   "description": "Help de Sint met de 5 december voorbereidingen",
   "author": "Matthijs Groen <matthijs.groen@gmail.com>",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",

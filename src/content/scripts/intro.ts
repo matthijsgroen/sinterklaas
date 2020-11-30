@@ -26,7 +26,7 @@ const intro = (queue: Queue) => {
   });
 
   fadeIn();
-  pause();
+  pause(800);
   hiddo("Mam, het gaat beginnen!");
   updateBackground({ image: "livingRoom", tv: true, kids: false });
   jinte("Hoofdpiet is op de TV!");

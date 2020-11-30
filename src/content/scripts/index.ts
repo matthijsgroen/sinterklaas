@@ -7,6 +7,7 @@ import pietenhuis from "./pietenhuis";
 import poemroom from "./poem-room";
 import sintroom from "./sint-room";
 import gameComplete from "./gameComplete";
+import titleScreen from "./title-screen";
 
 const scripts = {
   bag,
@@ -18,6 +19,7 @@ const scripts = {
   poemroom,
   sintroom,
   gameComplete,
+  titleScreen,
 };
 
 export default scripts;

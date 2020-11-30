@@ -17,6 +17,9 @@
 .black {
   background-color: black;
 }
+.title {
+  @include img("title-screen.jpg");
+}
 .livingRoom {
   @include img("living-room.jpg");
 }

@@ -51,7 +51,7 @@ const initialState: GameState = {
 //   newIngredientsFound: false,
 // };
 
-export const startScript = "intro";
+export const startScript = "titleScreen";
 
 export default createSlice({
   name: "game",
