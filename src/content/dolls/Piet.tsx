@@ -4,7 +4,7 @@ import styles from "./Piet.module.scss";
 
 export interface PietProps {
   color?: "blue" | "red" | "white";
-  body?: "default" | "pointUp" | "think" | "cooking";
+  body?: "default" | "pointUp" | "think" | "hip";
   expression?:
     | "happy"
     | "hmm"
@@ -15,8 +15,12 @@ export interface PietProps {
     | "crying"
     | "small-smile"
     | "sip2"
-    | "sip-open";
+    | "sip-open"
+    | "concentrated"
+    | "defeated"
+    | "wink";
   glasses?: boolean;
+  cooking?: boolean;
 }
 
 const Piet: React.FC<PietProps> = ({
@@ -24,6 +28,7 @@ const Piet: React.FC<PietProps> = ({
   expression = "happy",
   color = "blue",
   glasses = false,
+  cooking = false,
 }) => (
   <div className={styles.piet}>
     <div
@@ -36,11 +41,13 @@ const Piet: React.FC<PietProps> = ({
           color === "red" && (body === undefined || body === "default"),
         [styles.pointUp2]: color === "red" && body === "pointUp",
         [styles.think2]: color === "red" && body === "think",
+
         [styles.body3]:
           color === "white" && (body === undefined || body === "default"),
         [styles.pointUp3]: color === "white" && body === "pointUp",
         [styles.think3]: color === "white" && body === "think",
-        [styles.cooking3]: color === "white" && body === "cooking",
+        [styles.hip3]: color === "white" && body === "hip",
+        [styles.cooking]: !!cooking === true,
       })}
     />
     <div className={styles[`exp-${expression}`]} />

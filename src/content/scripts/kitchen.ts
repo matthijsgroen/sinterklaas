@@ -10,6 +10,7 @@ const keuken = (queue: Queue) => {
     fadeOut,
     updateBackground,
     manageCharacter,
+    hpunch,
     jump,
     hold,
     buttons,
@@ -39,7 +40,7 @@ const keuken = (queue: Queue) => {
       x: 650,
       y: 110,
       visible: false,
-      dollSettings: { color: "white", body: "cooking" },
+      dollSettings: { color: "white", body: "default", cooking: true },
     }
   );
 
@@ -71,31 +72,67 @@ const keuken = (queue: Queue) => {
               s.gingerbreadButtonPie === "ingredients" ||
               s.gingerbreadButtonPie === "inventory"
             ),
-          () => bakpiet("Ah, heerlijk om weer pepernoten te kunnen maken!")
+          () =>
+            bakpiet(
+              "Ah, heerlijk om weer pepernoten te kunnen maken!",
+              { expression: "concentrated" },
+              { expression: "small-smile" }
+            )
         );
 
         onState(
           s => s.gingerbreadButtonPie === "desired",
           () => {
             hiddoPos({ visible: true });
-            hiddo("Bakpiet, Sinterklaas had een leuk idee!");
-            hiddo("Catootje is namelijk helemaal gek op taart...");
-            hiddo("Dus vroeg hij of je misschien een lekkere taart kon maken?");
-            pause(1000);
-            bakpiet("Ja, dat is ook een goed idee!");
-            bakpiet("Ai! Probleem!");
-            bakpiet(
-              "Ik heb alleen net al mijn ingrediënten gebruikt om pepernoten te maken...."
-            );
-            bakpiet(
-              "...dus moeten we nieuwe ingrediënten regelen voor de taart!"
-            );
-            bakpiet("... even denken. Ik heb nodig:");
-            bakpiet("Melk, Eieren, Meel en speculaaskruiden.");
-            bakpiet("Denk je dat je die kunt vinden voor mij?");
 
-            hiddo("Tuurlijk! Geen probleem!");
-            hiddo("...denk ik...");
+            hiddo("Bakpiet, Sinterklaas had een leuk idee!", {
+              expression: "enthusiastic",
+            });
+            hiddo("Catootje is namelijk helemaal gek op taart...", {
+              expression: "happy",
+              body: "chin",
+            });
+            hiddo(
+              "Dus vroeg hij of je misschien een lekkere taart kon maken.",
+              { expression: "very-enthusiastic", body: "default" },
+              { expression: "mouth-closed" }
+            );
+            bakpiet("Ja, dat is ook een goed idee!", {
+              body: "pointUp",
+              expression: "happy",
+            });
+            hpunch();
+            bakpiet("Ai! Probleem!", {
+              body: "hip",
+              expression: "defeated",
+            });
+            bakpiet(
+              "Ik heb alleen net al mijn ingrediënten gebruikt om pepernoten te maken....",
+              { expression: "sip-open" }
+            );
+            bakpiet(
+              "...dus moeten we nieuwe ingrediënten regelen voor de taart!",
+              { body: "pointUp", expression: "happy" }
+            );
+            bakpiet("... even denken. Ik heb nodig:", {
+              body: "think",
+              expression: "sip",
+            });
+            bakpiet("Melk, Eieren, Meel en Speculaaskruiden.", {
+              expression: "happy",
+              body: "default",
+            });
+            bakpiet(
+              "Denk je dat je die kunt vinden voor mij?",
+              { expression: "grin" },
+              { expression: "small-smile" }
+            );
+
+            hiddo("Tuurlijk! Geen probleem!", {
+              body: "default",
+              expression: "enthusiastic",
+            });
+            hiddo("...denk ik...", { body: "chin", expression: "think" });
             updateState(a => a.updateGingerbreadButtonPie("ingredients"));
             hiddoPos({ visible: false });
           },
@@ -112,7 +149,9 @@ const keuken = (queue: Queue) => {
                 onState(
                   s => s.newIngredientsFound,
                   () => {
-                    bakpiet("Ah, meer ingrediënten, fijn!");
+                    bakpiet("Ah, meer ingrediënten, fijn!", {
+                      expression: "happy",
+                    });
                     updateState(a => a.deliverIngredients());
                   }
                 );
@@ -127,37 +166,74 @@ const keuken = (queue: Queue) => {
                   },
                   () => {
                     bakpiet(
-                      `We hebben alleen nog maar ${stillNeeded[0]} nodig!`
+                      `We hebben alleen nog maar ${stillNeeded[0]} nodig!`,
+                      { body: "pointUp", expression: "happy" }
                     );
                   },
                   () => {
                     if (stillNeeded.length === 0) {
-                      bakpiet("We hebben alles! We kunnen aan de slag!");
-                      hiddo("Woohoo!");
+                      hiddoPos({
+                        visible: true,
+                        dollSettings: {
+                          body: "default",
+                          expression: "mouth-closed",
+                        },
+                      });
+                      bakpiet(
+                        "We hebben alles! We kunnen aan de slag!",
+                        { expression: "happy", body: "hip" },
+                        { expression: "small-smile" }
+                      );
+                      hiddo(
+                        "Woohoo!",
+                        { body: "fists", expression: "very-enthusiastic" },
+                        { body: "default", expression: "mouth-closed" }
+                      );
                       fadeOut();
                       pause(3000);
                       fadeIn();
                       bakpiet(
-                        "Alsjeblieft! Een heerlijke verse pepernoten taart."
+                        "Alsjeblieft! Een heerlijke verse pepernoten taart.",
+                        {
+                          body: "hip",
+                          cooking: false,
+                          expression: "small-smile",
+                        }
                       );
+                      hiddoPos({ visible: false });
+                      bakpietPos({ visible: false });
+                      pause(300);
+                      bakpietPos({ x: 400, y: 50, scale: 1.4, visible: true });
                       bakpiet(
-                        "En kinderen thuis, er staat iets lekkers voor jullie in de oven!"
+                        "En kinderen thuis, er staat iets lekkers voor jullie in de oven!",
+                        { expression: "wink" }
                       );
+                      pause(300);
+                      bakpietPos({ visible: false });
+                      pause(300);
+                      bakpietPos({ x: 650, y: 110, scale: 1, visible: true });
+                      hiddoPos({ visible: true });
+
                       updateState(a =>
                         a.updateGingerbreadButtonPie("inventory")
                       );
                       bakpiet(
-                        "Hiddo, wil je deze taart naar Sinterklaas brengen?"
+                        "Hiddo, wil je deze taart naar Sinterklaas brengen?",
+                        { expression: "grin", cooking: true, body: "default" }
                       );
+                      hiddoPos({ visible: false });
                     } else {
                       const [first, ...rest] = stillNeeded;
-                      bakpiet(`We zoeken nog ${rest.join(", ")} en ${first}.`);
+                      bakpiet(`We zoeken nog ${rest.join(", ")} en ${first}.`, {
+                        body: "think",
+                        expression: "sip",
+                      });
                     }
                   }
                 );
               },
               () => {
-                bakpiet("Nog bedankt voor alle hulp!");
+                bakpiet("Nog bedankt voor alle hulp!", { expression: "happy" });
               }
             )
         );

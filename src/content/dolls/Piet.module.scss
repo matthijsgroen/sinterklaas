@@ -41,16 +41,32 @@
   @include img("body3");
 }
 
-.cooking3 {
+.body3.cooking {
   @include img("body3-cook");
+}
+
+.hip3 {
+  @include img("body3-hip");
+}
+
+.hip3.cooking {
+  @include img("body3-hip-cooking");
 }
 
 .pointUp3 {
   @include img("body3-point-up");
 }
 
+.pointUp3.cooking {
+  @include img("body3-point-up-cooking");
+}
+
 .think3 {
   @include img("body3-think");
+}
+
+.think3.cooking {
+  @include img("body3-think-cooking");
 }
 
 .glasses {
@@ -95,4 +111,16 @@
 
 .exp-sip-open {
   @include img("10");
+}
+
+.exp-concentrated {
+  @include img("11");
+}
+
+.exp-defeated {
+  @include img("12");
+}
+
+.exp-wink {
+  @include img("13");
 }
