@@ -11,7 +11,7 @@ const living = (queue: Queue) => {
     fadeIn,
     updateBackground,
     hold,
-
+    pause,
     jump,
     buttons,
     manageCharacter,
@@ -109,8 +109,16 @@ const living = (queue: Queue) => {
         hiddoPos({ visible: true });
         hiddo("Hee, dat is geen zak pakjes, dat is een zak meel!");
         hide();
-
+        hiddoPos({ x: 300, y: 230, dollSettings: { expression: "shocked" } });
         hiddo("Oef! Die is zwaar");
+
+        hiddoPos({
+          x: 300,
+          y: 110,
+          dollSettings: { expression: "mouth-closed" },
+        });
+        pause(200);
+
         updateState(a => a.findIngredient("flour"));
         hiddoPos({ visible: false });
       },
