@@ -18,7 +18,8 @@ export interface PietProps {
     | "sip-open"
     | "concentrated"
     | "defeated"
-    | "wink";
+    | "wink"
+    | "big-smile";
   glasses?: boolean;
   cooking?: boolean;
 }

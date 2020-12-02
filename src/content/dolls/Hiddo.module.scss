@@ -25,6 +25,10 @@
   @include img("body-arms-open");
 }
 
+.bodyWave {
+  @include img("body-wave");
+}
+
 .chin {
   @include img("chin");
 }

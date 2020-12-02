@@ -3,7 +3,7 @@ import className from "src/lib/className";
 import styles from "./Hiddo.module.scss";
 
 export interface HiddoProps {
-  body?: "default" | "fists" | "open" | "chin";
+  body?: "default" | "fists" | "open" | "chin" | "wave";
   expression?:
     | "happy"
     | "shocked"
@@ -26,6 +26,7 @@ const Hiddo: React.FC<HiddoProps> = ({
         [styles.bodyFists]: body === "fists",
         [styles.bodyOpen]: body === "open",
         [styles.chin]: body === "chin",
+        [styles.bodyWave]: body === "wave",
       })}
     />
     <div className={styles[`exp-${expression}`]} />
