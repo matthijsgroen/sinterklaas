@@ -36,26 +36,11 @@ const initialState: GameState = {
   newIngredientsFound: false,
 };
 
-// const devState: GameState = {
-//   mansionKey: true,
-//   mansionAccess: true,
-//   poemPiet: "helped",
-//   sint: "details",
-//   bakingPiet: "helped",
-//   glasses: "done",
-//   recipe: "done",
-//   livingVisited: true,
-//   listCarl: "done",
-//   gingerbreadButtonPie: "inventory",
-//   neededIngriedients: [],
-//   newIngredientsFound: false,
-// };
-
 export const startScript = "titleScreen";
 
 export default createSlice({
   name: "game",
-  initialState, //: devState,
+  initialState,
   reducers: {
     getKey: state => {
       state.mansionKey = true;
