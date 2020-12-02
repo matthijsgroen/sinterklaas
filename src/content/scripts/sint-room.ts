@@ -227,11 +227,30 @@ const sintroom = (queue: Queue) => {
       position: [783, 149],
       onClick: ({ hide, show }) => {
         hide();
-        hide("book");
-        sintPos({
-          visible: true,
-          dollSettings: { body: "book", glasses: true, expression: "reading" },
-        });
+        onState(
+          s => s.glasses === "done",
+          () => {
+            hide("book");
+            sintPos({
+              visible: true,
+              dollSettings: {
+                body: "book",
+                glasses: true,
+                expression: "reading",
+              },
+            });
+          },
+          () => {
+            sintPos({
+              visible: true,
+              dollSettings: {
+                body: "default",
+                glasses: false,
+                expression: "mouth-closed",
+              },
+            });
+          }
+        );
         onState(
           s => s.sint === "details",
           () => {
