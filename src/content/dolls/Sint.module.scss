@@ -17,10 +17,34 @@
   @include img("body");
 }
 
+.book {
+  @include img("body-book");
+}
+
 .glasses {
   @include img("glasses");
 }
 
 .exp-happy {
   @include img("01");
+}
+
+.exp-wink {
+  @include img("02");
+}
+
+.exp-mouth-closed {
+  @include img("03");
+}
+
+.exp-mouth-open-sip {
+  @include img("04");
+}
+
+.exp-eyes-down {
+  @include img("05");
+}
+
+.exp-reading {
+  @include img("06");
 }

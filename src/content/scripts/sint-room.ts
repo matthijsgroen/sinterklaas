@@ -28,7 +28,7 @@ const sintroom = (queue: Queue) => {
     manageCharacter,
   } = scriptHelpers(queue);
 
-  const { say: sint, pos: sintPos } = manageCharacter(
+  const { say: sint, pos: sintPos, doll: sintDoll } = manageCharacter(
     "sint",
     "sint",
     "Sinterklaas",
@@ -60,20 +60,27 @@ const sintroom = (queue: Queue) => {
     state => state.sint === "new",
     () => {
       sintPos({ visible: true });
-      sint("Hey, Hiddo, wat gezellig dat je er bent!");
+      sint("Hey, Hiddo, wat gezellig dat je er bent!", { expression: "happy" });
 
       sintPos({ visible: false });
       updateState(actions => actions.updateSint("visited"));
     }
   );
 
-  const gameComplete = () => {
+  const gameComplete = (show: (id?: string | undefined) => void) => {
     onState(
       s => s.gingerbreadButtonPie === "done" && s.listCarl === "done",
       () => {
         updateState(a => a.updateSint("helped"));
-        sint("Nou, volgens mij is alles weer op orde!");
-        sint("We gaan het gewoon toch weer redden dit jaar!");
+        sint("Nou, volgens mij is alles weer op orde!", {
+          expression: "mouth-open-sip",
+          glasses: false,
+        });
+        show("book");
+        sint("We gaan het gewoon toch weer redden dit jaar!", {
+          body: "default",
+          expression: "happy",
+        });
         fadeOut();
         stopMusic();
         jump("gameComplete");
@@ -90,7 +97,24 @@ const sintroom = (queue: Queue) => {
       onClick: ({ hide }) => {
         hide("sint");
         sintPos({ visible: true });
-        sint("Dag hoor!");
+        hide("book");
+        onState(
+          s => s.glasses === "done",
+          () => {
+            sint("Dag hoor!", {
+              body: "book",
+              glasses: true,
+              expression: "happy",
+            });
+          },
+          () => {
+            sint("Dag hoor!", {
+              body: "default",
+              glasses: false,
+              expression: "happy",
+            });
+          }
+        );
         stopMusic();
         fadeOut();
         jump("hall");
@@ -120,7 +144,7 @@ const sintroom = (queue: Queue) => {
     {
       id: "book",
       image: bookHotspot,
-      position: [610, 360],
+      position: [610, 365],
       onClick: () => {
         // no action
       },
@@ -203,7 +227,11 @@ const sintroom = (queue: Queue) => {
       position: [783, 149],
       onClick: ({ hide, show }) => {
         hide();
-        sintPos({ visible: true });
+        hide("book");
+        sintPos({
+          visible: true,
+          dollSettings: { body: "book", glasses: true, expression: "reading" },
+        });
         onState(
           s => s.sint === "details",
           () => {
@@ -219,20 +247,28 @@ const sintroom = (queue: Queue) => {
                     onState(
                       s => s.listCarl === "inventory",
                       () => {
-                        hiddo("Ik heb denk ik wat u zoekt.");
+                        sintDoll({ expression: "mouth-closed" });
+                        hiddo("Ik heb denk ik wat u zoekt.", {
+                          expression: "happy",
+                        });
                         sint(
-                          "Ow wat fijn, dan kan ik mijn boek weer bijwerken."
+                          "Ow wat fijn, dan kan ik mijn boek weer bijwerken.",
+                          { expression: "happy" }
                         );
-                        sint("... ... ...");
-                        sint("Ow... alweer dat... nouja dat mag hoor.");
-                        sint("Super bedankt!");
+                        sint("... ... ...", { expression: "reading" });
+                        sint("Ow... alweer dat... nouja dat mag hoor.", {
+                          expression: "eyes-down",
+                        });
+                        sint("Super bedankt!", { expression: "happy" });
                         updateState(a => a.updateListCarl("done"));
 
-                        gameComplete();
+                        gameComplete(show);
                       },
                       () => {
                         hiddo(
-                          "Ow ik weet het weer, ik moest even naar Rijmpiet toe."
+                          "Ow ik weet het weer, ik moest even naar Rijmpiet toe.",
+                          { expression: "happy", body: "chin" },
+                          { body: "default", expression: "mouth-closed" }
                         );
                       }
                     );
@@ -242,41 +278,70 @@ const sintroom = (queue: Queue) => {
                   onState(
                     s => s.bakingPiet === "new",
                     () => {
-                      sint("Ben je al bij bakpiet geweest?");
-                      hiddo("Ownee, dat was het, ik moest naar Bakpiet toe!");
+                      sint(
+                        "Ben je al bij bakpiet geweest?",
+                        { expression: "happy" },
+                        { expression: "mouth-closed" }
+                      );
+                      hiddo(
+                        "Ownee, dat was het, ik moest naar Bakpiet toe!",
+                        { body: "open", expression: "question" },
+                        { body: "default", expression: "mouth-closed" }
+                      );
+                      sintDoll({ expression: "reading" });
                     },
                     () =>
                       onState(
                         s => s.bakingPiet === "visited",
                         () => {
+                          sintDoll({ expression: "mouth-closed" });
                           hiddo(
-                            "Ik wil het graag aan Bakpiet vragen, maar hij is een recept kwijt."
+                            "Ik wil het graag aan Bakpiet vragen, maar hij is een recept kwijt.",
+                            { body: "open", expression: "question" },
+                            { body: "default", expression: "mouth-closed" }
                           );
-                          sint("Och, ik ben ook wel eens iets kwijt.");
+                          sint("Och, ik ben ook wel eens iets kwijt.", {
+                            expression: "mouth-open-sip",
+                          });
                           sint(
-                            "Vaak helpt het om gewoon even rust te scheppen in je hoofd voordat je gaat zoeken...."
+                            "Vaak helpt het om gewoon even rust te scheppen in je hoofd voordat je gaat zoeken....",
+                            { expression: "eyes-down" }
                           );
                           sint(
-                            "Ik doe dat vaak door even naar de prachtige kindertekening in mijn kamer te kijken."
+                            "Ik doe dat vaak door even naar de prachtige kindertekeningen in mijn kamer te kijken.",
+                            { expression: "happy" }
                           );
                         },
                         () => {
                           onState(
                             s => s.gingerbreadButtonPie === "inventory",
                             () => {
+                              sintDoll({ expression: "mouth-closed" });
                               hiddo(
-                                "Hij is klaar Sinterklaas! Ik heb de taart hier."
+                                "Hij is klaar Sinterklaas! Ik heb de taart hier.",
+                                { expression: "very-enthusiastic" }
                               );
                               sint(
-                                "Ow dat zal Catootje heerlijk vinden. Dank je wel."
+                                "Ow dat zal Catootje heerlijk vinden. Dank je wel.",
+                                { expression: "happy" }
                               );
                               updateState(a =>
                                 a.updateGingerbreadButtonPie("done")
                               );
-                              gameComplete();
+                              gameComplete(show);
                             },
                             () => {
-                              hiddo("We zijn er druk mee bezig.");
+                              sintDoll({ expression: "mouth-closed" });
+                              hiddo(
+                                "We zijn er druk mee bezig.",
+                                { expression: "happy" },
+                                { expression: "mouth-closed" }
+                              );
+                              sint(
+                                "Ah. Dat is fijn om te horen.",
+                                { expression: "happy" },
+                                { expression: "mouth-closed" }
+                              );
                             }
                           );
                         }
@@ -298,60 +363,97 @@ const sintroom = (queue: Queue) => {
                   visible: true,
                   dollSettings: { expression: "mouth-closed" },
                 });
-                hiddo("Sinterklaas, ik heb een bril voor u!");
-                sint("Ow wat fijn! Ik ben benieuwd.");
+                sintPos({ dollSettings: { expression: "mouth-closed" } });
+                hiddo(
+                  "Sinterklaas, ik heb een bril voor u!",
+                  { expression: "happy" },
+                  { expression: "mouth-closed" }
+                );
+                sint("Ow wat fijn! Ik ben benieuwd.", { expression: "happy" });
 
                 updateState(a => a.updateSint("details"));
                 updateState(a => a.updateGlasses("done"));
 
-                sint("Ooh dit is echt heel fijn.", { glasses: true });
-                pause(200);
-                sint("Nou, kan ik eindelijk in het grote boek kijken...");
-                sint("Ik weet dat ik wat dingetjes mis...");
-
-                sint("...even kijken hoor.");
-
-                sint("Ik ben het verlanglijstje van Carl kwijtgeraakt.");
-                sint("Ik kan er helemaal niets van vinden in mijn boek.");
                 sint(
-                  "Rijmpiet heeft het lijstje van Carl vast in zijn boekenkast."
+                  "Ooh dit is echt heel fijn.",
+                  { glasses: true, expression: "mouth-open-sip" },
+                  { expression: "mouth-closed" }
                 );
-                sint("Hij houdt altijd erg goed dit soort zaken bij.");
+                pause(200);
+                hide("book");
+                sint("Nou, kan ik eindelijk in het grote boek kijken...", {
+                  body: "book",
+                  expression: "eyes-down",
+                });
+                sint("Ik weet dat ik wat dingetjes mis...", {
+                  expression: "reading",
+                });
+                sint("...even kijken hoor.", { expression: "eyes-down" });
+
+                sint("Ik ben het verlanglijstje van Carl kwijtgeraakt.", {
+                  expression: "mouth-open-sip",
+                });
+                sint("Ik kan er helemaal niets van vinden in mijn boek.", {
+                  expression: "eyes-down",
+                });
+                sint(
+                  "Rijmpiet heeft het lijstje van Carl vast in zijn boekenkast.",
+                  { expression: "happy" }
+                );
+                sint("Hij houdt altijd erg goed dit soort zaken bij.", {
+                  expression: "mouth-open-sip",
+                });
                 updateState(a => a.updateListCarl("desired"));
 
-                sint("En verder...");
+                sint("En verder...", { expression: "reading" });
                 sint(
-                  "Oh, ik lees hier net dat Catootje heel erg gek is op pepernotentaart..."
+                  "Oh, ik lees hier net dat Catootje heel erg gek is op pepernotentaart...",
+                  { expression: "eyes-down" }
                 );
                 sint(
-                  "Dat zou leuk zijn om te geven, misschien wil Bakpiet er wel eentje maken?"
+                  "Dat zou leuk zijn om te geven, misschien wil Bakpiet er wel eentje maken?",
+                  { expression: "happy" }
                 );
                 updateState(a => a.updateGingerbreadButtonPie("desired"));
 
-                sint("En, tenslotte...");
-                sint("Nee, dit was alles!");
+                sint("En, tenslotte...", { expression: "reading" });
+                sint("Nee, dit was alles!", {
+                  expression: "happy",
+                  glasses: false,
+                });
               },
               () => {
                 hiddoPos({
                   visible: true,
                   dollSettings: { expression: "mouth-closed" },
                 });
-                sint("Hiddo, zou je me willen helpen met mijn boek?");
-                hiddo("Ja, natuurlijk!", { expression: "happy" });
-                hiddoPos({ dollSettings: { expression: "mouth-closed" } });
-                sint("Er zijn wat dingen die ik lijk te missen.");
                 sint(
-                  "Ik zou je graag willen vertellen wat, maar ik ben mijn leesbril kwijt."
+                  "Hiddo, zou je me willen helpen met mijn boek?",
+                  { expression: "happy" },
+                  { expression: "mouth-closed" }
+                );
+                hiddo(
+                  "Ja, natuurlijk!",
+                  { expression: "happy" },
+                  { expression: "mouth-closed" }
+                );
+                sint("Er zijn wat dingen die ik lijk te missen.", {
+                  expression: "happy",
+                });
+                sint(
+                  "Ik zou je graag willen vertellen wat, maar ik ben mijn leesbril kwijt.",
+                  { expression: "mouth-open-sip" },
+                  { expression: "mouth-closed" }
                 );
                 hiddo(
                   "Geen probleem, ik vind wel een goede leesbril voor je.",
-                  {
-                    expression: "enthusiastic",
-                  }
+                  { expression: "enthusiastic" },
+                  { expression: "mouth-closed" }
                 );
-                hiddoPos({ dollSettings: { expression: "mouth-closed" } });
 
-                sint("Oh, dat zou echt geweldig zijn. Dank je.");
+                sint("Oh, dat zou echt geweldig zijn. Dank je.", {
+                  expression: "happy",
+                });
                 updateState(state => state.updateSint("glasses"));
               }
             )
