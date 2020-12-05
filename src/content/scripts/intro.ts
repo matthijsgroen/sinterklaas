@@ -87,7 +87,7 @@ const intro = (queue: Queue) => {
     expression: "shocked",
   });
   fadeOut();
-  playSound(carStoppingSound, { wait: true });
+  playSound(carStoppingSound, { wait: true, volume: 0.5 });
   playSound(carDoorClose);
   jump("pietenhuis");
 };

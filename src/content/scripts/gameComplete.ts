@@ -184,7 +184,7 @@ const gameComplete = (queue: Queue) => {
   sint("Je krijgt natuurlijk ook nog een echt pakje!", {
     expression: "mouth-open-sip",
   });
-  sint("Jouw echte cadeau ligt verstopt onder het bed van je ouders.", {
+  sint("Jouw echte cadeau ligt verstopt in jouw kledingkast.", {
     expression: "happy",
   });
   sint("Veel plezier!", { expression: "wink" });

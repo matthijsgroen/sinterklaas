@@ -130,6 +130,7 @@ const sintroom = (queue: Queue) => {
         s.neededIngriedients.includes("milk"),
       onClick: ({ hide }) => {
         hiddoPos({ visible: true });
+        hide("sint");
         sintPos({ visible: true });
         hiddo("Hoi Sinterklaas, mag ik deze melk meenemen?");
         sint("Ja hoor, geen probleem, ik heb net mijn glas gevuld.");
