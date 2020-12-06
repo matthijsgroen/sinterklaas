@@ -3,6 +3,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 This project will be built as an [Electron App](https://www.electronjs.org/).
 
+# Play / Download
+
+[Play or download](https://thaisi.itch.io/hiddo) the game on itch.io
+
 ## Available Scripts
 
 In the project directory, you can run:
