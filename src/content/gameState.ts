@@ -42,6 +42,7 @@ export default createSlice({
   name: "game",
   initialState,
   reducers: {
+    restore: (_state, action: PayloadAction<GameState>) => action.payload,
     getKey: state => {
       state.mansionKey = true;
     },
