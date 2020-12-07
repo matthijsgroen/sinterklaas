@@ -49,6 +49,7 @@ const living = (queue: Queue) => {
 
   const bagInterest = () => {
     hiddoPos({ visible: true, x: 300, y: 110, flipped: false });
+    updateBackground({ blur: true });
     hiddo("Oeh! Pakjes zakken....", { expression: "very-enthusiastic" });
 
     onState(
@@ -81,6 +82,7 @@ const living = (queue: Queue) => {
         });
       }
     );
+    updateBackground({ blur: false });
     hiddoPos({ visible: false });
   };
 
@@ -107,6 +109,7 @@ const living = (queue: Queue) => {
         s.neededIngriedients.includes("flour"),
       onClick: ({ hide }) => {
         hiddoPos({ visible: true });
+        updateBackground({ blur: true });
         hiddo("Hee, dat is geen zak pakjes, dat is een zak meel!");
         hide();
         hiddoPos({ x: 300, y: 230, dollSettings: { expression: "shocked" } });
@@ -121,6 +124,7 @@ const living = (queue: Queue) => {
 
         updateState(a => a.findIngredient("flour"));
         hiddoPos({ visible: false });
+        updateBackground({ blur: false });
       },
     },
     {
@@ -166,6 +170,7 @@ const living = (queue: Queue) => {
       onClick: ({ hide }) => {
         hide();
         bakpietPos({ visible: true });
+        updateBackground({ blur: true });
         hiddoPos({
           visible: true,
           x: 200,
@@ -230,6 +235,7 @@ const living = (queue: Queue) => {
             )
         );
 
+        updateBackground({ blur: false });
         bakpietPos({ visible: false });
         hiddoPos({ visible: false });
       },

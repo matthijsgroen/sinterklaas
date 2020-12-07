@@ -21,7 +21,7 @@ const Dialog: React.FC<DialogProps> = ({
   useEffect(() => setVisibleText(1), [text]);
   useEffect(() => {
     if (visibleText < text.length) {
-      setTimeout(() => setVisibleText(curr => curr + 1), 25);
+      setTimeout(() => setVisibleText(curr => curr + 1), 10);
     }
   }, [visibleText, text]);
   return (

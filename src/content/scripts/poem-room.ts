@@ -129,7 +129,7 @@ const poemroom = (queue: Queue) => {
     poem("Aiiii dat rijmt niet!", { expression: "annoyed" });
     hiddoDoll({ expression: "shocked" });
     vpunch();
-    poem("Fout fout fout!", { expression: "shout" });
+    poem("Fout, fout, fout!", { expression: "shout" });
     hiddoDoll({ expression: "sip" });
     poem("Het lukt ons nooit!", { expression: "crying" });
     hiddo("Oeps! Sorry...", { expression: "shocked" });
@@ -332,6 +332,7 @@ const poemroom = (queue: Queue) => {
     s => s.poemPiet === "new",
     () => {
       poemPos({ visible: true });
+      updateBackground({ blur: true });
       pause(100);
       hpunch();
       poem("Hey! wat kom je hier doen??");
@@ -344,6 +345,7 @@ const poemroom = (queue: Queue) => {
       poem("Zou jij me willen helpen?", { expression: "grin" });
       updateState(a => a.updatePoemPiet("visited"));
       playChoice();
+      updateBackground({ blur: false });
     }
   );
 
@@ -388,6 +390,7 @@ const poemroom = (queue: Queue) => {
         s.gingerbreadButtonPie === "ingredients" &&
         s.neededIngriedients.includes("gingerherbs"),
       onClick({ hide }) {
+        updateBackground({ blur: true });
         hiddoPos({ visible: true });
         poemPos({ visible: true });
 
@@ -446,6 +449,7 @@ const poemroom = (queue: Queue) => {
         hiddo("Bedankt!", { expression: "happy" });
         updateState(a => a.findIngredient("gingerherbs"));
 
+        updateBackground({ blur: false });
         hiddoPos({ visible: false });
         poemPos({ visible: false });
       },
@@ -458,13 +462,14 @@ const poemroom = (queue: Queue) => {
       position: [436, 134],
       onClick: ({ hide, show }) => {
         hide();
+        updateBackground({ blur: true });
         poem(
           "Hee Hiddo.",
           { expression: "happy" },
           { expression: "small-smile" }
         );
         playChoice();
-        show();
+        updateBackground({ blur: false });
       },
     },
     {
@@ -475,13 +480,14 @@ const poemroom = (queue: Queue) => {
       position: [436, 134],
       onClick: ({ hide, show }) => {
         hide();
+        updateBackground({ blur: true });
         poem(
           "Zou jij me willen helpen?",
           { expression: "sip-open" },
           { expression: "hmm" }
         );
         playChoice();
-        show();
+        updateBackground({ blur: false });
       },
     },
   ]);

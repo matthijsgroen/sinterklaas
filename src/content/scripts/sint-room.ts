@@ -59,10 +59,12 @@ const sintroom = (queue: Queue) => {
   onState(
     state => state.sint === "new",
     () => {
+      updateBackground({ blur: true });
       sintPos({ visible: true });
       sint("Hey, Hiddo, wat gezellig dat je er bent!", { expression: "happy" });
 
       sintPos({ visible: false });
+      updateBackground({ blur: false });
       updateState(actions => actions.updateSint("visited"));
     }
   );
@@ -96,6 +98,7 @@ const sintroom = (queue: Queue) => {
       color: "black",
       onClick: ({ hide }) => {
         hide("sint");
+        updateBackground({ blur: true });
         sintPos({ visible: true });
         hide("book");
         onState(
@@ -115,6 +118,7 @@ const sintroom = (queue: Queue) => {
             });
           }
         );
+        updateBackground({ blur: false });
         stopMusic();
         fadeOut();
         jump("hall");
@@ -130,6 +134,7 @@ const sintroom = (queue: Queue) => {
         s.neededIngriedients.includes("milk"),
       onClick: ({ hide }) => {
         hiddoPos({ visible: true });
+        updateBackground({ blur: true });
         hide("sint");
         sintPos({ visible: true });
         hiddo("Hoi Sinterklaas, mag ik deze melk meenemen?");
@@ -138,6 +143,7 @@ const sintroom = (queue: Queue) => {
         updateState(a => a.findIngredient("milk"));
 
         hiddo("Bedankt!");
+        updateBackground({ blur: false });
         hiddoPos({ visible: false });
         sintPos({ visible: false });
       },
@@ -228,6 +234,7 @@ const sintroom = (queue: Queue) => {
       position: [783, 149],
       onClick: ({ hide, show }) => {
         hide();
+        updateBackground({ blur: true });
         onState(
           s => s.glasses === "done",
           () => {
@@ -478,6 +485,7 @@ const sintroom = (queue: Queue) => {
               }
             )
         );
+        updateBackground({ blur: false });
         sintPos({ visible: false });
         hiddoPos({ visible: false });
         show();

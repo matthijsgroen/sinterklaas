@@ -66,6 +66,7 @@ const keuken = (queue: Queue) => {
       onClick: ({ hide }) => {
         hide();
         bakpietPos({ visible: true });
+        updateBackground({ blur: true });
         onState(
           s =>
             !(
@@ -239,6 +240,7 @@ const keuken = (queue: Queue) => {
         );
 
         bakpietPos({ visible: false });
+        updateBackground({ blur: false });
       },
     },
   ]);
