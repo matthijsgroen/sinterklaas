@@ -141,6 +141,7 @@ const flowHelpers = (queue: Queue) => {
           } as Partial<Button> & ButtonProps;
           delete buttonProps["onClick"];
           delete buttonProps["skip"];
+          delete buttonProps["condition"];
 
           storeDispatch(buttonsState.actions.add(buttonProps));
         });
