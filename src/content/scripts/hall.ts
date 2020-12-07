@@ -58,6 +58,7 @@ const pietenhuis = (queue: Queue) => {
       position: [50, 260],
       onClick({ show, hide }) {
         hide();
+        updateBackground({ blur: true });
         piet("Welkom! Leuk dat je ons wilt komen helpen!", {
           expression: "happy",
         });
@@ -208,7 +209,7 @@ const pietenhuis = (queue: Queue) => {
           },
           MenuType.Dialog
         );
-        show();
+        updateBackground({ blur: false });
       },
     },
     {

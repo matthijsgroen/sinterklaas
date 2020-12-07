@@ -16,11 +16,9 @@ export interface BackgroundProps {
     | "title";
   kids?: boolean;
   tv?: boolean;
-  blur?: boolean;
-  frontLayer?: "news" | "news2" | "drawing1" | "drawing2" | "recipe";
 }
 
-const Background: React.FC<BackgroundProps> = ({ image, kids, tv, blur }) => (
+const Background: React.FC<BackgroundProps> = ({ image, kids, tv }) => (
   <>
     <div
       className={className({
@@ -35,7 +33,6 @@ const Background: React.FC<BackgroundProps> = ({ image, kids, tv, blur }) => (
         [styles.kitchen]: image === "kitchen",
         [styles.bag]: image === "bag",
         [styles.title]: image === "title",
-        [styles.blur]: !!blur,
         [styles.background]: true,
       })}
     />

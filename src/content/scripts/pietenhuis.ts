@@ -39,7 +39,7 @@ const pietenhuis = (queue: Queue) => {
     }
   );
 
-  updateBackground({ image: "pietenhuis", frontLayer: undefined, blur: false });
+  updateBackground({ image: "pietenhuis", frontLayer: undefined, blur: true });
   fadeIn();
   playMusic(birdsTrack, { fadeIn: true });
   onState(
@@ -49,6 +49,7 @@ const pietenhuis = (queue: Queue) => {
     }
   );
   hiddoPos({ visible: false });
+  updateBackground({ blur: false });
 
   buttons([
     {
@@ -59,6 +60,7 @@ const pietenhuis = (queue: Queue) => {
       position: [1060, 654],
       onClick: () => {
         updateState(a => a.getKey());
+        updateBackground({ blur: true });
         hiddoPos({
           x: 412,
           y: 130,
@@ -77,6 +79,7 @@ const pietenhuis = (queue: Queue) => {
         hiddoPos({
           visible: false,
         });
+        updateBackground({ blur: false });
       },
     },
     {
@@ -96,6 +99,7 @@ const pietenhuis = (queue: Queue) => {
       condition: s => s.gingerbreadButtonPie === "ingredients",
       onClick: () => {
         hiddoPos({ visible: true });
+        updateBackground({ blur: true });
         onState(
           s => s.neededIngriedients.includes("eggs"),
           () => {
@@ -120,6 +124,7 @@ const pietenhuis = (queue: Queue) => {
             hiddo("Nog bedankt voor de eitjes!");
           }
         );
+        updateBackground({ blur: false });
         hiddoPos({ visible: false });
       },
     },
@@ -156,6 +161,7 @@ const pietenhuis = (queue: Queue) => {
               visible: true,
               dollSettings: { expression: "mouth-closed" },
             });
+            updateBackground({ blur: true });
             playSound(doorKnock, { wait: true });
             hiddo("Hallo?", { expression: "happy" });
             piet("Hallo! Wat fijn dat je ons wilt helpen!", {
@@ -166,6 +172,7 @@ const pietenhuis = (queue: Queue) => {
             piet("Ja graag! Maar ik ben de sleutel kwijtgeraakt.", {
               expression: "sip",
             });
+            updateBackground({ blur: false });
             hiddoPos({ visible: false });
           }
         );

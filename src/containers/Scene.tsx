@@ -16,6 +16,7 @@ import { ScreenButtons, Button } from "src/components/generic/ScreenButtons";
 import buttons from "src/state/buttons";
 import FrontLayer from "src/components/Frontlayer";
 import Loader from "./Loader";
+import BackgroundBlur from "src/components/generic/BackgroundBlur";
 
 interface ConnectedSceneProps {
   dialog: DialogState;
@@ -56,6 +57,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
           pressButton(id);
         }}
       />
+      <BackgroundBlur active={!!background.blur} />
       {characters
         .filter(({ portrait }) => !portrait)
         .map(({ id, doll, x, y, visible, scale, flipped, dollSettings }) => (

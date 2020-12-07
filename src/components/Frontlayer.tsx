@@ -1,9 +1,12 @@
 import React from "react";
 import styles from "./Background.module.scss";
 import className from "src/lib/className";
-import { BackgroundProps } from "./Background";
 
-const FrontLayer: React.FC<BackgroundProps> = ({ frontLayer }) => (
+export interface FrontLayerProps {
+  frontLayer?: "news" | "news2" | "drawing1" | "drawing2" | "recipe";
+}
+
+const FrontLayer: React.FC<FrontLayerProps> = ({ frontLayer }) => (
   <>
     <div
       className={className({
