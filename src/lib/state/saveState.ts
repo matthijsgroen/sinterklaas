@@ -13,6 +13,8 @@ export const saveState = (
   state[slotId] = {
     script,
     gameState,
+    name: script,
+    time: Date.now(),
   };
   localStorage.setItem("saveGames", JSON.stringify(state));
 };

@@ -1,0 +1,53 @@
+.boxContainer {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  border: 2px solid yellow;
+  border-radius: 4px;
+  background: rgba(red, 80%);
+}
+
+.box > header {
+  border-bottom: 2px solid yellow;
+  display: flex;
+  flex-direction: row;
+  color: yellow;
+}
+
+.box > header > h1 {
+  padding: 0.25rem 1rem;
+  font-size: 1rem;
+  flex: auto;
+}
+
+.box > header > button {
+  border: none;
+  border-left: 2px solid yellow;
+  background-color: red;
+  color: yellow;
+  font-size: 2rem;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+}
+
+.box ul {
+  margin: 0;
+  padding: 0;
+}
+
+.box ul > li {
+  list-style: none;
+}
+
+.box ul button {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  color: yellow;
+}

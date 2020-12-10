@@ -1,0 +1,14 @@
+@import "../../style/variables.scss";
+
+.scene {
+  width: $windowWidth;
+  height: $windowHeight;
+  position: relative;
+  overflow: hidden;
+}
+
+.sceneZoomContainer {
+  position: absolute;
+  width: $windowWidth;
+  height: $windowHeight;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Scene.module.scss";
 import className from "src/lib/className";
-import useWindowSize from "../hooks/useWindowSize";
+import ScreenScale from "./ScreenScale";
 
 export interface SceneProps {
   horizontalPunch?: boolean;
@@ -12,29 +12,15 @@ const Scene: React.FC<SceneProps> = ({
   children,
   horizontalPunch = false,
   verticalPunch = false,
-}) => {
-  const windowSize = useWindowSize();
-  const scale =
-    windowSize.height &&
-    windowSize.width &&
-    Math.min(windowSize.height / 720, windowSize.width / 1280);
-
-  return (
-    <div
-      style={{ transform: `scale(${scale})` }}
-      className={styles.sceneZoomContainer}
-    >
-      <div
-        className={className({
-          [styles.scene]: true,
-          [styles.hpunch]: horizontalPunch,
-          [styles.vpunch]: verticalPunch,
-        })}
-      >
-        {children}
-      </div>
-    </div>
-  );
-};
+}) => (
+  <ScreenScale
+    className={className({
+      [styles.hpunch]: horizontalPunch,
+      [styles.vpunch]: verticalPunch,
+    })}
+  >
+    {children}
+  </ScreenScale>
+);
 
 export default Scene;

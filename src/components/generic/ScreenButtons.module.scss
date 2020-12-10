@@ -28,3 +28,8 @@
   background-blend-mode: screen;
   cursor: pointer;
 }
+
+.shadow:hover {
+  filter: drop-shadow(3px 3px 3px);
+  cursor: pointer;
+}

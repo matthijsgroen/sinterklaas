@@ -19,7 +19,7 @@ import { handleCallback, callbackQ } from "./events/callback";
 import { handleHold, holdQ } from "./events/hold";
 import { DollSettings } from "src/content/dolls/types";
 import { RootState } from "src/state/store";
-import { saveState } from "./state/saveState";
+// import { saveState } from "./state/saveState";
 
 const playQueue = async (
   store: Store,
@@ -168,7 +168,7 @@ export const playEvent = async (
 
   if (nextScript) {
     // Make snapshot of script and game state.
-    saveState("autosave", nextScript, store.getState().gameState);
+    // saveState("autosave", nextScript, store.getState().gameState);
 
     return playEvent(store, scripts, nextScript);
   }

@@ -1,17 +1,3 @@
-@import "../../style/variables.scss";
-
-.scene {
-  width: $windowWidth;
-  height: $windowHeight;
-  position: relative;
-  overflow: hidden;
-}
-
-.sceneZoomContainer {
-  width: $windowWidth;
-  height: $windowHeight;
-}
-
 @keyframes vshake {
   0% {
     transform: translateY(1px);

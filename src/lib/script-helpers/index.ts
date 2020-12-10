@@ -4,6 +4,7 @@ import flowHelpers from "./flow";
 import gameHelpers from "./game";
 import sceneHelpers from "./scene";
 import screenHelpers from "./screen";
+import stateHelpers from "./state";
 
 type Helper<T> = (q: Queue) => T;
 
@@ -18,6 +19,9 @@ export default combine(
   gameHelpers,
   combine(
     audioHelpers,
-    combine(flowHelpers, combine(sceneHelpers, screenHelpers))
+    combine(
+      flowHelpers,
+      combine(sceneHelpers, combine(screenHelpers, stateHelpers))
+    )
   )
 );

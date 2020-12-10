@@ -8,7 +8,7 @@ export type Button = {
   position: [number, number];
   scale?: number;
   visible?: boolean;
-  hoverEffect?: "glow";
+  hoverEffect?: "glow" | "shadow";
 };
 
 export type Highlight = {
@@ -53,6 +53,7 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
       className={className({
         [styles.image]: true,
         [styles.glow]: hoverEffect === "glow" && !buttonActive,
+        [styles.shadow]: hoverEffect === "shadow" && !buttonActive,
       })}
       style={{
         left: position[0],
