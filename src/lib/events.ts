@@ -1,4 +1,3 @@
-import { audioQ, handleAudio, preloadAudio } from "./events/audio";
 import { Action, Store, createStore, AnyAction } from "redux";
 import {
   AudioItem,
@@ -6,17 +5,21 @@ import {
   DispatchItem,
   HoldItem,
   JumpItem,
+  LoadGameItem,
   PauseItem,
   Queue,
   QueueItem,
 } from "./events/types";
+
 import characters from "src/state/characters";
 import buttons from "src/state/buttons";
 import loader, { DollQueueItem } from "src/state/loader";
 import eventQueue from "./events/queue";
+import { audioQ, handleAudio, preloadAudio } from "./events/audio";
 import { handlePause, pauseQ } from "./events/pause";
 import { handleCallback, callbackQ } from "./events/callback";
 import { handleHold, holdQ } from "./events/hold";
+import { handleLoadGame, loadGameQ } from "./events/load";
 import { DollSettings } from "src/content/dolls/types";
 import { RootState } from "src/state/store";
 // import { saveState } from "./state/saveState";
@@ -44,6 +47,9 @@ const playQueue = async (
         return (event as JumpItem).target;
       case "HOLD":
         await handleHold(event as HoldItem, queue);
+        break;
+      case "LOAD_GAME":
+        await handleLoadGame(event as LoadGameItem, queue, store);
         break;
       default:
         throw new Error(`Unsupported type: ${event.type}`);
@@ -156,6 +162,9 @@ export const playEvent = async (
   scripts: Scripts,
   active: string
 ): Promise<void> => {
+  store.dispatch(characters.actions.reset());
+  store.dispatch(buttons.actions.reset());
+
   store.dispatch(loader.actions.loading());
   await preloadAssets(scripts[active], store);
   store.dispatch(loader.actions.loadingDone());
@@ -163,10 +172,9 @@ export const playEvent = async (
   const queue = eventQueue();
   scripts[active](queue);
   const nextScript = await playQueue(store, queue);
-  store.dispatch(characters.actions.reset());
-  store.dispatch(buttons.actions.reset());
 
   if (nextScript) {
+    queue.closeQueue();
     // Make snapshot of script and game state.
     // saveState("autosave", nextScript, store.getState().gameState);
 
@@ -180,4 +188,4 @@ export const dispatchQ = (queue: Queue) => (action: Action): void =>
 export const jumpQ = (queue: Queue) => (target: string): void =>
   queue.addItem({ type: "JUMP", target } as JumpItem);
 
-export { audioQ, pauseQ, callbackQ, holdQ };
+export { audioQ, pauseQ, callbackQ, holdQ, loadGameQ };

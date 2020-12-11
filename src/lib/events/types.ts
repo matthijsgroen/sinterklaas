@@ -14,6 +14,7 @@ export type Queue = {
   collectToNewQueue(): () => QueueItem[];
   getNext(): QueueItem | undefined;
   getQueue(): QueueItem[];
+  closeQueue(): void;
   onItemAdded(s: Subscriber): Unsubscribe;
   onQueueEnded(s: Subscriber): Unsubscribe;
 };
@@ -25,6 +26,11 @@ export type PauseItem = {
 
 export type HoldItem = {
   type: "HOLD";
+};
+
+export type LoadGameItem = {
+  type: "LOAD_GAME";
+  gameSlotId: string;
 };
 
 export type JumpItem = {

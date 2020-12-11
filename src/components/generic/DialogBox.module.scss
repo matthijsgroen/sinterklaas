@@ -8,7 +8,7 @@
 .box {
   border: 2px solid yellow;
   border-radius: 4px;
-  background: rgba(red, 80%);
+  background: rgba(red, 0.8);
 }
 
 .box > header {
@@ -50,4 +50,9 @@
   background: none;
   border: none;
   color: yellow;
+  cursor: pointer;
+}
+
+.box ul button:hover {
+  background-color: rgba(yellow, 0.3);
 }

@@ -9,6 +9,7 @@ import { getSaveSlots } from "src/lib/state/loadState";
 interface ConnectedSceneProps {
   dialogOpen: RootState["ui"]["dialogOpen"];
   closeDialog: () => void;
+  onResult: (result: string) => void;
 }
 
 const dateFormat: Intl.DateTimeFormatOptions = {
@@ -22,15 +23,20 @@ const dateFormat: Intl.DateTimeFormatOptions = {
 const ConnectedScene: React.FC<ConnectedSceneProps> = ({
   dialogOpen,
   closeDialog,
+  onResult,
 }) =>
   dialogOpen === Dialogs.Loading ? (
     <ScreenScale>
       <DialogBox title="Spel laden" onClose={() => closeDialog()}>
         <ul>
-          {getSaveSlots().map(({ slotId, time }, index) => (
+          {getSaveSlots().map(({ name, slotId, time }, index) => (
             <li key={index}>
-              <button>
-                {slotId} -{" "}
+              <button
+                onClick={() => {
+                  onResult(slotId);
+                }}
+              >
+                {slotId} - {name} -{" "}
                 {Intl.DateTimeFormat(undefined, dateFormat).format(time)}
               </button>
             </li>
@@ -46,6 +52,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = {
   closeDialog: ui.actions.closeDialog,
+  onResult: ui.actions.dialogResult,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedScene);

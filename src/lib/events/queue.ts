@@ -20,6 +20,13 @@ const eventQueue = (): Queue => {
         addSubscribers.forEach(e => e());
       }
     },
+    closeQueue: () => {
+      while (mainQueue.shift()) {
+        // clearing queue
+      }
+      activeQueue = mainQueue;
+      endSubscribers.forEach(e => e());
+    },
     collectToNewQueue: () => {
       const prevQueue = activeQueue;
       activeQueue = [];

@@ -40,7 +40,7 @@ export const getSaveSlots = (): SlotInfo[] => {
       >
     ).map(([key, value]) => ({
       time: new Date(value.time),
-      name: value.name || key,
+      name: value.name || value.script,
       slotId: key,
     }));
   } catch {

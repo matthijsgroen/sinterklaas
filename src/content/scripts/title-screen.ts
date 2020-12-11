@@ -38,9 +38,7 @@ const titleScreen = (queue: Queue) => {
       image: loadButton,
       position: [850, 360],
       condition: () => getSaveSlots().length > 0,
-      onClick: () => {
-        loadGame();
-      },
+      onClick: loadGame,
     },
     // add option to continue
   ]);
