@@ -16,6 +16,7 @@ type ButtonSupport = {
 };
 
 type ButtonActions = {
+  role?: "hud";
   skip?: (state: GameState) => boolean;
   condition?: (state: GameState) => boolean;
   onClick: (buttonRef: ButtonSupport) => void;

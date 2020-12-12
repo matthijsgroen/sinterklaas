@@ -43,6 +43,14 @@ const pause = (autoContinue: number | null = null): Promise<void> =>
 export const pauseQ = (queue: Queue) => (delay?: number): void =>
   queue.addItem({ type: "PAUSE", delay } as PauseItem);
 
-export const handlePause = async (queueItem: PauseItem) => {
-  await pause(queueItem.delay);
+export const handlePause = async (queueItem: PauseItem, queue: Queue) => {
+  await new Promise(resolve => {
+    queue.onItemAdded(() => {
+      // button pressed during pause
+      resolve();
+    });
+    pause(queueItem.delay).then(() => {
+      resolve();
+    });
+  });
 };

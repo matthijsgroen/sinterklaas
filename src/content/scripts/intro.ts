@@ -4,6 +4,7 @@ import characterHelpers from "./helpers/characters";
 
 import carStoppingSound from "../assets/sounds/352744__rosebugg__car-stopping.mp3";
 import carDoorClose from "../assets/sounds/208695__monotraum__car-door-close.mp3";
+import { hud } from "./hud";
 
 const intro = (queue: Queue) => {
   const {
@@ -15,6 +16,7 @@ const intro = (queue: Queue) => {
     jump,
     playSound,
   } = scriptHelpers(queue);
+  hud(queue);
   const { reporter, hiddoP, jinteP } = characterHelpers(queue);
   const hiddo = hiddoP({});
   const jinte = jinteP({});

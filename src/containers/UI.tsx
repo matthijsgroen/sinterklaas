@@ -44,6 +44,47 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
         </ul>
       </DialogBox>
     </ScreenScale>
+  ) : dialogOpen === Dialogs.Settings ? (
+    <ScreenScale>
+      <DialogBox title="Pauze menu" onClose={() => closeDialog()}>
+        <ul>
+          <li>
+            <button
+              onClick={() => {
+                onResult("resume");
+              }}
+            >
+              Hervatten
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => {
+                onResult("save");
+              }}
+            >
+              Opslaan
+            </button>
+          </li>
+        </ul>
+      </DialogBox>
+    </ScreenScale>
+  ) : dialogOpen === Dialogs.Saving ? (
+    <ScreenScale>
+      <DialogBox title="Opslag menu" onClose={() => closeDialog()}>
+        <ul>
+          <li>
+            <button
+              onClick={() => {
+                onResult("save");
+              }}
+            >
+              Opslaan
+            </button>
+          </li>
+        </ul>
+      </DialogBox>
+    </ScreenScale>
   ) : null;
 
 const mapStateToProps = (state: RootState) => ({

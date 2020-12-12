@@ -9,6 +9,7 @@ export type Button = {
   scale?: number;
   visible?: boolean;
   hoverEffect?: "glow" | "shadow";
+  role?: "hud";
 };
 
 export type Highlight = {
@@ -46,16 +47,22 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
     position,
     scale = 1.0,
     hoverEffect,
+    role,
   }: Button) => (
     <div
       key={id}
-      onClick={() => onClick(id)}
+      onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick(id);
+      }}
       className={className({
         [styles.image]: true,
         [styles.glow]: hoverEffect === "glow" && !buttonActive,
         [styles.shadow]: hoverEffect === "shadow" && !buttonActive,
       })}
       style={{
+        ...(role === "hud" && { zIndex: 2 }),
         left: position[0],
         top: position[1],
         transform: `scale(${scale})`,
@@ -74,7 +81,11 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
   }: Highlight) => (
     <div
       key={id}
-      onClick={() => onClick(id)}
+      onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick(id);
+      }}
       className={className({
         [styles.highlight]: true,
         [styles.glow]: hoverEffect === "glow" && !buttonActive,

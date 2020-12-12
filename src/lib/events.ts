@@ -41,7 +41,7 @@ const playQueue = async (
         await handleAudio(event as AudioItem);
         break;
       case "PAUSE":
-        await handlePause(event as PauseItem);
+        await handlePause(event as PauseItem, queue);
         break;
       case "JUMP":
         return (event as JumpItem).target;
