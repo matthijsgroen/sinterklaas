@@ -3,8 +3,10 @@ import React from "react";
 import { RootState } from "src/state/store";
 import ui, { Dialogs } from "src/state/ui";
 import ScreenScale from "src/components/generic/ScreenScale";
-import DialogBox from "src/components/generic/DialogBox";
+import DialogBox from "src/components/generic/ui/DialogBox";
 import { getSaveSlots } from "src/lib/state/loadState";
+import { OptionList } from "src/components/generic/ui/OptionList";
+import { ButtonList } from "src/components/generic/ui/ButtonList";
 
 interface ConnectedSceneProps {
   dialogOpen: RootState["ui"]["dialogOpen"];
@@ -28,45 +30,32 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
   dialogOpen === Dialogs.Loading ? (
     <ScreenScale>
       <DialogBox title="Spel laden" onClose={() => closeDialog()}>
-        <ul>
-          {getSaveSlots().map(({ name, slotId, time }, index) => (
-            <li key={index}>
-              <button
-                onClick={() => {
-                  onResult(slotId);
-                }}
-              >
-                {slotId} - {name} -{" "}
-                {Intl.DateTimeFormat(undefined, dateFormat).format(time)}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <OptionList
+          options={getSaveSlots().map(({ name, slotId, time }, index) => ({
+            name: `${slotId} - ${name} - ${Intl.DateTimeFormat(
+              undefined,
+              dateFormat
+            ).format(time)}`,
+            onClick: () => onResult(slotId),
+          }))}
+        />
       </DialogBox>
     </ScreenScale>
   ) : dialogOpen === Dialogs.Settings ? (
     <ScreenScale>
       <DialogBox title="Pauze menu" onClose={() => closeDialog()}>
-        <ul>
-          <li>
-            <button
-              onClick={() => {
-                onResult("resume");
-              }}
-            >
-              Hervatten
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                onResult("save");
-              }}
-            >
-              Opslaan
-            </button>
-          </li>
-        </ul>
+        <ButtonList
+          buttons={[
+            {
+              name: "Hervatten",
+              onClick: () => onResult("resume"),
+            },
+            {
+              name: "Opslaan",
+              onClick: () => onResult("save"),
+            },
+          ]}
+        />
       </DialogBox>
     </ScreenScale>
   ) : dialogOpen === Dialogs.Saving ? (
