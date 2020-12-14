@@ -26,55 +26,57 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
   dialogOpen,
   closeDialog,
   onResult,
-}) =>
-  dialogOpen === Dialogs.Loading ? (
+}) => {
+  const title: string = {
+    [Dialogs.None]: "",
+    [Dialogs.Loading]: "Spel laden",
+    [Dialogs.Saving]: "Spel opslaan",
+    [Dialogs.Settings]: "Pause menu",
+  }[dialogOpen];
+
+  const saveSlots = getSaveSlots();
+  if (dialogOpen === Dialogs.None) {
+    return null;
+  }
+
+  return (
     <ScreenScale>
-      <DialogBox title="Spel laden" onClose={() => closeDialog()}>
-        <OptionList
-          options={getSaveSlots().map(({ name, slotId, time }, index) => ({
-            name: `${slotId} - ${name} - ${Intl.DateTimeFormat(
-              undefined,
-              dateFormat
-            ).format(time)}`,
-            onClick: () => onResult(slotId),
-          }))}
-        />
+      <DialogBox title={title} onClose={() => closeDialog()}>
+        {dialogOpen === Dialogs.Loading ? (
+          <OptionList
+            options={saveSlots.map(({ name, slotId, time }, index) => ({
+              name: `${slotId} - ${name} - ${Intl.DateTimeFormat(
+                undefined,
+                dateFormat
+              ).format(time)}`,
+              onClick: () => onResult(slotId),
+            }))}
+          />
+        ) : dialogOpen === Dialogs.Settings ? (
+          <ButtonList
+            buttons={[
+              {
+                name: "Hervatten",
+                onClick: () => onResult("resume"),
+              },
+              {
+                name: "Opslaan",
+                onClick: () => onResult("save"),
+              },
+            ]}
+          />
+        ) : dialogOpen === Dialogs.Saving ? (
+          <OptionList
+            options={[1, 2, 3, 4, 5, 6, 7, 8].map(index => ({
+              name: `Opslag ${index}`,
+              onClick: () => onResult(`slot${index}`),
+            }))}
+          />
+        ) : null}
       </DialogBox>
     </ScreenScale>
-  ) : dialogOpen === Dialogs.Settings ? (
-    <ScreenScale>
-      <DialogBox title="Pauze menu" onClose={() => closeDialog()}>
-        <ButtonList
-          buttons={[
-            {
-              name: "Hervatten",
-              onClick: () => onResult("resume"),
-            },
-            {
-              name: "Opslaan",
-              onClick: () => onResult("save"),
-            },
-          ]}
-        />
-      </DialogBox>
-    </ScreenScale>
-  ) : dialogOpen === Dialogs.Saving ? (
-    <ScreenScale>
-      <DialogBox title="Opslag menu" onClose={() => closeDialog()}>
-        <ul>
-          <li>
-            <button
-              onClick={() => {
-                onResult("save");
-              }}
-            >
-              Opslaan
-            </button>
-          </li>
-        </ul>
-      </DialogBox>
-    </ScreenScale>
-  ) : null;
+  );
+};
 
 const mapStateToProps = (state: RootState) => ({
   dialogOpen: state.ui.dialogOpen,

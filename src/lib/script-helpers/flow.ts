@@ -152,46 +152,45 @@ const flowHelpers = (queue: Queue) => {
         const unsub = subscribe(() => {
           const state = getState();
           const currSelected = state.buttons.selected;
-          if (currSelected !== prevSelected && prevSelected === null) {
-            prevSelected = currSelected;
-            if (currSelected !== null) {
-              const selectedButton = buttons.find(b => b.id === currSelected);
-              if (selectedButton) {
-                setTimeout(() => {
-                  const commit = queue.collectToNewQueue();
-                  const { remove, hide, show, hideAll } = buttonsState.actions;
-                  selectedButton.onClick({
-                    remove: () => {
-                      dispatch(remove(selectedButton.id));
-                    },
-                    hide: (id?: string) => {
-                      dispatch(hide(id || selectedButton.id));
-                    },
-                    hideAll: () => {
-                      dispatch(hideAll());
-                    },
-                    show: (id?: string) => {
-                      dispatch(show(id || selectedButton.id));
-                    },
-                  });
-                  dispatch(buttonsState.actions.deselect());
-                  callback(({ getState, dispatch: storeDispatch }) => {
-                    buttons.forEach(b => {
-                      const visible =
-                        (!b.skip || !b.skip(getState().gameState)) &&
-                        (!b.condition || b.condition(getState().gameState));
 
-                      storeDispatch(
-                        visible
-                          ? buttonsState.actions.show(b.id)
-                          : buttonsState.actions.hide(b.id)
-                      );
-                    });
-                    prevSelected = null;
-                  });
-                  commit();
+          if (currSelected !== prevSelected && currSelected !== null) {
+            prevSelected = currSelected;
+            const selectedButton = buttons.find(b => b.id === currSelected);
+            if (selectedButton) {
+              setTimeout(() => {
+                const commit = queue.collectToNewQueue();
+                const { remove, hide, show, hideAll } = buttonsState.actions;
+                selectedButton.onClick({
+                  remove: () => {
+                    dispatch(remove(selectedButton.id));
+                  },
+                  hide: (id?: string) => {
+                    dispatch(hide(id || selectedButton.id));
+                  },
+                  hideAll: () => {
+                    dispatch(hideAll());
+                  },
+                  show: (id?: string) => {
+                    dispatch(show(id || selectedButton.id));
+                  },
                 });
-              }
+                dispatch(buttonsState.actions.deselect());
+                callback(({ getState, dispatch: storeDispatch }) => {
+                  buttons.forEach(b => {
+                    const visible =
+                      (!b.skip || !b.skip(getState().gameState)) &&
+                      (!b.condition || b.condition(getState().gameState));
+
+                    storeDispatch(
+                      visible
+                        ? buttonsState.actions.show(b.id)
+                        : buttonsState.actions.hide(b.id)
+                    );
+                  });
+                  prevSelected = null;
+                });
+                commit();
+              });
             }
           }
         });

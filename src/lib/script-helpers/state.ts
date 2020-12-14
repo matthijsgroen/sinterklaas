@@ -8,6 +8,14 @@ const screenHelpers = (queue: Queue) => {
   const loadGame = loadGameQ(queue);
 
   return {
+    debug: (message: string) => {
+      callback(store => {
+        if (isPreloading(store.getState)) {
+          return;
+        }
+        console.log(message);
+      });
+    },
     loadGame: () => {
       callback(async store => {
         if (isPreloading(store.getState)) {
