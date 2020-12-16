@@ -1,19 +1,21 @@
-import React from "react";
-import styles from "./ButtonList.module.scss";
+import React, { ReactNode } from "react";
+import styled from "styled-components";
 
-interface ButtonListProps {
-  buttons: {
-    name: string;
-    onClick(): void;
-  }[];
-}
+const List = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
 
-export const ButtonList: React.FC<ButtonListProps> = ({ buttons }) => (
-  <ul className={styles.list}>
-    {buttons.map(({ name, onClick }, index) => (
-      <li key={index}>
-        <button onClick={onClick}>{name}</button>
-      </li>
-    ))}
-  </ul>
-);
+const ListItem = styled.li`
+  list-style: none;
+  margin: 1rem;
+`;
+
+export const ButtonList: React.FC = ({ children }) =>
+  !children ? null : (
+    <List>
+      {([] as ReactNode[]).concat(children).map((child, index) => (
+        <ListItem key={index}>{child}</ListItem>
+      ))}
+    </List>
+  );

@@ -1,19 +1,34 @@
-import React from "react";
-import styles from "./OptionList.module.scss";
+import React, { ReactNode } from "react";
+import styled from "styled-components";
 
-interface OptionListProps {
-  options: {
-    name: string;
-    onClick(): void;
-  }[];
-}
+const List = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
 
-export const OptionList: React.FC<OptionListProps> = ({ options }) => (
-  <ul className={styles.list}>
-    {options.map(({ name, onClick }, index) => (
-      <li key={index}>
-        <button onClick={onClick}>{name}</button>
-      </li>
-    ))}
-  </ul>
-);
+const ListItem = styled.li`
+  list-style: none;
+`;
+
+export const OptionList: React.FC = ({ children }) =>
+  !children ? null : (
+    <List>
+      {([] as ReactNode[]).concat(children).map((child, index) => (
+        <ListItem key={index}>{child}</ListItem>
+      ))}
+    </List>
+  );
+
+export const Option = styled.button`
+  background: none;
+  border: none;
+  color: yellow;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+
+  &:hover {
+    background-color: rgba(255, 255, 0, 0.3);
+  }
+`;

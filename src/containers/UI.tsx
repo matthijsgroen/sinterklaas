@@ -5,8 +5,9 @@ import ui, { Dialogs } from "src/state/ui";
 import ScreenScale from "src/components/generic/ScreenScale";
 import DialogBox from "src/components/generic/ui/DialogBox";
 import { getSaveSlots } from "src/lib/state/loadState";
-import { OptionList } from "src/components/generic/ui/OptionList";
+import { Option, OptionList } from "src/components/generic/ui/OptionList";
 import { ButtonList } from "src/components/generic/ui/ButtonList";
+import { Button } from "src/components/generic/ui/Button";
 
 interface ConnectedSceneProps {
   dialogOpen: RootState["ui"]["dialogOpen"];
@@ -43,35 +44,27 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
     <ScreenScale>
       <DialogBox title={title} onClose={() => closeDialog()}>
         {dialogOpen === Dialogs.Loading ? (
-          <OptionList
-            options={saveSlots.map(({ name, slotId, time }, index) => ({
-              name: `${slotId} - ${name} - ${Intl.DateTimeFormat(
-                undefined,
-                dateFormat
-              ).format(time)}`,
-              onClick: () => onResult(slotId),
-            }))}
-          />
+          <OptionList>
+            {saveSlots.map(({ name, slotId, time }, index) => (
+              <Option onClick={() => onResult(slotId)}>
+                {slotId} - {name} -{" "}
+                {Intl.DateTimeFormat(undefined, dateFormat).format(time)}
+              </Option>
+            ))}
+          </OptionList>
         ) : dialogOpen === Dialogs.Settings ? (
-          <ButtonList
-            buttons={[
-              {
-                name: "Hervatten",
-                onClick: () => onResult("resume"),
-              },
-              {
-                name: "Opslaan",
-                onClick: () => onResult("save"),
-              },
-            ]}
-          />
+          <ButtonList>
+            <Button onClick={() => onResult("resume")}>Hervatten</Button>
+            <Button onClick={() => onResult("save")}>Opslaan</Button>
+          </ButtonList>
         ) : dialogOpen === Dialogs.Saving ? (
-          <OptionList
-            options={[1, 2, 3, 4, 5, 6, 7, 8].map(index => ({
-              name: `Opslag ${index}`,
-              onClick: () => onResult(`slot${index}`),
-            }))}
-          />
+          <OptionList>
+            {[1, 2, 3, 4, 5, 6, 7, 8].map(index => (
+              <Option onClick={() => onResult(`slot${index}`)}>
+                Opslag {index}
+              </Option>
+            ))}
+          </OptionList>
         ) : null}
       </DialogBox>
     </ScreenScale>
