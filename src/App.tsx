@@ -6,13 +6,17 @@ import ConnectedUI from "./containers/UI";
 import { playEvent } from "./lib/events";
 import scripts from "./content/scripts";
 import { startScript } from "./content/gameState";
+import { ThemeProvider } from "styled-components";
+import { myTheme } from "./components/theme";
 // import gameState, { startScript } from "./content/gameState";
 // import { loadState } from "./lib/state/loadState";
 
 const App = (): ReactElement => (
   <Provider store={store}>
-    <ConnectedScene />
-    <ConnectedUI />
+    <ThemeProvider theme={myTheme}>
+      <ConnectedScene />
+      <ConnectedUI />
+    </ThemeProvider>
   </Provider>
 );
 
