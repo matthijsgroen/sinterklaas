@@ -7,6 +7,7 @@ import bookCarl from "../assets/hotspots/poem-room-carl.png";
 import herbs from "../assets/hotspots/poem-room-herbs.png";
 
 import rapTrack from "../assets/sounds/372069__swagmasterlord__80-s-old-school-rap-drum-loop.mp3";
+import { hud } from "./hud";
 
 const poemroom = (queue: Queue) => {
   const {
@@ -27,6 +28,7 @@ const poemroom = (queue: Queue) => {
     onState,
     updateState,
   } = scriptHelpers(queue);
+  hud(queue);
 
   updateBackground({ image: "poemroom", frontLayer: undefined, blur: false });
   fadeIn();

@@ -4,6 +4,7 @@ import characterHelpers from "./helpers/characters";
 
 import rapTrack from "../assets/sounds/372069__swagmasterlord__80-s-old-school-rap-drum-loop.mp3";
 import backgroundTrack from "src/content/assets/sounds/background-sint.mp3";
+import { hud } from "./hud";
 
 const gameComplete = (queue: Queue) => {
   const {
@@ -16,6 +17,7 @@ const gameComplete = (queue: Queue) => {
     stopMusic,
     say,
   } = scriptHelpers(queue);
+  hud(queue);
   const { reporter } = characterHelpers(queue);
 
   updateBackground({ image: "pietenhuis", frontLayer: "news2", blur: true });

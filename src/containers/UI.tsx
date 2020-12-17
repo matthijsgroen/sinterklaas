@@ -40,15 +40,26 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
     return null;
   }
 
+  const slotMapping = saveSlots.reduce(
+    (acc, { name, slotId, time }) => ({
+      ...acc,
+      [slotId]: `${slotId} - ${name} - ${Intl.DateTimeFormat(
+        undefined,
+        dateFormat
+      ).format(time)}`,
+    }),
+    {} as Record<string, string>
+  );
+  const savedSlots = Object.keys(slotMapping).sort();
+
   return (
     <ScreenScale>
       <DialogBox title={title} onClose={() => closeDialog()}>
         {dialogOpen === Dialogs.Loading ? (
           <OptionList>
-            {saveSlots.map(({ name, slotId, time }, index) => (
-              <Option onClick={() => onResult(slotId)}>
-                {slotId} - {name} -{" "}
-                {Intl.DateTimeFormat(undefined, dateFormat).format(time)}
+            {savedSlots.map((slotId, index) => (
+              <Option onClick={() => onResult(slotId)} key={index}>
+                {slotMapping[slotId]}
               </Option>
             ))}
           </OptionList>
@@ -56,12 +67,13 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
           <ButtonList>
             <Button onClick={() => onResult("resume")}>Hervatten</Button>
             <Button onClick={() => onResult("save")}>Opslaan</Button>
+            <Button onClick={() => onResult("load")}>Laden</Button>
           </ButtonList>
         ) : dialogOpen === Dialogs.Saving ? (
           <OptionList>
             {[1, 2, 3, 4, 5, 6, 7, 8].map(index => (
-              <Option onClick={() => onResult(`slot${index}`)}>
-                Opslag {index}
+              <Option onClick={() => onResult(`slot${index}`)} key={index}>
+                {slotMapping[`slot${index}`] || `Opslag ${index}`}
               </Option>
             ))}
           </OptionList>

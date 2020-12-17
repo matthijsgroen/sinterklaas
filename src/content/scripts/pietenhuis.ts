@@ -7,6 +7,7 @@ import chickenButton from "src/content/assets/hotspots/mansion-chickens.png";
 import doorKnock from "src/content/assets/sounds/540770__subwaysandwitch420__door-knock.mp3";
 import birdsTrack from "src/content/assets/sounds/345852__hargissssound__spring-birds-loop-with-low-cut-new-jersey.mp3";
 import chickenAlarm from "src/content/assets/sounds/316920__rudmer-rotteveel__chicken-single-alarm-call.mp3";
+import { hud } from "./hud";
 
 const pietenhuis = (queue: Queue) => {
   const {
@@ -25,6 +26,7 @@ const pietenhuis = (queue: Queue) => {
     updateState,
     buttons,
   } = scriptHelpers(queue);
+  hud(queue);
 
   const { pietP } = characterHelpers(queue);
   const piet = pietP({});

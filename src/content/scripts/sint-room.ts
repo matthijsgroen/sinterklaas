@@ -10,6 +10,7 @@ import milkHotspot from "../assets/hotspots/sint-room-milk.png";
 
 import backgroundTrack from "src/content/assets/sounds/background-sint.mp3";
 import { MenuType } from "src/lib/script-helpers/flow";
+import { hud } from "./hud";
 
 const sintroom = (queue: Queue) => {
   const {
@@ -27,6 +28,7 @@ const sintroom = (queue: Queue) => {
     updateState,
     manageCharacter,
   } = scriptHelpers(queue);
+  hud(queue);
 
   const { say: sint, pos: sintPos, doll: sintDoll } = manageCharacter(
     "sint",

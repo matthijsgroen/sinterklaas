@@ -3,6 +3,7 @@ import scriptHelpers from "src/lib/script-helpers";
 
 import packageHotspot from "src/content/assets/hotspots/bag-gina.png";
 import paperRipping from "src/content/assets/sounds/535361__eminyildirim__paper-ripping.mp3";
+import { hud } from "./hud";
 
 const bag = (queue: Queue) => {
   const {
@@ -16,6 +17,7 @@ const bag = (queue: Queue) => {
     buttons,
     playSound,
   } = scriptHelpers(queue);
+  hud(queue);
 
   const { say: hiddo } = manageCharacter("hiddo", "hiddo", "Hiddo", {
     x: 512,

@@ -17,6 +17,7 @@ const intro = (queue: Queue) => {
     playSound,
   } = scriptHelpers(queue);
   hud(queue);
+
   const { reporter, hiddoP, jinteP } = characterHelpers(queue);
   const hiddo = hiddoP({});
   const jinte = jinteP({});

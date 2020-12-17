@@ -27,7 +27,7 @@ document.addEventListener("touchend", () => {
 });
 
 const pause = (autoContinue: number | null = null): Promise<void> =>
-  new Promise(resolve => {
+  new Promise<void>(resolve => {
     document.body.classList.add(styles.promoteClick);
     const timeout: ReturnType<typeof setTimeout> | undefined =
       autoContinue !== null ? setTimeout(resolve, autoContinue) : undefined;
@@ -43,14 +43,11 @@ const pause = (autoContinue: number | null = null): Promise<void> =>
 export const pauseQ = (queue: Queue) => (delay?: number): void =>
   queue.addItem({ type: "PAUSE", delay } as PauseItem);
 
-export const handlePause = async (queueItem: PauseItem, queue: Queue) => {
-  await new Promise(resolve => {
-    queue.onItemAdded(() => {
+export const handlePause = (queueItem: PauseItem, queue: Queue) =>
+  new Promise<void>(resolve => {
+    queue.onItemAdded(() =>
       // button pressed during pause
-      resolve();
-    });
-    pause(queueItem.delay).then(() => {
-      resolve();
-    });
+      resolve()
+    );
+    pause(queueItem.delay).then(() => resolve());
   });
-};

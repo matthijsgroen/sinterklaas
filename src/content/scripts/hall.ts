@@ -6,6 +6,7 @@ import carpet from "src/content/assets/hotspots/hall-carpet.png";
 
 import backgroundTrack from "src/content/assets/sounds/background.mp3";
 import { MenuType } from "src/lib/script-helpers/flow";
+import { hud } from "./hud";
 
 const pietenhuis = (queue: Queue) => {
   const {
@@ -22,6 +23,8 @@ const pietenhuis = (queue: Queue) => {
     playMusic,
     stopMusic,
   } = scriptHelpers(queue);
+  hud(queue);
+
   const { say: hiddo, pos: hiddoPos, doll: hiddoDoll } = manageCharacter(
     "hiddo",
     "hiddo",

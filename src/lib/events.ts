@@ -22,7 +22,6 @@ import { handleHold, holdQ } from "./events/hold";
 import { handleLoadGame, loadGameQ } from "./events/load";
 import { DollSettings } from "src/content/dolls/types";
 import { RootState } from "src/state/store";
-// import { saveState } from "./state/saveState";
 
 const playQueue = async (
   store: Store,
@@ -157,11 +156,16 @@ const preloadAssets = async (script: Script, store: Store) => {
   await Promise.all([...audioItems, loadingPromise]);
 };
 
+let activeScript = "none";
+
+export const getActiveScript = () => activeScript;
+
 export const playEvent = async (
   store: Store,
   scripts: Scripts,
   active: string
 ): Promise<void> => {
+  activeScript = active;
   store.dispatch(characters.actions.reset());
   store.dispatch(buttons.actions.reset());
 

@@ -4,6 +4,7 @@ import scriptHelpers from "src/lib/script-helpers";
 import bakpietHotspot from "../assets/hotspots/living-bakpiet.png";
 import bagHotspot from "../assets/hotspots/living-bag.png";
 import flourHotspot from "../assets/hotspots/living-flour.png";
+import { hud } from "./hud";
 
 const living = (queue: Queue) => {
   const {
@@ -18,6 +19,7 @@ const living = (queue: Queue) => {
     onState,
     updateState,
   } = scriptHelpers(queue);
+  hud(queue);
 
   const { say: bakpiet, pos: bakpietPos } = manageCharacter(
     "bakpiet",

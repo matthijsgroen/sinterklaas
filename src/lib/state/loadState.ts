@@ -1,4 +1,5 @@
 import { GameState } from "src/content/gameState";
+import { SAVE_KEY } from "./constants";
 
 export type SaveGame = {
   script: string;
@@ -13,7 +14,7 @@ export const loadState = (slotId: string): SaveGame | null => {
   }
   try {
     const saveStates = JSON.parse(
-      localStorage.getItem("saveGames") || "{}"
+      localStorage.getItem(SAVE_KEY) || "{}"
     ) as Record<string, SaveGame>;
 
     return saveStates[slotId] || null;
@@ -34,7 +35,7 @@ export const getSaveSlots = (): SlotInfo[] => {
   }
   try {
     return Object.entries(
-      JSON.parse(localStorage.getItem("saveGames") || "{}") as Record<
+      JSON.parse(localStorage.getItem(SAVE_KEY) || "{}") as Record<
         string,
         SaveGame
       >

@@ -3,6 +3,7 @@ import scriptHelpers from "src/lib/script-helpers";
 
 import bakpietHotspot from "../assets/hotspots/kitchen-bakpiet.png";
 import { Ingredient } from "../gameState";
+import { hud } from "./hud";
 
 const keuken = (queue: Queue) => {
   const {
@@ -18,6 +19,7 @@ const keuken = (queue: Queue) => {
     updateState,
     pause,
   } = scriptHelpers(queue);
+  hud(queue);
 
   const { say: hiddo, pos: hiddoPos } = manageCharacter(
     "hiddo",
