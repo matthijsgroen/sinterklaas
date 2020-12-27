@@ -12,6 +12,7 @@ export interface CharacterProps {
   mirrored?: boolean;
   x: number;
   y: number;
+  z?: number;
   visible?: boolean;
   scale?: number;
 }
@@ -21,6 +22,7 @@ const Character: React.FC<CharacterProps> = ({
   mirrored = false,
   x,
   y,
+  z = 0,
   visible = true,
   scale = 1.0,
 }) => (
@@ -33,6 +35,7 @@ const Character: React.FC<CharacterProps> = ({
       transform: cssTransform(scale, mirrored),
       left: x,
       top: y,
+      zIndex: z,
     }}
   >
     {character}

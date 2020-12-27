@@ -90,6 +90,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
             scale={scale}
             x={x}
             y={y}
+            z={2}
           />
         ))}
       <Menu />

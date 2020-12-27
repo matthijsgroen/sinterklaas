@@ -45,9 +45,15 @@ export const pauseQ = (queue: Queue) => (delay?: number): void =>
 
 export const handlePause = (queueItem: PauseItem, queue: Queue) =>
   new Promise<void>(resolve => {
-    queue.onItemAdded(() =>
+    const unsub = queue.onItemAdded(({ addItem }) => {
       // button pressed during pause
-      resolve()
-    );
-    pause(queueItem.delay).then(() => resolve());
+      // add new pause
+      addItem(queueItem);
+      unsub();
+      resolve();
+    });
+    pause(queueItem.delay).then(() => {
+      unsub();
+      resolve();
+    });
   });

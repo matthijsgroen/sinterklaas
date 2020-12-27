@@ -1,9 +1,9 @@
 import { HoldItem, Queue } from "./types";
 
 export const handleHold = async (item: HoldItem, queue: Queue) => {
-  queue.insertItem(item);
-  await new Promise(resolve => {
-    queue.onItemAdded(resolve);
+  queue.undoItem();
+  await new Promise<void>(resolve => {
+    queue.onItemAdded(() => resolve());
     queue.onQueueEnded(resolve);
   });
 };

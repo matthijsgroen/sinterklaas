@@ -5,17 +5,22 @@ export interface QueueItem {
   type: string;
 }
 
+export type AddSubscriber = (api: {
+  addItem: (item: QueueItem) => void;
+}) => void;
+
 export type Subscriber = () => void;
 export type Unsubscribe = () => void;
 
 export type Queue = {
+  length: number;
   addItem(item: QueueItem): void;
-  insertItem(item: QueueItem): void;
+  undoItem(): void;
   collectToNewQueue(): () => QueueItem[];
   getNext(): QueueItem | undefined;
   getQueue(): QueueItem[];
   closeQueue(): void;
-  onItemAdded(s: Subscriber): Unsubscribe;
+  onItemAdded(s: AddSubscriber): Unsubscribe;
   onQueueEnded(s: Subscriber): Unsubscribe;
 };
 

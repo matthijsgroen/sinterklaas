@@ -109,7 +109,7 @@ const flowHelpers = (queue: Queue) => {
             }
           });
           commit();
-          resolve();
+          resolve(result);
         });
       });
     });

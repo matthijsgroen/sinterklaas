@@ -11,7 +11,15 @@ const DialogBox: React.FC<DialogBoxProps> = ({ title, children, onClose }) => (
     <div className={styles.box}>
       <header>
         <h1>{title}</h1>
-        <button onClick={onClose}>&times;</button>
+        <button
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            onClose();
+          }}
+        >
+          &times;
+        </button>
       </header>
       <div>{children}</div>
     </div>
