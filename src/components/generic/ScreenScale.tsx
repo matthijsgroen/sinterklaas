@@ -1,11 +1,28 @@
 import React from "react";
-import styles from "./ScreenScale.module.scss";
-import classNameHelper from "src/lib/className";
+import styled from "styled-components";
 import useWindowSize from "../hooks/useWindowSize";
 
 export interface ScreenScaleProps {
   className?: string;
 }
+
+interface ResizeProps {
+  $scale: number;
+}
+
+const ResizeContainer = styled.div<ResizeProps>`
+  position: absolute;
+  width: ${props => props.theme.windowWidth}px;
+  height: ${props => props.theme.windowHeight}px;
+  transform: scale(${props => props.$scale});
+`;
+
+const ClipContainer = styled.div`
+  width: ${props => props.theme.windowWidth}px;
+  height: ${props => props.theme.windowHeight}px;
+  position: relative;
+  overflow: hidden;
+`;
 
 const ScreenScale: React.FC<ScreenScaleProps> = ({ children, className }) => {
   const windowSize = useWindowSize();
@@ -15,19 +32,9 @@ const ScreenScale: React.FC<ScreenScaleProps> = ({ children, className }) => {
     Math.min(windowSize.height / 720, windowSize.width / 1280);
 
   return (
-    <div
-      style={{ transform: `scale(${scale})` }}
-      className={styles.sceneZoomContainer}
-    >
-      <div
-        className={classNameHelper({
-          [styles.scene]: true,
-          [className || ""]: !!className,
-        })}
-      >
-        {children}
-      </div>
-    </div>
+    <ResizeContainer $scale={scale || 1.0}>
+      <ClipContainer className={className}>{children}</ClipContainer>
+    </ResizeContainer>
   );
 };
 
