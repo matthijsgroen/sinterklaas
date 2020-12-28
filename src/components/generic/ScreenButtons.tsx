@@ -23,6 +23,7 @@ export type Highlight = {
 interface ScreenButtonProps {
   buttons: (Button | Highlight)[];
   buttonActive: boolean;
+  role?: "normal" | "hud";
   onClick: (buttonId: string) => void;
 }
 
@@ -39,6 +40,7 @@ const coordinatesToPolygon = (coords: number[]) => {
 export const ScreenButtons: React.FC<ScreenButtonProps> = ({
   buttons,
   buttonActive,
+  role = "normal",
   onClick,
 }) => {
   const renderButton = ({
@@ -99,14 +101,17 @@ export const ScreenButtons: React.FC<ScreenButtonProps> = ({
 
   return (
     <div
-      style={{
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-      }}
+      className={styles.container}
+      style={{ zIndex: role === "hud" ? 2 : 0 }}
     >
       {buttons
-        .filter(button => button.visible !== false)
+        .filter(
+          button =>
+            button.visible !== false &&
+            (isButton(button)
+              ? (button.role || "normal") === role
+              : role === "normal")
+        )
         .map(item =>
           isButton(item) ? renderButton(item) : renderHighlight(item)
         )}

@@ -1,6 +1,7 @@
 .image {
   position: absolute;
   display: inline-block;
+  pointer-events: initial;
   background-position: center, center;
   background-repeat: no-repeat;
   transition: background-blend-mode 0.2s;
@@ -12,6 +13,7 @@
 .highlight {
   position: absolute;
   display: inline-block;
+  pointer-events: initial;
   opacity: 0;
   transition: opacity 0.2s;
   top: 0;
@@ -32,4 +34,11 @@
 .shadow:hover {
   filter: drop-shadow(3px 3px 3px);
   cursor: pointer;
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }

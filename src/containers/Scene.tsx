@@ -51,6 +51,7 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
     >
       <Background {...background} />
       <ScreenButtons
+        role={"normal"}
         buttons={buttons}
         buttonActive={buttonActive}
         onClick={id => {
@@ -72,6 +73,14 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
           />
         ))}
       <FrontLayer {...background} />
+      <ScreenButtons
+        role={"hud"}
+        buttons={buttons}
+        buttonActive={buttonActive}
+        onClick={id => {
+          pressButton(id);
+        }}
+      />
       <ScreenFade active={screen.fadeOut} color={screen.color} />
       {dialog.visible && (
         <Dialog

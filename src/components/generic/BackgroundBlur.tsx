@@ -9,7 +9,7 @@ const BackgroundBlur = styled.div<BackgroundBlurProps>`
   width: ${props => props.theme.windowWidth}px;
   height: ${props => props.theme.windowHeight}px;
   position: absolute;
-  pointer-events: none;
+  pointer-events: ${props => (props.active ? "unset" : "none")};
 
   ${props =>
     props.active &&
