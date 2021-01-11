@@ -1,4 +1,5 @@
 import React from "react";
+import Layer from "./Layer";
 import styled from "styled-components";
 import useWindowSize from "../hooks/useWindowSize";
 
@@ -10,10 +11,7 @@ interface ResizeProps {
   $scale: number;
 }
 
-const ResizeContainer = styled.div<ResizeProps>`
-  position: absolute;
-  width: ${props => props.theme.windowWidth}px;
-  height: ${props => props.theme.windowHeight}px;
+const ResizeContainer = styled(Layer)<ResizeProps>`
   transform: scale(${props => props.$scale});
 `;
 

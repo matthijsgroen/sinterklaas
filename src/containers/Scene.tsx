@@ -17,6 +17,7 @@ import buttons from "src/state/buttons";
 import FrontLayer from "src/components/Frontlayer";
 import Loader from "./Loader";
 import BackgroundBlur from "src/components/generic/BackgroundBlur";
+import Layer from "src/components/generic/Layer";
 
 interface ConnectedSceneProps {
   dialog: DialogState;
@@ -49,59 +50,65 @@ const ConnectedScene: React.FC<ConnectedSceneProps> = ({
       horizontalPunch={screen.horizontalPunch}
       verticalPunch={screen.verticalPunch}
     >
-      <Background {...background} />
-      <ScreenButtons
-        role={"normal"}
-        buttons={buttons}
-        buttonActive={buttonActive}
-        onClick={id => {
-          pressButton(id);
-        }}
-      />
-      <BackgroundBlur active={!!background.blur} />
-      {characters
-        .filter(({ portrait }) => !portrait)
-        .map(({ id, doll, x, y, visible, scale, flipped, dollSettings }) => (
-          <Character
-            key={id}
-            visible={visible}
-            character={<Doll doll={doll} settings={dollSettings} />}
-            mirrored={flipped}
-            scale={scale}
-            x={x}
-            y={y}
-          />
-        ))}
-      <FrontLayer {...background} />
-      <ScreenButtons
-        role={"hud"}
-        buttons={buttons}
-        buttonActive={buttonActive}
-        onClick={id => {
-          pressButton(id);
-        }}
-      />
-      <ScreenFade active={screen.fadeOut} color={screen.color} />
-      {dialog.visible && (
-        <Dialog
-          name={dialog.name}
-          {...dialog.settings}
-          text={dialog.contents || ""}
+      <Layer z={1}>
+        <Background {...background} />
+        <ScreenButtons
+          role={"normal"}
+          buttons={buttons}
+          buttonActive={buttonActive}
+          onClick={id => {
+            pressButton(id);
+          }}
         />
-      )}
-      {characters
-        .filter(({ portrait, visible }) => portrait && visible)
-        .map(({ id, doll, x, y, scale, flipped, dollSettings }) => (
-          <Character
-            key={id}
-            character={<Doll doll={doll} settings={dollSettings} />}
-            mirrored={flipped}
-            scale={scale}
-            x={x}
-            y={y}
-            z={2}
+        <BackgroundBlur active={!!background.blur} />
+      </Layer>
+      <Layer z={2}>
+        {characters
+          .filter(({ portrait }) => !portrait)
+          .map(({ id, doll, x, y, visible, scale, flipped, dollSettings }) => (
+            <Character
+              key={id}
+              visible={visible}
+              character={<Doll doll={doll} settings={dollSettings} />}
+              mirrored={flipped}
+              scale={scale}
+              x={x}
+              y={y}
+            />
+          ))}
+        <FrontLayer {...background} />
+        <ScreenButtons
+          role={"hud"}
+          buttons={buttons}
+          buttonActive={buttonActive}
+          onClick={id => {
+            pressButton(id);
+          }}
+        />
+      </Layer>
+      <Layer z={3}>
+        <ScreenFade active={screen.fadeOut} color={screen.color} />
+        {dialog.visible && (
+          <Dialog
+            name={dialog.name}
+            {...dialog.settings}
+            text={dialog.contents || ""}
           />
-        ))}
+        )}
+        {characters
+          .filter(({ portrait, visible }) => portrait && visible)
+          .map(({ id, doll, x, y, scale, flipped, dollSettings }) => (
+            <Character
+              key={id}
+              character={<Doll doll={doll} settings={dollSettings} />}
+              mirrored={flipped}
+              scale={scale}
+              x={x}
+              y={y}
+              z={2}
+            />
+          ))}
+      </Layer>
       <Menu />
       <Loader />
     </Scene>
